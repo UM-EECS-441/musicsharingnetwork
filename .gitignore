@@ -91,3 +91,15 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+
+# Python files to ignore - added 10/14
+*.pyc
+__pycache__/
+*.egg-info*
+dist/
+env/
+venv/
+venv3/
+.venv/
+.pytest_cache
