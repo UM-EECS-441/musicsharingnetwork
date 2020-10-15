@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Download necessary packages for sentiment analysis development.
-# This script assumes you have already created your virtual environment
+# This script assumes you have already created your virtual environment.
 # Run it from the directory where you created your virtual environment
 
 # Stop on errors, print commands
