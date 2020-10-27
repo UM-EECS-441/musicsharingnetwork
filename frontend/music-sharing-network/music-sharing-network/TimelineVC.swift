@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TimelineVC.swift
 //  music-sharing-network
 //
 //  Created by Joe Zawisa on 10/9/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainVC: UITableViewController {
+class TimelineVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
