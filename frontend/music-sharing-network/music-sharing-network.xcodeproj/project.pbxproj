@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D829752C254A80CE006C87BA /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829752B254A80CE006C87BA /* UserVC.swift */; };
 		D837777725489E17000C1D05 /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837777625489E17000C1D05 /* ExploreVC.swift */; };
 		D87EF55125315311008EA46A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87EF55025315311008EA46A /* AppDelegate.swift */; };
 		D87EF55325315311008EA46A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87EF55225315311008EA46A /* SceneDelegate.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D829752B254A80CE006C87BA /* UserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
 		D837777625489E17000C1D05 /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
 		D87EF54D25315311008EA46A /* music-sharing-network.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "music-sharing-network.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D87EF55025315311008EA46A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,8 +71,9 @@
 				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
 				D8DF6E00254A1F6B005481D9 /* LoginVC.swift */,
 				D87EF55425315311008EA46A /* TimelineVC.swift */,
-				D837777625489E17000C1D05 /* ExploreVC.swift */,
 				D8F34BFB2548A87200B5C2A3 /* MessageVC.swift */,
+				D837777625489E17000C1D05 /* ExploreVC.swift */,
+				D829752B254A80CE006C87BA /* UserVC.swift */,
 				D87EF55625315311008EA46A /* Main.storyboard */,
 				D87EF55925315314008EA46A /* Assets.xcassets */,
 				D87EF55B25315314008EA46A /* LaunchScreen.storyboard */,
@@ -153,6 +156,7 @@
 				D87EF55125315311008EA46A /* AppDelegate.swift in Sources */,
 				D8DF6E01254A1F6B005481D9 /* LoginVC.swift in Sources */,
 				D837777725489E17000C1D05 /* ExploreVC.swift in Sources */,
+				D829752C254A80CE006C87BA /* UserVC.swift in Sources */,
 				D8F34BFC2548A87200B5C2A3 /* MessageVC.swift in Sources */,
 				D8DF6DFE254A1E10005481D9 /* SharedData.swift in Sources */,
 				D87EF55325315311008EA46A /* SceneDelegate.swift in Sources */,

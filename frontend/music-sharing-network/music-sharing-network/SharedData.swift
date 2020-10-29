@@ -7,16 +7,50 @@
 
 import UIKit
 
+/*
+ Store data and implementation that is used across many view controllers.
+ */
 class SharedData {
     static let baseURL: String = "https://backend-qjgo4vxcdq-uc.a.run.app"
-    static var cookie: HTTPCookie? = nil
+    static var username: String = ""
     
-    static func getCoookie() -> HTTPCookie? {
-        return self.cookie
+    /*
+     Send an HTTP request and wait for the response.
+     */
+    static func SynchrnousHTTPRequest(_ request: URLRequest) -> (Data?, URLResponse?, Error?) {
+        let sem = DispatchSemaphore.init(value: 0)
+        
+        var result: (Data?, URLResponse?, Error?)
+        
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            result = (data, response, error)
+            sem.signal()
+        }
+        
+        task.resume()
+        sem.wait()
+        
+        return result
     }
     
-    static func setCookie(_ httpResponse: HTTPURLResponse) {
-        let cookies = HTTPCookie.cookies(withResponseHeaderFields: httpResponse.allHeaderFields as! [String: String], for: httpResponse.url!)
-        self.cookie = cookies[0]
+    /**
+     If the user is not logged in, prompt them to log in.
+     
+     - Parameter parentVC: the view controller requesting the user to log in
+     - Parameter completion: closure to run after the user logs in
+     */
+    static func login(parentVC: UIViewController, completion: (() -> Void)?) {
+        if self.username == "" {
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let loginVC = storyBoard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            loginVC.completion = { (_ username: String) in
+                self.username = username
+                completion?()
+            }
+            parentVC.navigationController?.show(loginVC, sender: nil)
+        } else {
+            completion?()
+        }
     }
+    
 }
