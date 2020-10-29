@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D829752C254A80CE006C87BA /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829752B254A80CE006C87BA /* UserVC.swift */; };
 		D837777725489E17000C1D05 /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837777625489E17000C1D05 /* ExploreVC.swift */; };
+		D87A877F254B41E6005EBE3C /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A877E254B41E6005EBE3C /* SettingsVC.swift */; };
 		D87EF55125315311008EA46A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87EF55025315311008EA46A /* AppDelegate.swift */; };
 		D87EF55325315311008EA46A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87EF55225315311008EA46A /* SceneDelegate.swift */; };
 		D87EF55525315311008EA46A /* TimelineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87EF55425315311008EA46A /* TimelineVC.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		D829752B254A80CE006C87BA /* UserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
 		D837777625489E17000C1D05 /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
+		D87A877E254B41E6005EBE3C /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		D87EF54D25315311008EA46A /* music-sharing-network.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "music-sharing-network.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D87EF55025315311008EA46A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D87EF55225315311008EA46A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				D8F34BFB2548A87200B5C2A3 /* MessageVC.swift */,
 				D837777625489E17000C1D05 /* ExploreVC.swift */,
 				D829752B254A80CE006C87BA /* UserVC.swift */,
+				D87A877E254B41E6005EBE3C /* SettingsVC.swift */,
 				D87EF55625315311008EA46A /* Main.storyboard */,
 				D87EF55925315314008EA46A /* Assets.xcassets */,
 				D87EF55B25315314008EA46A /* LaunchScreen.storyboard */,
@@ -160,6 +163,7 @@
 				D8F34BFC2548A87200B5C2A3 /* MessageVC.swift in Sources */,
 				D8DF6DFE254A1E10005481D9 /* SharedData.swift in Sources */,
 				D87EF55325315311008EA46A /* SceneDelegate.swift in Sources */,
+				D87A877F254B41E6005EBE3C /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
