@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -13,7 +13,7 @@
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="Login" customClass="ViewController" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" id="BYZ-38-t0r" userLabel="Login" customClass="LoginVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,10 +46,16 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUM-h7-0fk" userLabel="Login Button">
                                         <rect key="frame" x="0.0" y="149" width="374" height="30"/>
                                         <state key="normal" title="Login"/>
+                                        <connections>
+                                            <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kxx-l1-U8B"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tee-1j-9Vg" userLabel="Guest Button">
                                         <rect key="frame" x="0.0" y="189" width="374" height="30"/>
                                         <state key="normal" title="Continue as Guest"/>
+                                        <connections>
+                                            <action selector="continueAsGuest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WPK-dM-QHP"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -63,6 +69,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Music Sharing Network" id="WbD-Sb-RpA"/>
+                    <connections>
+                        <outlet property="continueAsGuestButton" destination="tee-1j-9Vg" id="pXU-d9-fzl"/>
+                        <outlet property="loginButton" destination="BUM-h7-0fk" id="OEy-AE-8gE"/>
+                        <outlet property="passwordInput" destination="GXY-0h-qIq" id="lNm-T6-EzV"/>
+                        <outlet property="usernameInput" destination="WU3-DI-zZi" id="Udp-mF-X1l"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -547,9 +559,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8PM-0g-xuL" userLabel="Follow Button">
-                                <rect key="frame" x="337" y="127" width="57" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8PM-0g-xuL" userLabel="Follow Button">
+                                <rect key="frame" x="337" y="127.5" width="57" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Follow"/>
                             </button>
@@ -557,12 +568,14 @@
                         <viewLayoutGuide key="safeArea" id="tM3-ZT-kSV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="8PM-0g-xuL" firstAttribute="centerY" secondItem="obr-wu-amI" secondAttribute="centerY" id="00C-pW-EaZ"/>
                             <constraint firstItem="18f-PB-LZr" firstAttribute="leading" secondItem="5Mz-ak-RFI" secondAttribute="leadingMargin" id="6Ii-Sd-E1o"/>
                             <constraint firstItem="obr-wu-amI" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="18f-PB-LZr" secondAttribute="bottom" id="GLB-dP-LC5"/>
                             <constraint firstItem="18f-PB-LZr" firstAttribute="top" secondItem="5Mz-ak-RFI" secondAttribute="topMargin" constant="20" id="O8q-BQ-z5I"/>
                             <constraint firstItem="obr-wu-amI" firstAttribute="centerY" secondItem="18f-PB-LZr" secondAttribute="centerY" id="PN7-qN-m5X"/>
                             <constraint firstItem="obr-wu-amI" firstAttribute="leading" secondItem="18f-PB-LZr" secondAttribute="trailing" constant="10" id="STE-9J-e8G"/>
-                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="obr-wu-amI" secondAttribute="trailing" id="rcz-nz-vO1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8PM-0g-xuL" secondAttribute="trailing" id="fZa-m5-l6v"/>
+                            <constraint firstItem="8PM-0g-xuL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="obr-wu-amI" secondAttribute="trailing" id="rcz-nz-vO1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="My Profile" id="cdu-1Z-mIE">

@@ -11,7 +11,13 @@ class MessageListVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // Prompt the user to login if they have not already
+        if SharedData.cookie == nil {
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let loginVC = storyBoard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            self.navigationController?.showDetailViewController(loginVC, sender: nil)
+        }
     }
 
     // MARK:- TableView handlers
