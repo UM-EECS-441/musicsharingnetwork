@@ -22,7 +22,7 @@ def create_post():
         'post_id': str(post_id),
         'owner': username,
         'timestamp': datetime.datetime.utcnow(),
-        'messsage': flask.request.json.get('message', None),
+        'message': flask.request.json.get('message', None),
         'content': flask.request.json.get('content', None),
         'reply_to': flask.request.json.get('reply_to', None),
         'num_likes': 0,
