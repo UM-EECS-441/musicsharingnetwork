@@ -8,15 +8,19 @@
 import UIKit
 
 class PostVC: UIViewController {
-
+    
+    @IBOutlet weak var songInput: UITextField!
+    @IBOutlet weak var artistInput: UITextField!
+    @IBOutlet weak var captionTextView: UITextView!
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        // Prompt the user to login if they have not already
+        SharedData.login(parentVC: self, completion: nil)
     }
-    
-
-    @IBOutlet weak var captionTextView: UITextView!
     
     @IBAction func cancelButtonHandler(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -26,7 +30,7 @@ class PostVC: UIViewController {
         // Send the song title and artist as the message text
         
         // Serialize the username and password into JSON data
-        let json: [String: Any] = ["message": self.captionTextView.text ?? "", "content": "Artist:Song", "reply_to": 0]
+        let json: [String: Any] = ["message": self.captionTextView.text ?? "", "content": (self.artistInput.text ?? "Artist") + ":" + (self.songInput.text ?? "Song"), "reply_to": 0]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request

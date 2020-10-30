@@ -34,8 +34,8 @@ class TimelineTableCell: UITableViewCell {
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var songLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
+    @IBOutlet weak var songLabel: UILabel!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var textBox: UILabel!

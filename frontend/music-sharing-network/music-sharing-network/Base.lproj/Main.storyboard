@@ -269,13 +269,13 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="artistLabel" destination="QPZ-hf-mCp" id="wko-IS-2V3"/>
+                                    <outlet property="artistLabel" destination="QPZ-hf-mCp" id="y9o-d0-JT1"/>
                                     <outlet property="commentButton" destination="cfb-Ni-keY" id="elf-Wg-Uvf"/>
                                     <outlet property="likeButton" destination="C0t-SD-sLq" id="aQd-hf-gnG"/>
                                     <outlet property="playButton" destination="2zW-4Z-Z4z" id="UiV-qE-rg6"/>
                                     <outlet property="repostButton" destination="Xof-nF-Ghs" id="uvR-F8-yfH"/>
                                     <outlet property="shareButton" destination="fSn-CM-zlY" id="5WU-RU-fvI"/>
-                                    <outlet property="songLabel" destination="QPZ-hf-mCp" id="3ix-r6-Srb"/>
+                                    <outlet property="songLabel" destination="lU0-qu-MB6" id="Dj9-gh-twW"/>
                                     <outlet property="textBox" destination="aFU-ZO-Yfb" id="q88-q3-5QC"/>
                                     <outlet property="timestampLabel" destination="1TC-Cv-fcX" id="H0c-qO-NJI"/>
                                     <outlet property="usernameLabel" destination="aQk-mC-MxI" id="H8S-nF-yFS"/>
@@ -332,52 +332,66 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Write a caption.." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BBU-Bf-Tbb" userLabel="Caption TextView">
-                                <rect key="frame" x="43" y="279" width="329" height="186"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BBU-Bf-Tbb" userLabel="Text Box">
+                                <rect key="frame" x="20" y="265" width="374" height="523"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <accessibility key="accessibilityConfiguration" identifier="captionTextView"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Song Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2s8-jU-zae">
-                                <rect key="frame" x="237" y="100" width="98" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2s8-jU-zae" userLabel="Song Label">
+                                <rect key="frame" x="20" y="76" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Song Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7is-RQ-NyF">
-                                <rect key="frame" x="237" y="155" width="114" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7is-RQ-NyF" userLabel="Artist Label">
+                                <rect key="frame" x="20" y="170.5" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Ck-4s-a8J" userLabel="Album ImageView">
-                                <rect key="frame" x="20" y="93" width="199" height="106"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MEs-3a-5Ol" userLabel="Album Button">
-                                <rect key="frame" x="107" y="207" width="59" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="photo" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="35"/>
-                                </state>
-                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Song" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gWy-94-QW9" userLabel="Song Input">
+                                <rect key="frame" x="20" y="116.5" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Artist" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GEI-gV-cRZ" userLabel="Artist Input">
+                                <rect key="frame" x="20" y="211" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aR2-RK-CvU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Yoo-C3-eEZ" firstAttribute="leading" secondItem="aR2-RK-CvU" secondAttribute="leading" id="33g-s8-ntQ"/>
+                            <constraint firstItem="GEI-gV-cRZ" firstAttribute="leading" secondItem="I33-1g-ooS" secondAttribute="leadingMargin" id="5ya-XP-Fxs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7is-RQ-NyF" secondAttribute="trailing" id="BWL-wm-mgV"/>
+                            <constraint firstItem="7is-RQ-NyF" firstAttribute="top" secondItem="gWy-94-QW9" secondAttribute="bottom" constant="20" id="Fdv-Vr-fxH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GEI-gV-cRZ" secondAttribute="trailing" id="Gbx-Mx-IfN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2s8-jU-zae" secondAttribute="trailing" id="MUN-Pb-pLs"/>
                             <constraint firstItem="Yoo-C3-eEZ" firstAttribute="trailing" secondItem="aR2-RK-CvU" secondAttribute="trailing" id="Mo0-ta-3Zg"/>
+                            <constraint firstItem="gWy-94-QW9" firstAttribute="top" secondItem="2s8-jU-zae" secondAttribute="bottom" constant="20" id="Pj6-6e-Qy9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BBU-Bf-Tbb" secondAttribute="trailing" id="RQj-az-GCd"/>
                             <constraint firstItem="Yoo-C3-eEZ" firstAttribute="top" secondItem="aR2-RK-CvU" secondAttribute="top" id="T4h-we-mhR"/>
+                            <constraint firstItem="2s8-jU-zae" firstAttribute="top" secondItem="Yoo-C3-eEZ" secondAttribute="bottom" constant="20" id="b9d-GB-Y4n"/>
+                            <constraint firstItem="BBU-Bf-Tbb" firstAttribute="leading" secondItem="I33-1g-ooS" secondAttribute="leadingMargin" id="dgn-X7-HxZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gWy-94-QW9" secondAttribute="trailing" id="fiq-mp-Q2A"/>
+                            <constraint firstItem="7is-RQ-NyF" firstAttribute="leading" secondItem="I33-1g-ooS" secondAttribute="leadingMargin" id="huD-Dh-vdJ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="BBU-Bf-Tbb" secondAttribute="bottom" constant="20" id="jVH-ga-fcG"/>
+                            <constraint firstItem="gWy-94-QW9" firstAttribute="leading" secondItem="I33-1g-ooS" secondAttribute="leadingMargin" id="klh-h3-2gb"/>
+                            <constraint firstItem="BBU-Bf-Tbb" firstAttribute="top" secondItem="GEI-gV-cRZ" secondAttribute="bottom" constant="20" id="oLY-rT-1ji"/>
+                            <constraint firstItem="2s8-jU-zae" firstAttribute="leading" secondItem="I33-1g-ooS" secondAttribute="leadingMargin" id="yji-ZC-FuY"/>
+                            <constraint firstItem="GEI-gV-cRZ" firstAttribute="top" secondItem="7is-RQ-NyF" secondAttribute="bottom" constant="20" id="ysq-J8-uWr"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Brl-2E-nzj"/>
                     <connections>
+                        <outlet property="artistInput" destination="GEI-gV-cRZ" id="xDZ-PO-h2Z"/>
                         <outlet property="captionTextView" destination="BBU-Bf-Tbb" id="UrU-3f-umR"/>
+                        <outlet property="songInput" destination="gWy-94-QW9" id="dqS-Gm-Dez"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JCY-fj-4g0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
