@@ -53,7 +53,7 @@ class LoginVC: UIViewController {
         request.httpBody = jsonData
         
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchrnousHTTPRequest(request)
+        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
         
         // Check for errors
         guard let _ = data, error == nil else {

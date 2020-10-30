@@ -34,7 +34,7 @@ class SettingsVC: UIViewController {
         request.httpBody = jsonData
         
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchrnousHTTPRequest(request)
+        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
         
         // Check for errors
         guard let _ = data, error == nil else {
@@ -60,7 +60,7 @@ class SettingsVC: UIViewController {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchrnousHTTPRequest(request)
+        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
         
         // Check for errors
         guard let _ = data, error == nil else {

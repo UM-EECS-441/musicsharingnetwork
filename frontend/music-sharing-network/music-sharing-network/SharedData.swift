@@ -17,7 +17,7 @@ class SharedData {
     /*
      Send an HTTP request and wait for the response.
      */
-    static func SynchrnousHTTPRequest(_ request: URLRequest) -> (Data?, URLResponse?, Error?) {
+    static func SynchronousHTTPRequest(_ request: URLRequest) -> (Data?, URLResponse?, Error?) {
         let sem = DispatchSemaphore.init(value: 0)
         
         var result: (Data?, URLResponse?, Error?)
