@@ -34,7 +34,14 @@ class TimelineTableCell: UITableViewCell {
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var postLabel: UILabel!
+    @IBOutlet weak var songLabel: UILabel!
+    @IBOutlet weak var artistLabel: UILabel!
+    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var textBox: UILabel!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var repostButton: UIButton!
+    @IBOutlet weak var commentButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,6 +60,14 @@ class TimelineVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        
+        getPosts()
+    }
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        self.getPosts()
     }
     
     func getPosts() {
@@ -91,7 +106,7 @@ class TimelineVC: UITableViewController {
                 let postList = json["posts"] as! [[String: Any]]
 
                 for postEntry in postList {
-                    self.posts.append(Post(identifier: postEntry["post_id"] as! String, timestamp: postEntry["timestamp"] as! String, owner: postEntry["owner"] as! String, media: postEntry["content"] as! String, message: postEntry["message"] as! String, likes: postEntry["num_likes"] as! Int, reposts: postEntry["num_reposts"] as! Int))
+                    self.posts.append(Post(identifier: postEntry["post_id"] as! String, timestamp: postEntry["timestamp"] as! String, owner: postEntry["owner"] as! String, media: postEntry["content"] as! String, message: postEntry["message"] as? String ?? postEntry["messsage"] as! String, likes: postEntry["num_likes"] as! Int, reposts: postEntry["num_reposts"] as! Int))
                 }
                 DispatchQueue.main.async {
                     self.tableView.rowHeight = UITableView.automaticDimension
@@ -112,7 +127,7 @@ class TimelineVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // how many rows per section
-        return 2
+        return self.posts.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -122,7 +137,21 @@ class TimelineVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // populate a single cell
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableCell", for: indexPath) as? TimelineTableCell else {
+            fatalError("No reusable cell!")
+        }
+        
+        let post = self.posts[indexPath.row]
+        cell.usernameLabel.text = post.owner
+        cell.usernameLabel.sizeToFit()
+        cell.timestampLabel.text = post.timestamp
+        cell.timestampLabel.sizeToFit()
+        cell.textBox.text = post.message
+        cell.textBox.sizeToFit()
+        
+        let media = post.media.components(separatedBy: ":")
+        cell.artistLabel.text = media.first
+        cell.songLabel.text = media.last
          
         return cell
     }

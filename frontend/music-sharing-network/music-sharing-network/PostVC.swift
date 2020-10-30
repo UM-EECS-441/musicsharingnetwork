@@ -26,7 +26,7 @@ class PostVC: UIViewController {
         // Send the song title and artist as the message text
         
         // Serialize the username and password into JSON data
-        let json: [String: Any] = ["message": [self.captionTextView.text ?? ""], "content": "", "reply_to": 0]
+        let json: [String: Any] = ["message": self.captionTextView.text ?? "", "content": "Artist:Song", "reply_to": 0]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
