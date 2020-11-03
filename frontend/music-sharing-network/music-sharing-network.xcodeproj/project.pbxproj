@@ -26,6 +26,9 @@
 		D87EF55825315311008EA46A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D87EF55625315311008EA46A /* Main.storyboard */; };
 		D87EF55A25315314008EA46A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D87EF55925315314008EA46A /* Assets.xcassets */; };
 		D87EF55D25315314008EA46A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D87EF55B25315314008EA46A /* LaunchScreen.storyboard */; };
+		D8B90084255210D900DBBD67 /* ExploreTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B90083255210D900DBBD67 /* ExploreTableCell.swift */; };
+		D8C546952551FE4A00F0B3E3 /* SongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C546942551FE4A00F0B3E3 /* SongView.swift */; };
+		D8C546982551FE8200F0B3E3 /* SongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8C546972551FE8200F0B3E3 /* SongView.xib */; };
 		D8DF6DFE254A1E10005481D9 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DF6DFD254A1E10005481D9 /* SharedData.swift */; };
 		D8DF6E01254A1F6B005481D9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DF6E00254A1F6B005481D9 /* LoginVC.swift */; };
 		D8F34BFC2548A87200B5C2A3 /* MessageListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */; };
@@ -53,6 +56,9 @@
 		D87EF55925315314008EA46A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D87EF55C25315314008EA46A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D87EF55E25315314008EA46A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8B90083255210D900DBBD67 /* ExploreTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTableCell.swift; sourceTree = "<group>"; };
+		D8C546942551FE4A00F0B3E3 /* SongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongView.swift; sourceTree = "<group>"; };
+		D8C546972551FE8200F0B3E3 /* SongView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SongView.xib; sourceTree = "<group>"; };
 		D8DF6DFD254A1E10005481D9 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		D8DF6E00254A1F6B005481D9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListVC.swift; sourceTree = "<group>"; };
@@ -90,29 +96,72 @@
 			children = (
 				D87EF55025315311008EA46A /* AppDelegate.swift */,
 				D87EF55225315311008EA46A /* SceneDelegate.swift */,
-				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
-				D8DF6E00254A1F6B005481D9 /* LoginVC.swift */,
-				D87EF55425315311008EA46A /* TimelineVC.swift */,
-				49CF8E5C2551E8520001F326 /* TimelineTableCell.swift */,
-				49CF8E592551E7F50001F326 /* Post.swift */,
-				49FC01C9254C9C0600223147 /* NewPostVC.swift */,
-				D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */,
-				49CF8E702551EB5B0001F326 /* NewMessageVC.swift */,
-				49CF8E6D2551EB210001F326 /* MessageViewVC.swift */,
-				49CF8E692551EABE0001F326 /* MessageViewTableCell.swift */,
-				49CF8E662551EA8A0001F326 /* Message.swift */,
-				49CF8E632551EA1C0001F326 /* MessageListTableCell.swift */,
-				49CF8E602551E9DB0001F326 /* Conversation.swift */,
-				D837777625489E17000C1D05 /* ExploreVC.swift */,
-				D829752B254A80CE006C87BA /* ProfileVC.swift */,
-				49CF8E742551EBC00001F326 /* UserSearchVC.swift */,
-				D87A877E254B41E6005EBE3C /* SettingsVC.swift */,
+				D89B80822551F58000004E7F /* Reusable Components */,
+				D89B807E2551F04900004E7F /* Users */,
+				D89B807C2551F00000004E7F /* Posts */,
+				D89B807F2551F07400004E7F /* Messages */,
+				D89B80802551F08400004E7F /* Recommendations */,
 				D87EF55625315311008EA46A /* Main.storyboard */,
 				D87EF55925315314008EA46A /* Assets.xcassets */,
 				D87EF55B25315314008EA46A /* LaunchScreen.storyboard */,
 				D87EF55E25315314008EA46A /* Info.plist */,
 			);
 			path = "music-sharing-network";
+			sourceTree = "<group>";
+		};
+		D89B807C2551F00000004E7F /* Posts */ = {
+			isa = PBXGroup;
+			children = (
+				49CF8E592551E7F50001F326 /* Post.swift */,
+				49CF8E5C2551E8520001F326 /* TimelineTableCell.swift */,
+				D87EF55425315311008EA46A /* TimelineVC.swift */,
+				49FC01C9254C9C0600223147 /* NewPostVC.swift */,
+			);
+			name = Posts;
+			sourceTree = "<group>";
+		};
+		D89B807E2551F04900004E7F /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				D8DF6E00254A1F6B005481D9 /* LoginVC.swift */,
+				49CF8E742551EBC00001F326 /* UserSearchVC.swift */,
+				D829752B254A80CE006C87BA /* ProfileVC.swift */,
+				D87A877E254B41E6005EBE3C /* SettingsVC.swift */,
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
+		D89B807F2551F07400004E7F /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				49CF8E602551E9DB0001F326 /* Conversation.swift */,
+				49CF8E662551EA8A0001F326 /* Message.swift */,
+				49CF8E632551EA1C0001F326 /* MessageListTableCell.swift */,
+				D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */,
+				49CF8E692551EABE0001F326 /* MessageViewTableCell.swift */,
+				49CF8E6D2551EB210001F326 /* MessageViewVC.swift */,
+				49CF8E702551EB5B0001F326 /* NewMessageVC.swift */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
+		D89B80802551F08400004E7F /* Recommendations */ = {
+			isa = PBXGroup;
+			children = (
+				D8B90083255210D900DBBD67 /* ExploreTableCell.swift */,
+				D837777625489E17000C1D05 /* ExploreVC.swift */,
+			);
+			name = Recommendations;
+			sourceTree = "<group>";
+		};
+		D89B80822551F58000004E7F /* Reusable Components */ = {
+			isa = PBXGroup;
+			children = (
+				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
+				D8C546942551FE4A00F0B3E3 /* SongView.swift */,
+				D8C546972551FE8200F0B3E3 /* SongView.xib */,
+			);
+			name = "Reusable Components";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +224,7 @@
 				D87EF55D25315314008EA46A /* LaunchScreen.storyboard in Resources */,
 				D87EF55A25315314008EA46A /* Assets.xcassets in Resources */,
 				D87EF55825315311008EA46A /* Main.storyboard in Resources */,
+				D8C546982551FE8200F0B3E3 /* SongView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +242,8 @@
 				D8DF6E01254A1F6B005481D9 /* LoginVC.swift in Sources */,
 				D837777725489E17000C1D05 /* ExploreVC.swift in Sources */,
 				49CF8E5D2551E8520001F326 /* TimelineTableCell.swift in Sources */,
+				D8B90084255210D900DBBD67 /* ExploreTableCell.swift in Sources */,
+				D8C546952551FE4A00F0B3E3 /* SongView.swift in Sources */,
 				49FC01CA254C9C0600223147 /* NewPostVC.swift in Sources */,
 				D829752C254A80CE006C87BA /* ProfileVC.swift in Sources */,
 				49CF8E642551EA1C0001F326 /* MessageListTableCell.swift in Sources */,

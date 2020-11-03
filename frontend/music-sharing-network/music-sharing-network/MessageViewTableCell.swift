@@ -13,8 +13,7 @@ class MessageViewTableCell: UITableViewCell {
     var identifier: String?
     
     @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var songTitle: UILabel!
-    @IBOutlet weak var songArtist: UILabel!
+    @IBOutlet weak var songView: SongView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -33,7 +33,11 @@ class ExploreVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // populate a single cell
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "ExploreTableCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExploreTableCell", for: indexPath) as? ExploreTableCell else {
+            fatalError("No reusable cell!")
+        }
+        
+        cell.songView.showSong(song: "Artist:Song", parentVC: self)
         
         return cell
     }

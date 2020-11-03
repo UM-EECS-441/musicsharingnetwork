@@ -9,18 +9,16 @@ import UIKit
 
 class NewMessageVC: UIViewController {
     var song: String?
-    var artist: String?
     
-    @IBOutlet weak var songTitleLabel: UILabel!
-    @IBOutlet weak var songArtistLabel: UILabel!
+    @IBOutlet weak var songView: SongView!
     @IBOutlet weak var recipientInput: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.artist = self.songArtistLabel.text
-        self.song = self.songTitleLabel.text
+        self.songView.showSong(song: self.song!, parentVC: self)
+        self.songView.shareButton.isHidden = true
     }
     
     @IBAction func cancelButtonHandler(_ sender: Any) {
@@ -29,7 +27,7 @@ class NewMessageVC: UIViewController {
     
     @IBAction func sendButtonHandler(_ sender: Any) {
         // Send the song title and artist as the message text
-        let message = self.artist! + ":" + self.song!
+        let message = (self.songView.artistLabel.text ?? "Artist") + ":" + (self.songView.songLabel.text ?? "Song")
         
         // Serialize the username and password into JSON data
         let json: [String: Any] = ["recipients": [self.recipientInput.text ?? ""], "message": message]

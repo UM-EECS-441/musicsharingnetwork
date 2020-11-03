@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/joe/Desktop/Fall 2020/EECS 441/Project/GitHub/frontend/music-sharing-network/music-sharing-network/Song.xib">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/joe/Desktop/Fall 2020/EECS 441/Project/GitHub/frontend/music-sharing-network/music-sharing-network/SongVC.swift">
+   </FileRef>
+   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>

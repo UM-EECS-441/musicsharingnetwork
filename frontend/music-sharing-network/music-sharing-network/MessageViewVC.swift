@@ -105,11 +105,7 @@ class MessageViewVC: UITableViewController {
         cell.usernameLabel.text = message.owner
         cell.usernameLabel.sizeToFit()
         
-        let media = message.text.components(separatedBy: ":")
-        cell.songArtist.text = media[0]
-        cell.songArtist.sizeToFit()
-        cell.songTitle.text = media[1]
-        cell.songTitle.sizeToFit()
+        cell.songView.showSong(song: message.text, parentVC: self)
 
         return cell
     }

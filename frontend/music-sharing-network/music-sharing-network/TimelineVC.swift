@@ -93,9 +93,7 @@ class TimelineVC: UITableViewController {
         cell.textBox.text = post.message
         cell.textBox.sizeToFit()
         
-        let media = post.media.components(separatedBy: ":")
-        cell.artistLabel.text = media.first
-        cell.songLabel.text = media.last
+        cell.songView.showSong(song: post.media, parentVC: self)
          
         return cell
     }

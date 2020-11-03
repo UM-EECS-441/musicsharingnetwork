@@ -35,6 +35,15 @@ class LoginVC: UIViewController {
         continueAsGuestButton.isHidden = !allowGuest
     }
     
+    @objc func objc_close() {
+        self.close()
+    }
+    
+    func close() {
+        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     /*
      Sign in with the username and password supplied by the user.
      */
@@ -69,12 +78,9 @@ class LoginVC: UIViewController {
                 
                 // Mark the user as logged in by saving their username,
                 // and dismiss the login screen
-                self.navigationController?.popViewController(animated: true)
-                self.navigationController?.isNavigationBarHidden = false
                 self.completion?(self.usernameInput.text!)
+                self.close()
             }
         }
-        
-        
     }
 }
