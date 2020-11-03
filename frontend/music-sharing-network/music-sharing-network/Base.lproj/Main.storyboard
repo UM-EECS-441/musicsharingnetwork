@@ -300,6 +300,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="l7B-MP-ScR">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                 </tableViewController>
@@ -310,7 +311,7 @@
         <!--New Post-->
         <scene sceneID="VDG-ru-ZBR">
             <objects>
-                <viewController id="5b4-0M-2uW" userLabel="New Post" customClass="PostVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5b4-0M-2uW" userLabel="New Post" customClass="NewPostVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="I33-1g-ooS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

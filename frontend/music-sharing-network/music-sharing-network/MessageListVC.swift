@@ -1,31 +1,38 @@
 //
-//  TimelineVC.swift
+//  MessageVC.swift
 //  music-sharing-network
 //
-//  Created by Joe Zawisa on 10/9/20.
+//  Created by Joe Zawisa on 10/27/20.
 //
 
 import UIKit
-
-class TimelineVC: UITableViewController {
-    var posts = [Post]()
+/*
+ Controls a view that shows a list of all the conversations the user is a member
+ of. Conversations are identified by the set of members in them.
+ */
+class MessageListVC: UITableViewController {
     
+    var conversations = [Conversation]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
+
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
-        
-        getPosts()
+
+        // Prompt the user to login if they have not already
+        SharedData.login(parentVC: self) { () in
+            self.getConversations()
+        }
+
     }
-    
+
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        self.getPosts()
+        self.getConversations()
     }
-    
-    func getPosts() {
+
+    func getConversations() {
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/"
+        let requestURL = SharedData.baseURL + "/messages/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "GET"
@@ -33,10 +40,19 @@ class TimelineVC: UITableViewController {
 
         // Send the request and read the server's response
         SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
+            // Check for errors
+            guard let _ = data, error == nil else {
+                print("MessageListVC > getConversations: NETWORKING ERROR")
+                DispatchQueue.main.async {
+                    self.refreshControl?.endRefreshing()
+                }
+                return
+            }
+
             if let httpResponse = response as? HTTPURLResponse {
                 // Check for errors
                 if httpResponse.statusCode != 200 {
-                    print("TimelineVC > getPosts: HTTP STATUS: \(httpResponse.statusCode)")
+                    print("MessageListVC > getConversations: HTTP STATUS: \(httpResponse.statusCode)")
                     DispatchQueue.main.async {
                         self.refreshControl?.endRefreshing()
                     }
@@ -44,12 +60,12 @@ class TimelineVC: UITableViewController {
                 }
 
                 do {
-                    self.posts = [Post]()
+                    self.conversations = [Conversation]()
                     let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                    let postList = json["posts"] as! [[String: Any]]
+                    let conversations = json["conversations"] as! [[String: Any]]
 
-                    for postEntry in postList {
-                        self.posts.append(Post(identifier: postEntry["post_id"] as! String, timestamp: postEntry["timestamp"] as! String, owner: postEntry["owner"] as! String, media: postEntry["content"] as! String, message: postEntry["message"] as? String ?? postEntry["messsage"] as! String, likes: postEntry["num_likes"] as! Int, reposts: postEntry["num_reposts"] as! Int))
+                    for convo in conversations {
+                        self.conversations.append(Conversation(identifier: convo["conversation_id"] as! String, members: convo["members"] as! [String]))
                     }
                     DispatchQueue.main.async {
                         self.tableView.rowHeight = UITableView.automaticDimension
@@ -62,41 +78,42 @@ class TimelineVC: UITableViewController {
             }
         }
     }
+
     // MARK:- TableView handlers
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // how many sections are in table
         return 1
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // how many rows per section
-        return self.posts.count
+        return conversations.count
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // event handler when a cell is tapped
+        let conversation = conversations[indexPath.row]
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let messageViewVC = storyBoard.instantiateViewController(withIdentifier: "MessageViewVC") as! MessageViewVC
+        messageViewVC.conversation = conversation
+        self.navigationController?.show(messageViewVC, sender: nil)
+        
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // populate a single cell
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableCell", for: indexPath) as? TimelineTableCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageListTableCell", for: indexPath) as? MessageListTableCell else {
             fatalError("No reusable cell!")
         }
-        
-        let post = self.posts[indexPath.row]
-        cell.usernameLabel.text = post.owner
-        cell.usernameLabel.sizeToFit()
-        cell.timestampLabel.text = post.timestamp
-        cell.timestampLabel.sizeToFit()
-        cell.textBox.text = post.message
-        cell.textBox.sizeToFit()
-        
-        let media = post.media.components(separatedBy: ":")
-        cell.artistLabel.text = media.first
-        cell.songLabel.text = media.last
-         
+
+        let conversation = conversations[indexPath.row]
+        cell.identifier = conversation.identifier
+        cell.membersLabel.text = conversation.members.joined(separator: ", ")
+        cell.membersLabel.sizeToFit()
+
         return cell
     }
 }

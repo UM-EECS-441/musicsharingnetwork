@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PostVC: UIViewController {
+class NewPostVC: UIViewController {
     
     @IBOutlet weak var songInput: UITextField!
     @IBOutlet weak var artistInput: UITextField!
