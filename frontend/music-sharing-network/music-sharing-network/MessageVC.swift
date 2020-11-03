@@ -68,42 +68,42 @@ class MessageListVC: UITableViewController {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
 
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
-
-        // Check for errors
-        guard let _ = data, error == nil else {
-            print("MessageListVC > getConversations: NETWORKING ERROR")
-            DispatchQueue.main.async {
-                self.refreshControl?.endRefreshing()
-            }
-            return
-        }
-
-        if let httpResponse = response as? HTTPURLResponse {
+        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
             // Check for errors
-            if httpResponse.statusCode != 200 {
-                print("MessageListVC > getConversations: HTTP STATUS: \(httpResponse.statusCode)")
+            guard let _ = data, error == nil else {
+                print("MessageListVC > getConversations: NETWORKING ERROR")
                 DispatchQueue.main.async {
                     self.refreshControl?.endRefreshing()
                 }
                 return
             }
 
-            do {
-                self.conversations = [Conversation]()
-                let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                let conversations = json["conversations"] as! [[String: Any]]
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 200 {
+                    print("MessageListVC > getConversations: HTTP STATUS: \(httpResponse.statusCode)")
+                    DispatchQueue.main.async {
+                        self.refreshControl?.endRefreshing()
+                    }
+                    return
+                }
 
-                for convo in conversations {
-                    self.conversations.append(Conversation(identifier: convo["conversation_id"] as! String, members: convo["members"] as! [String]))
+                do {
+                    self.conversations = [Conversation]()
+                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                    let conversations = json["conversations"] as! [[String: Any]]
+
+                    for convo in conversations {
+                        self.conversations.append(Conversation(identifier: convo["conversation_id"] as! String, members: convo["members"] as! [String]))
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.rowHeight = UITableView.automaticDimension
+                        self.tableView.reloadData()
+                        self.refreshControl?.endRefreshing()
+                    }
+                } catch let error as NSError {
+                    print(error)
                 }
-                DispatchQueue.main.async {
-                    self.tableView.rowHeight = UITableView.automaticDimension
-                    self.tableView.reloadData()
-                    self.refreshControl?.endRefreshing()
-                }
-            } catch let error as NSError {
-                print(error)
             }
         }
     }
@@ -212,42 +212,42 @@ class MessageViewVC: UITableViewController {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
 
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
-
-        // Check for errors
-        guard let _ = data, error == nil else {
-            print("MessageViewVC > getConversations: NETWORKING ERROR")
-            DispatchQueue.main.async {
-                self.refreshControl?.endRefreshing()
-            }
-            return
-        }
-
-        if let httpResponse = response as? HTTPURLResponse {
+        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
             // Check for errors
-            if httpResponse.statusCode != 200 {
-                print("MessageViewVC > getConversations: HTTP STATUS: \(httpResponse.statusCode)")
+            guard let _ = data, error == nil else {
+                print("MessageViewVC > getConversations: NETWORKING ERROR")
                 DispatchQueue.main.async {
                     self.refreshControl?.endRefreshing()
                 }
                 return
             }
 
-            do {
-                self.messages = [Message]()
-                let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                let messages = json["messages"] as! [[String: Any]]
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 200 {
+                    print("MessageViewVC > getConversations: HTTP STATUS: \(httpResponse.statusCode)")
+                    DispatchQueue.main.async {
+                        self.refreshControl?.endRefreshing()
+                    }
+                    return
+                }
 
-                for message in messages {
-                    self.messages.append(Message(identifier: message["id"] as! String, timestamp: message["timestamp"] as! String, owner: message["owner"] as! String, text: message["message"] as! String))
+                do {
+                    self.messages = [Message]()
+                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                    let messages = json["messages"] as! [[String: Any]]
+
+                    for message in messages {
+                        self.messages.append(Message(identifier: message["id"] as! String, timestamp: message["timestamp"] as! String, owner: message["owner"] as! String, text: message["message"] as! String))
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.rowHeight = UITableView.automaticDimension
+                        self.tableView.reloadData()
+                        self.refreshControl?.endRefreshing()
+                    }
+                } catch let error as NSError {
+                    print(error)
                 }
-                DispatchQueue.main.async {
-                    self.tableView.rowHeight = UITableView.automaticDimension
-                    self.tableView.reloadData()
-                    self.refreshControl?.endRefreshing()
-                }
-            } catch let error as NSError {
-                print(error)
             }
         }
     }
@@ -328,24 +328,24 @@ class NewMessageVC: UIViewController {
         request.httpBody = jsonData
         
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
-        
-        // Check for errors
-        guard let _ = data, error == nil else {
-            print("NewMessageVC > sendButtonHandler: NETWORKING ERROR")
-            return
-        }
-        
-        if let httpResponse = response as? HTTPURLResponse {
+        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
             // Check for errors
-            if httpResponse.statusCode != 201 {
-                print("NewMessageVC > sendButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
+            guard let _ = data, error == nil else {
+                print("NewMessageVC > sendButtonHandler: NETWORKING ERROR")
                 return
             }
             
-            // Mark the user as logged in by saving their username,
-            // and dismiss the login screen
-            self.dismiss(animated: true, completion: nil)
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 201 {
+                    print("NewMessageVC > sendButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
+                    return
+                }
+                
+                // Mark the user as logged in by saving their username,
+                // and dismiss the login screen
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
 }

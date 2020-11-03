@@ -53,26 +53,28 @@ class LoginVC: UIViewController {
         request.httpBody = jsonData
         
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
-        
-        // Check for errors
-        guard let _ = data, error == nil else {
-            print("LoginVC > login: NETWORKING ERROR")
-            return
-        }
-        
-        if let httpResponse = response as? HTTPURLResponse {
+        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
             // Check for errors
-            if httpResponse.statusCode != 200 {
-                print("LoginVC > login: HTTP STATUS: \(httpResponse.statusCode)")
+            guard let _ = data, error == nil else {
+                print("LoginVC > login: NETWORKING ERROR")
                 return
             }
             
-            // Mark the user as logged in by saving their username,
-            // and dismiss the login screen
-            self.navigationController?.popViewController(animated: true)
-            self.navigationController?.isNavigationBarHidden = false
-            self.completion?(self.usernameInput.text!)
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 200 {
+                    print("LoginVC > login: HTTP STATUS: \(httpResponse.statusCode)")
+                    return
+                }
+                
+                // Mark the user as logged in by saving their username,
+                // and dismiss the login screen
+                self.navigationController?.popViewController(animated: true)
+                self.navigationController?.isNavigationBarHidden = false
+                self.completion?(self.usernameInput.text!)
+            }
         }
+        
+        
     }
 }

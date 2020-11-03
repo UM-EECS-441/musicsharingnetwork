@@ -57,30 +57,29 @@ class ProfileVC: UIViewController {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
-        
-        // Check for errors
-        guard let _ = data, error == nil else {
-            print("ProfileVC > getProfile: NETWORKING ERROR")
-            return
-        }
-        
-        if let httpResponse = response as? HTTPURLResponse {
+        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
             // Check for errors
-            if httpResponse.statusCode != 200 {
-                print("ProfileVC > getProfile: HTTP STATUS: \(httpResponse.statusCode)")
+            guard let _ = data, error == nil else {
+                print("ProfileVC > getProfile: NETWORKING ERROR")
                 return
             }
             
-            // Update the view with the data from the backend
-            if let json = try? JSONSerialization.jsonObject(with: data!) as? [String: Any] {
-                self.fullNameLabel.text = json["full_name"] as? String
-                self.usernameLabel.text = self.username
-                self.bioBox.text = json["user_bio"] as? String
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 200 {
+                    print("ProfileVC > getProfile: HTTP STATUS: \(httpResponse.statusCode)")
+                    return
+                }
+                
+                // Update the view with the data from the backend
+                if let json = try? JSONSerialization.jsonObject(with: data!) as? [String: Any] {
+                    self.fullNameLabel.text = json["full_name"] as? String
+                    self.usernameLabel.text = self.username
+                    self.bioBox.text = json["user_bio"] as? String
+                }
             }
         }
     }
-    
 }
 
 /*

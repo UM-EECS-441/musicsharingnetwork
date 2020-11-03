@@ -17,20 +17,25 @@ class SharedData {
     /*
      Send an HTTP request and wait for the response.
      */
-    static func SynchronousHTTPRequest(_ request: URLRequest) -> (Data?, URLResponse?, Error?) {
+    static func SynchronousHTTPRequest(_ request: URLRequest,  completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        
         let sem = DispatchSemaphore.init(value: 0)
         
-        var result: (Data?, URLResponse?, Error?)
+        var data: Data?
+        var response: URLResponse?
+        var error: Error?
         
-        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
-            result = (data, response, error)
+        let task = URLSession.shared.dataTask(with: request) {(_data, _response, _error) in
+            data = _data
+            response = _response
+            error = _error
             sem.signal()
         }
         
         task.resume()
         sem.wait()
         
-        return result
+        completionHandler(data, response, error)
     }
     
     /**

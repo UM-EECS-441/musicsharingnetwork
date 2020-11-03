@@ -43,24 +43,24 @@ class PostVC: UIViewController {
         request.httpBody = jsonData
         
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
-        
-        // Check for errors
-        guard let _ = data, error == nil else {
-            print("PostVC > addPost: NETWORKING ERROR")
-            return
-        }
-        
-        if let httpResponse = response as? HTTPURLResponse {
+        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
             // Check for errors
-            if httpResponse.statusCode != 201 {
-                print("PostVC > addPost: HTTP STATUS: \(httpResponse.statusCode)")
+            guard let _ = data, error == nil else {
+                print("PostVC > addPost: NETWORKING ERROR")
                 return
             }
             
-            // Mark the user as logged in by saving their username,
-            // and dismiss the login screen
-            self.dismiss(animated: true, completion: nil)
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 201 {
+                    print("PostVC > addPost: HTTP STATUS: \(httpResponse.statusCode)")
+                    return
+                }
+                
+                // Mark the user as logged in by saving their username,
+                // and dismiss the login screen
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
 }

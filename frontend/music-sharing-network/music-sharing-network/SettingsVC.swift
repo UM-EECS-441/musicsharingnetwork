@@ -34,21 +34,22 @@ class SettingsVC: UIViewController {
         request.httpBody = jsonData
         
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
-        
-        // Check for errors
-        guard let _ = data, error == nil else {
-            print("SettingsVC > saveButtonHandler: NETWORKING ERROR")
-            return
-        }
-        
-        if let httpResponse = response as? HTTPURLResponse {
+        SharedData.SynchronousHTTPRequest(request){ (data, response, error) in
             // Check for errors
-            if httpResponse.statusCode != 204 {
-                print("SettingsVC > saveButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
+            guard let _ = data, error == nil else {
+                print("SettingsVC > saveButtonHandler: NETWORKING ERROR")
                 return
             }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 204 {
+                    print("SettingsVC > saveButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
+                    return
+                }
+            }
         }
+        
     }
     
     @IBAction func logoutButtonHandler(_ sender: Any) {
@@ -60,23 +61,23 @@ class SettingsVC: UIViewController {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         // Send the request and read the server's response
-        let (data, response, error) = SharedData.SynchronousHTTPRequest(request)
-        
-        // Check for errors
-        guard let _ = data, error == nil else {
-            print("SettingsVC > logoutButtonHandler: NETWORKING ERROR")
-            return
-        }
-        
-        if let httpResponse = response as? HTTPURLResponse {
+        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
             // Check for errors
-            if httpResponse.statusCode != 200 {
-                print("SettingsVC > logoutButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
+            guard let _ = data, error == nil else {
+                print("SettingsVC > logoutButtonHandler: NETWORKING ERROR")
                 return
             }
             
-            // Exit the settings screen since the user is now logged out
-            self.navigationController?.popViewController(animated: true)
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 200 {
+                    print("SettingsVC > logoutButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
+                    return
+                }
+                
+                // Exit the settings screen since the user is now logged out
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
 }
