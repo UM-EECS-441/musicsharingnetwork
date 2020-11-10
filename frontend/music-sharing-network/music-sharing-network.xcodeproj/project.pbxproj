@@ -12,7 +12,7 @@
 		49CF8E612551E9DB0001F326 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E602551E9DB0001F326 /* Conversation.swift */; };
 		49CF8E642551EA1C0001F326 /* MessageListTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E632551EA1C0001F326 /* MessageListTableCell.swift */; };
 		49CF8E672551EA8A0001F326 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E662551EA8A0001F326 /* Message.swift */; };
-		49CF8E6A2551EABE0001F326 /* MessageViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E692551EABE0001F326 /* MessageViewTableCell.swift */; };
+		49CF8E6A2551EABE0001F326 /* MessageViewTableCellSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E692551EABE0001F326 /* MessageViewTableCellSong.swift */; };
 		49CF8E6E2551EB210001F326 /* MessageViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E6D2551EB210001F326 /* MessageViewVC.swift */; };
 		49CF8E712551EB5B0001F326 /* NewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E702551EB5B0001F326 /* NewMessageVC.swift */; };
 		49CF8E752551EBC00001F326 /* UserSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E742551EBC00001F326 /* UserSearchVC.swift */; };
@@ -40,7 +40,7 @@
 		49CF8E602551E9DB0001F326 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		49CF8E632551EA1C0001F326 /* MessageListTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListTableCell.swift; sourceTree = "<group>"; };
 		49CF8E662551EA8A0001F326 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		49CF8E692551EABE0001F326 /* MessageViewTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewTableCell.swift; sourceTree = "<group>"; };
+		49CF8E692551EABE0001F326 /* MessageViewTableCellSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewTableCellSong.swift; sourceTree = "<group>"; };
 		49CF8E6D2551EB210001F326 /* MessageViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewVC.swift; sourceTree = "<group>"; };
 		49CF8E702551EB5B0001F326 /* NewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVC.swift; sourceTree = "<group>"; };
 		49CF8E742551EBC00001F326 /* UserSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchVC.swift; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 				49CF8E662551EA8A0001F326 /* Message.swift */,
 				49CF8E632551EA1C0001F326 /* MessageListTableCell.swift */,
 				D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */,
-				49CF8E692551EABE0001F326 /* MessageViewTableCell.swift */,
+				49CF8E692551EABE0001F326 /* MessageViewTableCellSong.swift */,
 				49CF8E6D2551EB210001F326 /* MessageViewVC.swift */,
 				49CF8E702551EB5B0001F326 /* NewMessageVC.swift */,
 			);
@@ -251,7 +251,7 @@
 				D8DF6DFE254A1E10005481D9 /* SharedData.swift in Sources */,
 				D87EF55325315311008EA46A /* SceneDelegate.swift in Sources */,
 				49CF8E672551EA8A0001F326 /* Message.swift in Sources */,
-				49CF8E6A2551EABE0001F326 /* MessageViewTableCell.swift in Sources */,
+				49CF8E6A2551EABE0001F326 /* MessageViewTableCellSong.swift in Sources */,
 				49CF8E6E2551EB210001F326 /* MessageViewVC.swift in Sources */,
 				D87A877F254B41E6005EBE3C /* SettingsVC.swift in Sources */,
 				49CF8E612551E9DB0001F326 /* Conversation.swift in Sources */,

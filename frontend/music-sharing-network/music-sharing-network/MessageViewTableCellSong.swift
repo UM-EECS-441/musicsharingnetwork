@@ -1,5 +1,5 @@
 //
-//  MessageViewTableCell.swift
+//  MessageViewTableCellSong.swift
 //  music-sharing-network
 //
 //  Created by Andrew on 11/3/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MessageViewTableCell: UITableViewCell {
+class MessageViewTableCellSong: UITableViewCell {
     
     var owner: String?
     var identifier: String?

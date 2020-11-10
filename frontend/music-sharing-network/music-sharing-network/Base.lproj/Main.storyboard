@@ -247,7 +247,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AAd-Ya-PVU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4466.666666666667" y="-242.41071428571428"/>
+            <point key="canvasLocation" x="4467" y="-242"/>
         </scene>
         <!--New Post-->
         <scene sceneID="VDG-ru-ZBR">
@@ -338,7 +338,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JCY-fj-4g0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5279.7101449275369" y="-242.41071428571428"/>
+            <point key="canvasLocation" x="5258" y="-242"/>
         </scene>
         <!--Explore-->
         <scene sceneID="3DA-4v-Tai">
@@ -464,7 +464,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YLf-CB-cX8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5279.7101449275369" y="-912.05357142857133"/>
+            <point key="canvasLocation" x="5258" y="-912"/>
         </scene>
         <!--My Profile-->
         <scene sceneID="jcH-o6-lad">
@@ -550,7 +550,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ykg-r3-1IC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4466.666666666667" y="1865.625"/>
+            <point key="canvasLocation" x="4467" y="1866"/>
         </scene>
         <!--Settings-->
         <scene sceneID="HVf-eq-mF2">
@@ -710,65 +710,93 @@
             </objects>
             <point key="canvasLocation" x="4466.666666666667" y="454.6875"/>
         </scene>
-        <!--Message View-->
-        <scene sceneID="VQa-hZ-4Ui">
+        <!--MessageView-->
+        <scene sceneID="mZe-vX-lbI">
             <objects>
-                <tableViewController storyboardIdentifier="MessageViewVC" id="yoa-L0-VPh" userLabel="Message View" customClass="MessageViewVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fAB-vo-T3s">
+                <viewController storyboardIdentifier="MessageViewVC" title="MessageView" id="7Bw-um-mwV" customClass="MessageViewVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Kc3-e6-KJZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageViewTableCell" rowHeight="154" id="Iel-My-oF0" customClass="MessageViewTableCell" customModule="music_sharing_network" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="154"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Iel-My-oF0" id="rrN-eD-sl7">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="154"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXA-E9-HdB" userLabel="Username">
-                                            <rect key="frame" x="70" y="11" width="76" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b8k-4l-I3u" userLabel="Song" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                            <rect key="frame" x="70" y="41.5" width="324" height="75"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7lC-8j-29z">
+                                <rect key="frame" x="0.0" y="44" width="414" height="764"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageViewTableCellSong" rowHeight="156" id="N4c-eK-AdJ" customClass="MessageViewTableCellSong" customModule="music_sharing_network" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="156"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N4c-eK-AdJ" id="Pmk-Bj-WYu" userLabel="MessageViewTableCellSong">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="156"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahs-qR-bw3">
+                                                    <rect key="frame" x="20" y="11" width="76" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yfB-xS-a5B" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="41.5" width="374" height="75"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="75" id="GKl-rP-5aF"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="75" id="HkC-NA-V2A"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="yfB-xS-a5B" secondAttribute="trailing" id="7v7-Cc-4oo"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ahs-qR-bw3" secondAttribute="trailing" id="JcW-4M-DGT"/>
+                                                <constraint firstItem="ahs-qR-bw3" firstAttribute="top" secondItem="Pmk-Bj-WYu" secondAttribute="topMargin" id="Vdq-EY-ccd"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="yfB-xS-a5B" secondAttribute="bottom" id="ViY-Hb-uFt"/>
+                                                <constraint firstItem="yfB-xS-a5B" firstAttribute="top" secondItem="ahs-qR-bw3" secondAttribute="bottom" constant="10" id="YmJ-71-ncw"/>
+                                                <constraint firstItem="ahs-qR-bw3" firstAttribute="leading" secondItem="Pmk-Bj-WYu" secondAttribute="leadingMargin" id="iiV-1c-c2V"/>
+                                                <constraint firstItem="yfB-xS-a5B" firstAttribute="leading" secondItem="Pmk-Bj-WYu" secondAttribute="leadingMargin" id="xKR-oQ-tw5"/>
                                             </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="b8k-4l-I3u" firstAttribute="leading" secondItem="JXA-E9-HdB" secondAttribute="leading" id="4Wj-d9-KIv"/>
-                                        <constraint firstItem="b8k-4l-I3u" firstAttribute="top" secondItem="JXA-E9-HdB" secondAttribute="bottom" constant="10" id="66W-Hr-seS"/>
-                                        <constraint firstItem="b8k-4l-I3u" firstAttribute="trailing" secondItem="rrN-eD-sl7" secondAttribute="trailingMargin" id="AhF-CC-MTY"/>
-                                        <constraint firstItem="b8k-4l-I3u" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="rrN-eD-sl7" secondAttribute="bottomMargin" id="KxM-a8-0IA"/>
-                                        <constraint firstItem="JXA-E9-HdB" firstAttribute="top" secondItem="rrN-eD-sl7" secondAttribute="topMargin" id="nlH-Rh-9ZB"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="JXA-E9-HdB" secondAttribute="trailing" id="qYH-0S-uLH"/>
-                                        <constraint firstItem="b8k-4l-I3u" firstAttribute="leading" secondItem="rrN-eD-sl7" secondAttribute="leadingMargin" constant="50" id="zdt-FF-aEa"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="songView" destination="b8k-4l-I3u" id="2Fv-iq-dTH"/>
-                                    <outlet property="usernameLabel" destination="JXA-E9-HdB" id="q5y-cE-VGh"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="yoa-L0-VPh" id="4II-Xs-yQI"/>
-                            <outlet property="delegate" destination="yoa-L0-VPh" id="sO5-cf-3JQ"/>
-                        </connections>
-                    </tableView>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="2ar-FB-7I7">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </refreshControl>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zWN-nj-KKO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="songView" destination="yfB-xS-a5B" id="Xae-ff-mce"/>
+                                            <outlet property="usernameLabel" destination="ahs-qR-bw3" id="9IU-Fl-TYH"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wv8-Q8-dzz" userLabel="Send Button">
+                                <rect key="frame" x="369" y="817.5" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Ba5-ei-0wi"/>
+                                    <constraint firstAttribute="width" constant="35" id="vYC-m2-3ga"/>
+                                </constraints>
+                                <state key="normal" image="arrow.up.circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                                </state>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send a message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SFh-d8-F6B" userLabel="Message Input">
+                                <rect key="frame" x="10" y="818" width="349" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="PpK-Dr-mlX"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Wv8-Q8-dzz" firstAttribute="leading" secondItem="SFh-d8-F6B" secondAttribute="trailing" constant="10" id="61d-qc-brh"/>
+                            <constraint firstItem="PpK-Dr-mlX" firstAttribute="trailing" secondItem="Wv8-Q8-dzz" secondAttribute="trailing" constant="10" id="8oo-Py-2E8"/>
+                            <constraint firstItem="Wv8-Q8-dzz" firstAttribute="centerY" secondItem="SFh-d8-F6B" secondAttribute="centerY" id="9tg-lj-SuE"/>
+                            <constraint firstItem="7lC-8j-29z" firstAttribute="top" secondItem="PpK-Dr-mlX" secondAttribute="top" id="PHx-9U-fJN"/>
+                            <constraint firstItem="PpK-Dr-mlX" firstAttribute="bottom" secondItem="SFh-d8-F6B" secondAttribute="bottom" constant="10" id="QS8-v9-TZF"/>
+                            <constraint firstItem="7lC-8j-29z" firstAttribute="leading" secondItem="PpK-Dr-mlX" secondAttribute="leading" id="a2M-Fl-sIP"/>
+                            <constraint firstItem="SFh-d8-F6B" firstAttribute="leading" secondItem="PpK-Dr-mlX" secondAttribute="leading" constant="10" id="eTj-Bu-HsG"/>
+                            <constraint firstItem="SFh-d8-F6B" firstAttribute="top" secondItem="7lC-8j-29z" secondAttribute="bottom" constant="10" id="o37-FC-SGt"/>
+                            <constraint firstItem="PpK-Dr-mlX" firstAttribute="trailing" secondItem="7lC-8j-29z" secondAttribute="trailing" id="ubf-QA-oER"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="7lC-8j-29z" id="WnX-fz-oAs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5RE-VC-7im" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5279.7101449275369" y="454.6875"/>
+            <point key="canvasLocation" x="5257.971014492754" y="454.6875"/>
         </scene>
         <!--New Message-->
         <scene sceneID="FUZ-ky-ati">
@@ -837,7 +865,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h45-IR-yaB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6113.04347826087" y="454.6875"/>
+            <point key="canvasLocation" x="6061" y="455"/>
         </scene>
         <!--My Profile-->
         <scene sceneID="eTq-Yi-OOq">
@@ -856,13 +884,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0WR-2j-1ku" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3670" y="1866"/>
+            <point key="canvasLocation" x="3671" y="1866"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="bd0-zA-Vk9"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="arrow.up.circle.fill" catalog="system" width="128" height="121"/>
         <image name="globe" catalog="system" width="128" height="121"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="house" catalog="system" width="128" height="106"/>

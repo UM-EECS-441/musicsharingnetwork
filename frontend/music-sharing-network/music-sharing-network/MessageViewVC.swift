@@ -10,23 +10,52 @@ import UIKit
 /*
  Controls a view that shows the messages in a specific conversation.
  */
-class MessageViewVC: UITableViewController {
+class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var conversation: Conversation?
     var messages = [Message]()
-
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            self.tableView.delegate = self;
+            self.tableView.dataSource = self;
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        self.tableView.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: self.view.window)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: self.view.window)
 
         // Prompt the user to login if they have not already
         SharedData.login(parentVC: self) { () in
             self.getMessages()
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: self.view.window)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: self.view.window)
+    }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         self.getMessages()
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            if self.view.frame.origin.y == 0 {
+//                self.view.frame.origin.y -= keyboardSize.height
+//            }
+//        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+//        if self.view.frame.origin.y != 0 {
+//            self.view.frame.origin.y = 0
+//        }
     }
 
     func getMessages() {
@@ -43,7 +72,7 @@ class MessageViewVC: UITableViewController {
             guard let _ = data, error == nil else {
                 print("MessageViewVC > getConversations: NETWORKING ERROR")
                 DispatchQueue.main.async {
-                    self.refreshControl?.endRefreshing()
+                    self.tableView.refreshControl?.endRefreshing()
                 }
                 return
             }
@@ -53,7 +82,7 @@ class MessageViewVC: UITableViewController {
                 if httpResponse.statusCode != 200 {
                     print("MessageViewVC > getConversations: HTTP STATUS: \(httpResponse.statusCode)")
                     DispatchQueue.main.async {
-                        self.refreshControl?.endRefreshing()
+                        self.tableView.refreshControl?.endRefreshing()
                     }
                     return
                 }
@@ -69,7 +98,7 @@ class MessageViewVC: UITableViewController {
                     DispatchQueue.main.async {
                         self.tableView.rowHeight = UITableView.automaticDimension
                         self.tableView.reloadData()
-                        self.refreshControl?.endRefreshing()
+                        self.tableView.refreshControl?.endRefreshing()
                     }
                 } catch let error as NSError {
                     print(error)
@@ -80,24 +109,24 @@ class MessageViewVC: UITableViewController {
 
     // MARK:- TableView handlers
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // how many sections are in table
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // how many rows per section
         return messages.count
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // event handler when a cell is tapped
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // populate a single cell
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageViewTableCell", for: indexPath) as? MessageViewTableCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageViewTableCellSong", for: indexPath) as? MessageViewTableCellSong else {
             fatalError("No reusable cell!")
         }
 
