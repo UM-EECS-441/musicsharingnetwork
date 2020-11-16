@@ -29,7 +29,7 @@ class NewMessageVC: UIViewController {
         // Send the song title and artist as the message text
         let message = (self.songView.artistLabel.text ?? "Artist") + ":" + (self.songView.songLabel.text ?? "Song")
         
-        // Serialize the username and password into JSON data
+        // Serialize the recipient list and message into JSON data
         let json: [String: Any] = ["recipients": [self.recipientInput.text ?? ""], "message": message]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
@@ -57,8 +57,7 @@ class NewMessageVC: UIViewController {
                     return
                 }
                 
-                // Mark the user as logged in by saving their username,
-                // and dismiss the login screen
+                // Dismiss the screen once the message has been sent
                 self.dismiss(animated: true, completion: nil)
             }
         }

@@ -18,6 +18,7 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         didSet {
             self.tableView.delegate = self;
             self.tableView.dataSource = self;
+            self.tableView.refreshControl = UIRefreshControl()
         }
     }
     @IBOutlet weak var messageInput: UITextField! {
@@ -110,6 +111,7 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                         self.tableView.rowHeight = UITableView.automaticDimension
                         self.tableView.reloadData()
                         self.tableView.refreshControl?.endRefreshing()
+                        self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
                     }
                 } catch let error as NSError {
                     print(error)
@@ -153,7 +155,50 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     // MARK: - Event Handlers
     
     @IBAction func sendMessage(_ sender: Any) {
-        print("Sending message")
+        // Serialize the recipient list and message into JSON data
+        let json: [String: Any] = ["recipients": self.conversation?.members ?? [], "message": self.messageInput.text ?? ""]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/messages/send"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        // Send the request and read the server's response
+        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
+            // Check for errors
+            guard let _ = data, error == nil else {
+                print("MessageViewVC > sendMessage: NETWORKING ERROR")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 201 {
+                    print("MessageViewVC > sendMessage: HTTP STATUS: \(httpResponse.statusCode)")
+                    return
+                }
+                
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                    let message = json["message"] as! [String: Any]
+
+                    self.messages.append(Message(identifier: message["id"] as! String, timestamp: message["timestamp"] as! String, owner: message["owner"] as! String, text: message["message"] as! String))
+                    DispatchQueue.main.async {
+                        self.tableView.rowHeight = UITableView.automaticDimension
+                        self.tableView.reloadData()
+                        self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+                    }
+                } catch let error as NSError {
+                    print(error)
+                }
+            }
+        }
+        
         self.view.endEditing(false)
         self.messageInput.text = ""
     }
