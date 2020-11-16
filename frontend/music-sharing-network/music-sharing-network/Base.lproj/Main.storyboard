@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OOe-JN-57G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OOe-JN-57G">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -41,7 +41,10 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GXY-0h-qIq" userLabel="Password Input">
                                         <rect key="frame" x="0.0" y="105" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" textContentType="password"/>
+                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                        <connections>
+                                            <action selector="login:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="Ypg-ny-PGH"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUM-h7-0fk" userLabel="Login Button">
                                         <rect key="frame" x="0.0" y="149" width="374" height="30"/>
@@ -763,28 +766,19 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wv8-Q8-dzz" userLabel="Send Button">
-                                <rect key="frame" x="369" y="817.5" width="35" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="Ba5-ei-0wi"/>
-                                    <constraint firstAttribute="width" constant="35" id="vYC-m2-3ga"/>
-                                </constraints>
-                                <state key="normal" image="arrow.up.circle.fill" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
-                                </state>
-                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send a message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SFh-d8-F6B" userLabel="Message Input">
-                                <rect key="frame" x="10" y="818" width="349" height="34"/>
+                                <rect key="frame" x="10" y="818" width="394" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="sendMessage:" destination="7Bw-um-mwV" eventType="primaryActionTriggered" id="F9C-mC-isZ"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PpK-Dr-mlX"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Wv8-Q8-dzz" firstAttribute="leading" secondItem="SFh-d8-F6B" secondAttribute="trailing" constant="10" id="61d-qc-brh"/>
-                            <constraint firstItem="PpK-Dr-mlX" firstAttribute="trailing" secondItem="Wv8-Q8-dzz" secondAttribute="trailing" constant="10" id="8oo-Py-2E8"/>
-                            <constraint firstItem="Wv8-Q8-dzz" firstAttribute="centerY" secondItem="SFh-d8-F6B" secondAttribute="centerY" id="9tg-lj-SuE"/>
+                            <constraint firstItem="PpK-Dr-mlX" firstAttribute="trailing" secondItem="SFh-d8-F6B" secondAttribute="trailing" constant="10" id="G0d-T0-O0f"/>
                             <constraint firstItem="7lC-8j-29z" firstAttribute="top" secondItem="PpK-Dr-mlX" secondAttribute="top" id="PHx-9U-fJN"/>
                             <constraint firstItem="PpK-Dr-mlX" firstAttribute="bottom" secondItem="SFh-d8-F6B" secondAttribute="bottom" constant="10" id="QS8-v9-TZF"/>
                             <constraint firstItem="7lC-8j-29z" firstAttribute="leading" secondItem="PpK-Dr-mlX" secondAttribute="leading" id="a2M-Fl-sIP"/>
@@ -794,6 +788,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomConstraint" destination="QS8-v9-TZF" id="x04-Id-WqS"/>
+                        <outlet property="messageInput" destination="SFh-d8-F6B" id="QrU-eM-bHk"/>
                         <outlet property="tableView" destination="7lC-8j-29z" id="WnX-fz-oAs"/>
                     </connections>
                 </viewController>
@@ -894,7 +890,6 @@
         <segue reference="bd0-zA-Vk9"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="arrow.up.circle.fill" catalog="system" width="128" height="121"/>
         <image name="globe" catalog="system" width="128" height="121"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="house" catalog="system" width="128" height="106"/>

@@ -20,6 +20,13 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             self.tableView.dataSource = self;
         }
     }
+    @IBOutlet weak var messageInput: UITextField! {
+        didSet {
+            self.messageInput.returnKeyType = UIReturnKeyType.send
+        }
+    }
+    
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +35,10 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: self.view.window)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: self.view.window)
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(self.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
 
         // Prompt the user to login if they have not already
         SharedData.login(parentVC: self) { () in
@@ -45,19 +56,19 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-//            if self.view.frame.origin.y == 0 {
-//                self.view.frame.origin.y -= keyboardSize.height
-//            }
-//        }
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.bottomConstraint.constant = 10 + keyboardSize.height - 50
+        }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-//        if self.view.frame.origin.y != 0 {
-//            self.view.frame.origin.y = 0
-//        }
+        self.bottomConstraint.constant = 10
     }
-
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(false)
+    }
+    
     func getMessages() {
         // Build an HTTP request
         let requestURL = SharedData.baseURL + "/messages/\(self.conversation!.identifier)/"
@@ -139,5 +150,12 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         return cell
     }
     
+    // MARK: - Event Handlers
+    
+    @IBAction func sendMessage(_ sender: Any) {
+        print("Sending message")
+        self.view.endEditing(false)
+        self.messageInput.text = ""
+    }
 }
 
