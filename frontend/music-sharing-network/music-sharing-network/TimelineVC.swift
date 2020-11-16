@@ -96,11 +96,12 @@ class TimelineVC: UITableViewController {
         
         //Need an endpoint to check if a post is liked by a user
         
+        //TODO: Need to change like count too
         cell.likeButtonAction = { () in
             if(cell.isLiked){
-                cell.likeButton.setImage(UIImage(named: "heart.fill"), for: .normal)
+                cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             }else{
-                cell.likeButton.setImage(UIImage(named: "heart"), for: .normal)
+                cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
             }
         }
         return cell
