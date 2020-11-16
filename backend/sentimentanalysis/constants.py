@@ -1,0 +1,10 @@
+epoch_size = 50
+max_review_length = 100
+embedding_dimension = 300
+dropout_probability = .5
+num_filters = 2
+filters = [2, 4]
+training_filename = 'training_data.txt'
+test_filename = 'my_tests.txt'
+vocab_filename = 'vocab.txt'
+saved_model_filename = 'model.sav'

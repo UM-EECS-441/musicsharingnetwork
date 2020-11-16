@@ -42,6 +42,10 @@ def split_reviews(filename):
             score = 0
             if data['overall'] > 3:
                 score = 1
+            
+            # ignore middle reviews
+            elif data['overall'] == 3:
+                continue
 
             # insert review into proper file
             if i % modulus != 0:
@@ -52,4 +56,3 @@ def split_reviews(filename):
 
 review_filename = 'mard_reviews.json'
 split_reviews(review_filename)
-

@@ -2,6 +2,9 @@
 from string import punctuation
 import array
 import torch
+import pickle
+import constants
+import random
 
 def get_words(review, separator=True):
     # Returns list of all words in review
@@ -54,3 +57,84 @@ def get_max_review_length(reviews):
 def array_to_long_tensor(arr):
     arr = torch.Tensor(arr)
     return arr.long()
+
+
+def count_labels(filename):
+    result = {}
+    labels = get_labels(filename)
+    for label in labels:
+        result[label] = result.get(label, 0) + 1 
+
+    for (key, val) in result.items():
+        print("label:", key, "\tcount:", val)
+        print(type(key))
+        print(key)
+
+    return result
+
+
+def trim_file(filename):
+    counts = count_labels(filename)
+    lower = counts[0.0]
+    outfilename = filename[:-4] + '2.txt'
+    outfile = open(outfilename, 'w')
+    lines = []
+    with open(filename, 'r') as reader:
+        added = 0
+        done_with_1 = False
+        for line in reader:
+            line = line.strip()
+            split_index = line.rfind('|')
+            label = float(line[split_index+1:])
+            if label == 1.0:
+                if done_with_1:
+                    continue
+                
+                lines.append(line)
+                #outfile.write(line + '\n')
+                added += 1
+                if added >= 2*lower:
+                    done_with_1 = True
+            
+            else:
+                lines.append(line)
+                #outfile.write(line + '\n')
+
+    random.shuffle(lines)
+    for line in lines:
+        outfile.write(line + '\n')
+    outfile.close()
+
+
+def read_file(filename):
+    # returns an array of reviews and an array of labels
+    reviews = []
+    labels = []
+    with open(filename) as data:
+        for line in data:
+            line = line.strip()
+            split_idx = line.rfind('|')
+            review = line[:split_idx]
+            label = float(line[split_idx+1:])
+            review = remove_punctuation(review)
+            reviews.append(review)
+            labels.append(label)
+
+    return reviews, labels
+
+
+def fix_svc_labels(labels):
+    # changes all 0 labels to -1
+    for i in range(len(labels)):
+        if labels[i] == 0:
+            labels[i] = -1
+
+
+def save_model(model):
+    # Saves model parameters to the proper file
+    pickle.dump(model, open(constants.saved_model_filename, 'wb'))
+
+
+def load_model():
+    return pickle.load(open(constants.saved_model_filename, 'rb'))
+

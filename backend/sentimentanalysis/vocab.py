@@ -1,5 +1,6 @@
 # Code for vocab related functions. This script is run after split between train and test data is complete
 import helpers
+import constants
 
 def get_vocab(filename):
     # Returns a list of all words in all reviews
@@ -8,7 +9,10 @@ def get_vocab(filename):
     with open(filename, 'r') as reviewFile:
         for review in reviewFile:
             words = helpers.get_words(review, True)
-            for word in words:
+            for i, word in enumerate(words):
+                #if i == constants.max_review_length:
+                #    break
+
                 vocab[word] = vocab.get(word, 0) + 1
 
     # If a word is only used once in 1 review, get rid of it from the vocab list
@@ -36,6 +40,5 @@ def load_vocab(vocab_filename):
 
     return vocab
 
-filename = "training_data.txt"
-vocab = get_vocab(filename)
+vocab = get_vocab(constants.training_filename)
 write_to_vocab_file(vocab)
