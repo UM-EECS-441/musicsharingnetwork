@@ -92,9 +92,17 @@ class TimelineVC: UITableViewController {
         cell.timestampLabel.sizeToFit()
         cell.textBox.text = post.message
         cell.textBox.sizeToFit()
-        
         cell.songView.showSong(song: post.media, parentVC: self)
-         
+        
+        //Need an endpoint to check if a post is liked by a user
+        
+        cell.likeButtonAction = { () in
+            if(cell.isLiked){
+                cell.likeButton.setImage(UIImage(named: "heart.fill"), for: .normal)
+            }else{
+                cell.likeButton.setImage(UIImage(named: "heart"), for: .normal)
+            }
+        }
         return cell
     }
 }

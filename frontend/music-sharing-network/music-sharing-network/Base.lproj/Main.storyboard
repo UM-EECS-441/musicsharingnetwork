@@ -171,6 +171,9 @@
                                                 <color key="titleColor" name="AccentColor"/>
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
                                             </state>
+                                            <connections>
+                                                <action selector="likeTapped:" destination="Gcc-6b-Nn3" eventType="touchUpInside" id="cl4-Fm-iXg"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfb-Ni-keY" userLabel="Comment Button">
                                             <rect key="frame" x="63" y="197" width="121.5" height="14"/>
