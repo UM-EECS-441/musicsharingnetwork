@@ -849,7 +849,7 @@
         <!--New Message-->
         <scene sceneID="X9Q-Xn-9UM">
             <objects>
-                <viewController id="tdg-YR-5Vk" userLabel="New Message" sceneMemberID="viewController">
+                <viewController id="tdg-YR-5Vk" userLabel="New Message" customClass="NewMessageVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nqy-Bw-STH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -858,8 +858,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                 <items>
                                     <navigationItem title="New Message" id="xGG-kl-x3c">
-                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="TBy-h0-jbQ" userLabel="Cancel Button"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Send" id="aBa-Aa-N6R" userLabel="Send Button"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="TBy-h0-jbQ" userLabel="Cancel Button">
+                                            <connections>
+                                                <action selector="cancelButtonHandler:" destination="tdg-YR-5Vk" id="hfj-eZ-6Mf"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Send" id="aBa-Aa-N6R" userLabel="Send Button">
+                                            <connections>
+                                                <action selector="sendButtonHandler:" destination="tdg-YR-5Vk" id="D1K-OD-PeI"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -908,10 +916,14 @@
                             <constraint firstItem="Ozl-Nk-Ltc" firstAttribute="top" secondItem="7YM-t7-ZfZ" secondAttribute="bottom" constant="20" id="xcQ-T7-Has"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="messageInput" destination="KoS-QZ-TmD" id="VGF-Bp-0jo"/>
+                        <outlet property="recipientInput" destination="7YM-t7-ZfZ" id="Ote-Ht-Zba"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ock-7L-zeW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6011.594202898551" y="457.36607142857139"/>
+            <point key="canvasLocation" x="5978" y="455"/>
         </scene>
         <!--Share Song-->
         <scene sceneID="FUZ-ky-ati">
