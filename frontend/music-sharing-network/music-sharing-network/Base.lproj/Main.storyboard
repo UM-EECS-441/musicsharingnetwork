@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OOe-JN-57G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OOe-JN-57G">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -771,6 +771,42 @@
                                         <connections>
                                             <outlet property="songView" destination="yfB-xS-a5B" id="Xae-ff-mce"/>
                                             <outlet property="usernameLabel" destination="ahs-qR-bw3" id="9IU-Fl-TYH"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageViewTableCellText" rowHeight="118" id="AcZ-NE-EvZ" customClass="MessageViewTableCellText" customModule="music_sharing_network" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="184" width="414" height="118"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AcZ-NE-EvZ" id="s5L-cn-ano">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="118"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="az2-Tw-jIl" userLabel="Username Label">
+                                                    <rect key="frame" x="20" y="11" width="76" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message text goes here..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="12Z-ci-gsq">
+                                                    <rect key="frame" x="20" y="42" width="374" height="24"/>
+                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="az2-Tw-jIl" firstAttribute="top" secondItem="s5L-cn-ano" secondAttribute="topMargin" id="2dK-mo-SSE"/>
+                                                <constraint firstItem="12Z-ci-gsq" firstAttribute="top" secondItem="az2-Tw-jIl" secondAttribute="bottom" constant="10" id="4Fs-ye-f6H"/>
+                                                <constraint firstItem="az2-Tw-jIl" firstAttribute="leading" secondItem="s5L-cn-ano" secondAttribute="leadingMargin" id="QcX-5x-Ww0"/>
+                                                <constraint firstItem="12Z-ci-gsq" firstAttribute="leading" secondItem="s5L-cn-ano" secondAttribute="leadingMargin" id="bvM-CN-VFk"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="az2-Tw-jIl" secondAttribute="trailing" id="fbb-sg-9uO"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="12Z-ci-gsq" secondAttribute="bottom" id="nQy-Jt-WwL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="12Z-ci-gsq" secondAttribute="trailing" id="yD1-jP-Q7U"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="messageTextLabel" destination="12Z-ci-gsq" id="CvZ-HX-zZW"/>
+                                            <outlet property="usernameLabel" destination="az2-Tw-jIl" id="J8Y-F3-wNG"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

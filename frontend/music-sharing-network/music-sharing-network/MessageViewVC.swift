@@ -139,24 +139,42 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // populate a single cell
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageViewTableCellSong", for: indexPath) as? MessageViewTableCellSong else {
-            fatalError("No reusable cell!")
-        }
-
         let message = messages[indexPath.row]
-        cell.usernameLabel.text = message.owner
-        cell.usernameLabel.sizeToFit()
+        let messageData = try! (JSONSerialization.jsonObject(with: message.text.data(using: .utf8)!) as! [String: String])
         
-        cell.songView.showSong(song: message.text, parentVC: self)
+        if messageData["type"] == "text" {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageViewTableCellText", for: indexPath) as? MessageViewTableCellText else {
+                fatalError("No reusable cell!")
+            }
+            
+            cell.usernameLabel.text = message.owner
+            cell.usernameLabel.sizeToFit()
+            cell.messageTextLabel.text = messageData["content"]
+            cell.messageTextLabel.sizeToFit()
+            
+            return cell
+        } else if messageData["type"] == "song" {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageViewTableCellSong", for: indexPath) as? MessageViewTableCellSong else {
+                fatalError("No reusable cell!")
+            }
+            
+            cell.usernameLabel.text = message.owner
+            cell.usernameLabel.sizeToFit()
+            
+            cell.songView.showSong(song: messageData["content"] ?? "", parentVC: self)
 
-        return cell
+            return cell
+        } else {
+            fatalError("Invalid type!")
+        }
     }
     
     // MARK: - Event Handlers
     
     @IBAction func sendMessage(_ sender: Any) {
         // Serialize the recipient list and message into JSON data
-        let json: [String: Any] = ["recipients": self.conversation?.members ?? [], "message": self.messageInput.text ?? ""]
+        let messageText = try? JSONSerialization.data(withJSONObject: ["type": "text", "content": self.messageInput.text ?? ""] as [String: String])
+        let json: [String: Any] = ["recipients": self.conversation?.members ?? [], "message": String(data: messageText!, encoding: .utf8) as Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request

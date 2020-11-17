@@ -27,10 +27,11 @@ class NewMessageVC: UIViewController {
     
     @IBAction func sendButtonHandler(_ sender: Any) {
         // Send the song title and artist as the message text
-        let message = (self.songView.artistLabel.text ?? "Artist") + ":" + (self.songView.songLabel.text ?? "Song")
+        let messageContent = (self.songView.artistLabel.text ?? "Artist") + ":" + (self.songView.songLabel.text ?? "Song")
+        let messageText = try? JSONSerialization.data(withJSONObject: ["type": "song", "content": messageContent] as [String: String])
         
         // Serialize the recipient list and message into JSON data
-        let json: [String: Any] = ["recipients": [self.recipientInput.text ?? ""], "message": message]
+        let json: [String: Any] = ["recipients": [self.recipientInput.text ?? ""], "message": String(data: messageText!, encoding: .utf8) as Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
