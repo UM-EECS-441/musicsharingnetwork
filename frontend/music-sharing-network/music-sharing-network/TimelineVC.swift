@@ -104,6 +104,17 @@ class TimelineVC: UITableViewController {
                 cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
             }
         }
+        
+        /*
+        cell.followButton = { () in
+            if cell.isFollowed {
+                cell.followButton.setTitle("Unfollow", for: [])
+            } else {
+                cell.followButton.setTitle("Follow", for: [])
+            }
+        }
+        */
+        
         return cell
     }
 }

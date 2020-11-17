@@ -36,8 +36,6 @@ class TimelineTableCell: UITableViewCell {
         if isFollowed {
             
             // API request to follow user
-            //let json: [String: Any] = ["username": targetUser]
-            //let jsonData = try? JSONSerialization.data(withJSONObject: json)
             
             // Build an HTTP request
             let targetUser: String = self.usernameLabel.text ?? "ERROR"
@@ -47,7 +45,6 @@ class TimelineTableCell: UITableViewCell {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            //request.httpBody = jsonData
             
             // Send the request and read the server's response
             SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
@@ -63,7 +60,6 @@ class TimelineTableCell: UITableViewCell {
                         print("TimelineTableCellVC > followTapped: HTTP STATUS: \(httpResponse.statusCode)")
                         return
                     }
-                    
                 }
             }
             
@@ -71,9 +67,7 @@ class TimelineTableCell: UITableViewCell {
             
         } else {
             
-            // API request to follow user
-            //let json: [String: Any] = ["username": targetUser]
-            //let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            // API request to unfollow user
             
             // Build an HTTP request
             let targetUser: String = self.usernameLabel.text ?? "ERROR"
@@ -83,7 +77,6 @@ class TimelineTableCell: UITableViewCell {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            //request.httpBody = jsonData
             
             // Send the request and read the server's response
             SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
