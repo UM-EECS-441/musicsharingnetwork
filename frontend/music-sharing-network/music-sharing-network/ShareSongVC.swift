@@ -1,5 +1,5 @@
 //
-//  NewMessageVC.swift
+//  ShareSongVC.swift
 //  music-sharing-network
 //
 //  Created by Andrew on 11/3/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewMessageVC: UIViewController {
+class ShareSongVC: UIViewController {
     var song: String?
     
     @IBOutlet weak var songView: SongView!
@@ -47,14 +47,14 @@ class NewMessageVC: UIViewController {
         SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
             // Check for errors
             guard let _ = data, error == nil else {
-                print("NewMessageVC > sendButtonHandler: NETWORKING ERROR")
+                print("ShareSongVC > sendButtonHandler: NETWORKING ERROR")
                 return
             }
             
             if let httpResponse = response as? HTTPURLResponse {
                 // Check for errors
                 if httpResponse.statusCode != 201 {
-                    print("NewMessageVC > sendButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
+                    print("ShareSongVC > sendButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
                     return
                 }
                 

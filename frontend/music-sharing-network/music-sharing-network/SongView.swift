@@ -46,7 +46,7 @@ class SongView: UIView {
     
     @IBAction func shareButtonHandler(_ sender: Any) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let newMessageVC = storyBoard.instantiateViewController(withIdentifier: "NewMessageVC") as! NewMessageVC
+        let newMessageVC = storyBoard.instantiateViewController(withIdentifier: "ShareSongVC") as! ShareSongVC
         newMessageVC.song = self.song
         self.parentVC?.present(newMessageVC, animated: true, completion: nil)
     }
