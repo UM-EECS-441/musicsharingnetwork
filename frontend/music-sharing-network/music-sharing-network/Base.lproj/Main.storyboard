@@ -197,9 +197,12 @@
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQ2-6U-9Ek">
-                                            <rect key="frame" x="140" y="8" width="44" height="30"/>
+                                            <rect key="frame" x="4" y="44" width="64" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Follow"/>
+                                            <connections>
+                                                <action selector="followTapped:" destination="Gcc-6b-Nn3" eventType="touchUpInside" id="vpt-VM-e8K"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -226,6 +229,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="commentButton" destination="cfb-Ni-keY" id="elf-Wg-Uvf"/>
+                                    <outlet property="followButton" destination="FQ2-6U-9Ek" id="WhZ-fH-r8f"/>
                                     <outlet property="likeButton" destination="C0t-SD-sLq" id="aQd-hf-gnG"/>
                                     <outlet property="songView" destination="JE3-pq-qi9" id="z2U-8e-0lo"/>
                                     <outlet property="textBox" destination="aFU-ZO-Yfb" id="q88-q3-5QC"/>
@@ -258,7 +262,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AAd-Ya-PVU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4467" y="-242"/>
+            <point key="canvasLocation" x="4466.666666666667" y="-242.41071428571428"/>
         </scene>
         <!--New Post-->
         <scene sceneID="VDG-ru-ZBR">
