@@ -16,6 +16,7 @@ class ProfileVC: UIViewController {
     var mine: Bool = true
     // If not, whose profile are they viewing?
     var username: String = ""
+    var isFollowed: Bool = false
     
     @IBOutlet weak var navBar: UINavigationItem!
     @IBOutlet weak var fullNameLabel: UILabel!
@@ -76,12 +77,11 @@ class ProfileVC: UIViewController {
                     self.fullNameLabel.text = json["full_name"] as? String
                     self.usernameLabel.text = self.username
                     self.bioBox.text = json["user_bio"] as? String
+                    //self.isFollowed = json["following"]
                 }
             }
         }
     }
-    
-    var isFollowed: Bool = false
     
     @IBAction func followTapped(_ sender: Any) {
         
