@@ -105,16 +105,6 @@ class TimelineVC: UITableViewController {
             }
         }
         
-        /*
-        cell.followButton = { () in
-            if cell.isFollowed {
-                cell.followButton.setTitle("Unfollow", for: [])
-            } else {
-                cell.followButton.setTitle("Follow", for: [])
-            }
-        }
-        */
-        
         return cell
     }
 }

@@ -80,4 +80,77 @@ class ProfileVC: UIViewController {
             }
         }
     }
+    
+    var isFollowed: Bool = false
+    
+    @IBAction func followTapped(_ sender: Any) {
+        
+        self.isFollowed.toggle()
+        
+        if isFollowed {
+            
+            // API request to follow user
+            
+            // Build an HTTP request
+            let requestURL = SharedData.baseURL + "/users/" + self.username + "/follow/"
+            var request = URLRequest(url: URL(string: requestURL)!)
+            request.httpShouldHandleCookies = true
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            // Send the request and read the server's response
+            SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
+                // Check for errors
+                guard let _ = data, error == nil else {
+                    print("TimelineTableCellVC > followTapped: NETWORKING ERROR")
+                    return
+                }
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    // Check for errors
+                    if httpResponse.statusCode != 201 {
+                        print("TimelineTableCellVC > followTapped: HTTP STATUS: \(httpResponse.statusCode)")
+                        return
+                    }
+                }
+            }
+            
+            followButton.setTitle("Unfollow", for: [])
+            
+        } else {
+            
+            // API request to unfollow user
+            
+            // Build an HTTP request
+            let requestURL = SharedData.baseURL + "/users/" + self.username + "/unfollow/"
+            var request = URLRequest(url: URL(string: requestURL)!)
+            request.httpShouldHandleCookies = true
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            // Send the request and read the server's response
+            SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
+                // Check for errors
+                guard let _ = data, error == nil else {
+                    print("TimelineTableCellVC > followTapped: NETWORKING ERROR")
+                    return
+                }
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    // Check for errors
+                    if httpResponse.statusCode != 201 {
+                        print("TimelineTableCellVC > followTapped: HTTP STATUS: \(httpResponse.statusCode)")
+                        return
+                    }
+                    
+                }
+            }
+            
+            followButton.setTitle("Follow", for: [])
+            
+        }
+    }
+    
 }

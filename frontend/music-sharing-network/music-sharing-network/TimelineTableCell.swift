@@ -17,88 +17,14 @@ class TimelineTableCell: UITableViewCell {
     @IBOutlet weak var textBox: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
-    @IBOutlet weak var followButton: UIButton!
     
     var likeButtonAction : (() -> Void)?
     var isLiked: Bool = false
-    var isFollowed: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         self.likeButton.addTarget(self, action: #selector(likeTapped(_:)), for: .touchUpInside)
-    }
-    
-    @IBAction func followTapped(_ sender: Any) {
-        
-        self.isFollowed.toggle()
-        
-        if isFollowed {
-            
-            // API request to follow user
-            
-            // Build an HTTP request
-            let targetUser: String = self.usernameLabel.text ?? "ERROR"
-            let requestURL = SharedData.baseURL + "/users/" + targetUser + "/follow/"
-            var request = URLRequest(url: URL(string: requestURL)!)
-            request.httpShouldHandleCookies = true
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            // Send the request and read the server's response
-            SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-                // Check for errors
-                guard let _ = data, error == nil else {
-                    print("TimelineTableCellVC > followTapped: NETWORKING ERROR")
-                    return
-                }
-                
-                if let httpResponse = response as? HTTPURLResponse {
-                    // Check for errors
-                    if httpResponse.statusCode != 201 {
-                        print("TimelineTableCellVC > followTapped: HTTP STATUS: \(httpResponse.statusCode)")
-                        return
-                    }
-                }
-            }
-            
-            followButton.setTitle("Unfollow", for: [])
-            
-        } else {
-            
-            // API request to unfollow user
-            
-            // Build an HTTP request
-            let targetUser: String = self.usernameLabel.text ?? "ERROR"
-            let requestURL = SharedData.baseURL + "/users/" + targetUser + "/unfollow/"
-            var request = URLRequest(url: URL(string: requestURL)!)
-            request.httpShouldHandleCookies = true
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            // Send the request and read the server's response
-            SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-                // Check for errors
-                guard let _ = data, error == nil else {
-                    print("TimelineTableCellVC > followTapped: NETWORKING ERROR")
-                    return
-                }
-                
-                if let httpResponse = response as? HTTPURLResponse {
-                    // Check for errors
-                    if httpResponse.statusCode != 201 {
-                        print("TimelineTableCellVC > followTapped: HTTP STATUS: \(httpResponse.statusCode)")
-                        return
-                    }
-                    
-                }
-            }
-            
-            followButton.setTitle("Follow", for: [])
-            
-        }
     }
     
     @IBAction func likeTapped(_ sender: Any) {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OOe-JN-57G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OOe-JN-57G">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -196,14 +196,6 @@
                                                 <constraint firstAttribute="height" constant="75" id="fbX-jD-6Fc"/>
                                             </constraints>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FQ2-6U-9Ek">
-                                            <rect key="frame" x="4" y="44" width="64" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Follow"/>
-                                            <connections>
-                                                <action selector="followTapped:" destination="Gcc-6b-Nn3" eventType="touchUpInside" id="vpt-VM-e8K"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="cfb-Ni-keY" secondAttribute="trailing" id="2dW-eg-95Z"/>
@@ -229,7 +221,6 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="commentButton" destination="cfb-Ni-keY" id="elf-Wg-Uvf"/>
-                                    <outlet property="followButton" destination="FQ2-6U-9Ek" id="WhZ-fH-r8f"/>
                                     <outlet property="likeButton" destination="C0t-SD-sLq" id="aQd-hf-gnG"/>
                                     <outlet property="songView" destination="JE3-pq-qi9" id="z2U-8e-0lo"/>
                                     <outlet property="textBox" destination="aFU-ZO-Yfb" id="q88-q3-5QC"/>
@@ -530,6 +521,9 @@
                                 <rect key="frame" x="337" y="127.5" width="57" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Follow"/>
+                                <connections>
+                                    <action selector="followTapped:" destination="Euk-Kr-9CM" eventType="touchUpInside" id="y3Y-sp-S46"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tM3-ZT-kSV"/>
