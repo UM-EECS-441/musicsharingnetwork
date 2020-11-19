@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		499D84A72566E665007D3A5E /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499D84A62566E665007D3A5E /* SpotifyiOS.framework */; };
 		49CF8E5A2551E7F50001F326 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E592551E7F50001F326 /* Post.swift */; };
 		49CF8E5D2551E8520001F326 /* TimelineTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E5C2551E8520001F326 /* TimelineTableCell.swift */; };
 		49CF8E612551E9DB0001F326 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E602551E9DB0001F326 /* Conversation.swift */; };
@@ -38,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		499D84A62566E665007D3A5E /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
+		499D84A92566E6EB007D3A5E /* MusicSharingNetwork-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MusicSharingNetwork-Bridging-Header.h"; sourceTree = "<group>"; };
 		49CF8E592551E7F50001F326 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		49CF8E5C2551E8520001F326 /* TimelineTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTableCell.swift; sourceTree = "<group>"; };
 		49CF8E602551E9DB0001F326 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				499D84A72566E665007D3A5E /* SpotifyiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +88,7 @@
 		D87EF54425315311008EA46A = {
 			isa = PBXGroup;
 			children = (
+				499D84A92566E6EB007D3A5E /* MusicSharingNetwork-Bridging-Header.h */,
 				D87EF54F25315311008EA46A /* music-sharing-network */,
 				D87EF54E25315311008EA46A /* Products */,
 			);
@@ -110,6 +115,7 @@
 				D87EF55625315311008EA46A /* Main.storyboard */,
 				D87EF55925315314008EA46A /* Assets.xcassets */,
 				D87EF55B25315314008EA46A /* LaunchScreen.storyboard */,
+				499D84A62566E665007D3A5E /* SpotifyiOS.framework */,
 				D87EF55E25315314008EA46A /* Info.plist */,
 			);
 			path = "music-sharing-network";
@@ -416,14 +422,20 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XRS63T59UB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/music-sharing-network",
+				);
 				INFOPLIST_FILE = "music-sharing-network/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.umich.eecs441.music-sharing-network";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MusicSharingNetwork-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -436,14 +448,20 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XRS63T59UB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/music-sharing-network",
+				);
 				INFOPLIST_FILE = "music-sharing-network/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.umich.eecs441.music-sharing-network";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MusicSharingNetwork-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
