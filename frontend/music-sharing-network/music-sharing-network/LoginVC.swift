@@ -11,7 +11,7 @@ import UIKit
  Controls a view that prompts the user to login.
  */
 class LoginVC: UIViewController {
-    // Should we allow the user to continue as a guest wirhour signing in?
+    // Should we allow the user to continue as a guest without signing in?
     var allowGuest = true
     
     // Closure to run once the user is logged in
@@ -28,11 +28,16 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Hide the navigation bar if it is present
-        self.navigationController?.isNavigationBarHidden = true
-        
         // Hide the continue as guest button if necessary
         continueAsGuestButton.isHidden = !allowGuest
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if SharedData.logged_in {
+            self.close()
+        }
     }
     
     @objc func objc_close() {
@@ -40,8 +45,8 @@ class LoginVC: UIViewController {
     }
     
     func close() {
-        self.navigationController?.popViewController(animated: true)
-        self.navigationController?.isNavigationBarHidden = false
+        print("Dismissing LoginVC")
+        self.dismiss(animated: true, completion: nil)
     }
     
     /*

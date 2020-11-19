@@ -13,6 +13,11 @@ import UIKit
 class SharedData {
     static let baseURL: String = "https://backend-qjgo4vxcdq-uc.a.run.app"
     static var username: String = ""
+    static var logged_in: Bool {
+        get {
+            !self.username.isEmpty
+        }
+    }
     
     /*
      Send an HTTP request and wait for the response.
@@ -50,9 +55,10 @@ class SharedData {
             let loginVC = storyBoard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
             loginVC.completion = { (_ username: String) in
                 self.username = username
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
                 completion?()
             }
-            parentVC.navigationController?.show(loginVC, sender: nil)
+            parentVC.present(loginVC, animated: true, completion: nil)
         } else {
             completion?()
         }

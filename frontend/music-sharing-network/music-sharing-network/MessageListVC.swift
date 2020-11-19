@@ -13,17 +13,41 @@ import UIKit
 class MessageListVC: UITableViewController {
     
     var conversations = [Conversation]()
+    
+    // Track state changes
+    var logged_in = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.logged_in = SharedData.logged_in
 
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
 
-        // Prompt the user to login if they have not already
-        SharedData.login(parentVC: self) { () in
+        // Check whether the user is logged in
+        if SharedData.logged_in {
+            // If they are, retrieve a list of all their conversations
             self.getConversations()
+        } else {
+            // If they're not, prompt them to login
+            SharedData.login(parentVC: self, completion: nil)
         }
-
+    }
+    
+    @objc func loginChanged() {
+        // Check whether the user logged in or out
+        if SharedData.logged_in {
+            // User logged in
+            print("MessageListVC > loginChanged: User logged in")
+            self.getConversations()
+        } else {
+            // User logged out
+            print("MessageListVC > loginChanged: User logged out")
+            self.conversations.removeAll()
+            self.tableView.reloadData()
+        }
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
