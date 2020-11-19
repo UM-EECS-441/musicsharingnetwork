@@ -10,13 +10,33 @@ import UIKit
 class TimelineVC: UITableViewController {
     var posts = [Post]()
     
+    @IBOutlet weak var newPostButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         
+        if SharedData.logged_in {
+            self.newPostButton.image = UIImage(systemName: "plus")
+        } else {
+            self.newPostButton.image = .none
+        }
+        self.newPostButton.isEnabled = SharedData.logged_in
         getPosts()
+    }
+    
+    @objc func loginChanged() {
+        self.newPostButton.isEnabled = SharedData.logged_in
+        if SharedData.logged_in {
+            self.newPostButton.image = UIImage(systemName: "plus")
+        } else {
+            self.newPostButton.image = .none
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {

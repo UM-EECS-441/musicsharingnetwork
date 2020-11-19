@@ -28,13 +28,17 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        
         // Hide the continue as guest button if necessary
         continueAsGuestButton.isHidden = !allowGuest
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+    }
+    
+    @objc func loginChanged() {
         if SharedData.logged_in {
             self.close()
         }

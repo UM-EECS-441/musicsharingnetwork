@@ -47,6 +47,8 @@ class MessageListVC: UITableViewController {
             print("MessageListVC > loginChanged: User logged out")
             self.conversations.removeAll()
             self.tableView.reloadData()
+            
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
 

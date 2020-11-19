@@ -40,11 +40,6 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(self.dismissKeyboard))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
-
-        // Prompt the user to login if they have not already
-        SharedData.login(parentVC: self) { () in
-            self.getMessages()
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

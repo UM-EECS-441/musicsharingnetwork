@@ -36,12 +36,19 @@ class SongView: UIView {
         view.frame = self.bounds
         self.addSubview(view)
         contentView = view
+        
+        self.shareButton.isHidden = !SharedData.logged_in
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
     }
     
     func loadViewFromNib() -> UIView? {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: nibName, bundle: bundle)
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
+    }
+    
+    @objc func loginChanged() {
+        self.shareButton.isHidden = !SharedData.logged_in
     }
     
     @IBAction func shareButtonHandler(_ sender: Any) {
