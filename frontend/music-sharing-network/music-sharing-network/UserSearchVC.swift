@@ -13,9 +13,21 @@ import UIKit
  */
 class UserSearchVC: UITableViewController {
     
+    var results = [String]()
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        getUsers(nameBeginsWith: "")
+    }
+    
+    // MARK: - API Calls
+    
+    func getUsers(nameBeginsWith: String) {
+        // FIXME: Replace with an API call
+        results = ["adithyaboddu", "adithyaboddu1", "frontend", "jazawisa", "stevejobs"]
     }
 
     // MARK:- TableView handlers
@@ -27,30 +39,31 @@ class UserSearchVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // how many rows per section
-        return 2
+        return self.results.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // event handler when a cell is tapped
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let profileVC = storyBoard.instantiateViewController(withIdentifier: "ProfileVC") as! ProfileVC
+        profileVC.mine = false
+        profileVC.username = self.results[indexPath.row]
+        self.navigationController?.show(profileVC, sender: nil)
+        
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // populate a single cell
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserSearchTableCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserSearchTableCell", for: indexPath) as? UserSearchTableCell else {
+            fatalError("No reusable cell!")
+        }
+        
+        cell.usernameLabel.text = self.results[indexPath.row]
         
         return cell
     }
     
-    // MARK: - Storyboard Segues
-    
-    // FIXME: Probably want to use one of the tableview functions instead of this
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let profileVC = segue.destination as? ProfileVC {
-            profileVC.mine = false
-            profileVC.username = "frontend"
-        }
-    }
-    
+    // MARK: - Event Handlers
 }
 
