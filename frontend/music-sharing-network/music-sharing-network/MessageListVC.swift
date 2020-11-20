@@ -14,13 +14,10 @@ class MessageListVC: UITableViewController {
     
     var conversations = [Conversation]()
     
-    // Track state changes
-    var logged_in = false
-
+    @IBOutlet weak var composeButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.logged_in = SharedData.logged_in
 
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         
@@ -28,9 +25,15 @@ class MessageListVC: UITableViewController {
 
         // Check whether the user is logged in
         if SharedData.logged_in {
+            self.composeButton.image = UIImage(systemName: "square.and.pencil")
+            self.composeButton.isEnabled = true
+            
             // If they are, retrieve a list of all their conversations
             self.getConversations()
         } else {
+            self.composeButton.image = .none
+            self.composeButton.isEnabled = false
+            
             // If they're not, prompt them to login
             SharedData.login(parentVC: self, completion: nil)
         }
@@ -41,13 +44,19 @@ class MessageListVC: UITableViewController {
         if SharedData.logged_in {
             // User logged in
             print("MessageListVC > loginChanged: User logged in")
+            
             self.getConversations()
+            
+            self.composeButton.image = UIImage(systemName: "square.and.pencil")
+            self.composeButton.isEnabled = true
         } else {
             // User logged out
             print("MessageListVC > loginChanged: User logged out")
             self.conversations.removeAll()
             self.tableView.reloadData()
             
+            self.composeButton.image = .none
+            self.composeButton.isEnabled = false
             self.navigationController?.popToRootViewController(animated: true)
         }
     }

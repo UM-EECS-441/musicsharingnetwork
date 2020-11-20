@@ -37,13 +37,17 @@ class ProfileVC: UIViewController {
             self.followButton.isHidden = true
             
             if SharedData.logged_in {
+                self.navBar.rightBarButtonItem?.title = "Settings"
+                self.navBar.rightBarButtonItem?.isEnabled = true
+                
                 self.username = SharedData.username
                 self.getProfile()
             } else {
                 SharedData.login(parentVC: self, completion: nil)
             }
         } else {
-            self.navBar.rightBarButtonItems?.removeAll()
+            self.navBar.rightBarButtonItem?.title = nil
+            self.navBar.rightBarButtonItem?.isEnabled = false
             self.navBar.title = self.username
             
             if SharedData.logged_in {
@@ -63,10 +67,16 @@ class ProfileVC: UIViewController {
                 print("ProfileVC > loginChanged: User logged in on My Profile")
                 self.username = SharedData.username
                 self.getProfile()
+                
+                self.navBar.rightBarButtonItem?.title = "Settings"
+                self.navBar.rightBarButtonItem?.isEnabled = true
             } else {
                 // User logged out on My Profile
                 print("ProfileVC > loginChanged: User logged in on My Profile")
                 self.username = ""
+                
+                self.navBar.rightBarButtonItem?.title = nil
+                self.navBar.rightBarButtonItem?.isEnabled = false
             }
         } else {
             if SharedData.logged_in {
