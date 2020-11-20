@@ -36,20 +36,84 @@ def view_posts():
     # If user is not logged in, just return the most recent posts
     context = {'posts': [], 'url': flask.request.path}
     if 'username' not in flask.session:
-        db_posts = list(post_ref.order_by('timestamp', direction=firestore.Query.DESCENDING).stream())
-        for post in db_posts:
-            context['posts'].append(post.to_dict())
+        db_posts = (post_doc.to_dict() for post_doc in post_ref.order_by('timestamp', direction=firestore.Query.DESCENDING).stream())
+        db_posts = [add_liked_to_post(post_dict, None) for post_dict in db_posts]
+        context['posts'] = db_posts
         return flask.jsonify(**context), 200
     
     username = flask.session['username']
     following = list(follow_ref.where('follower', '==', username).stream())
     for user in following:
-        user_posts = list(post_ref.where('owner', '==', user.get('followed')).stream())
-        for post in user_posts:
-            context['posts'].append(post.to_dict())
+        user_posts = [post_doc.to_dict() for post_doc in post_ref.where('owner', '==', user.get('followed')).stream()]
+        user_posts = [add_liked_to_post(post_dict, username) for post_dict in user_posts]
+        context['posts'].extend(user_posts)
     
     context['posts'].sort(key=lambda x: x['timestamp'], reverse=True)
     return flask.jsonify(**context), 200
+
+
+@routes.route('/posts/<post_id>/', methods=['GET'])
+def view_post(post_id):
+    # retrieves all the information (including all replies) for a single post
+    post = post_ref.document(post_id).get()
+    if not post.exists:
+        return flask.jsonify(**{'message': 'specified post id {} not found'.format(post_id), 'url': flask.request.path}), 404
+    
+    #gets the post dictionary and adds liked status to that dictionary
+    post_dict = post.to_dict()
+    replies = [reply.to_dict() for reply in post_ref.where('reply_to', '==', post.id).stream()]
+    
+    if 'username' in flask.session:
+       post_dict = add_liked_to_post(post_dict, flask.session['username'])
+       replies = [add_liked_to_post(reply, flask.session['username']) for reply in replies]
+    else:
+       post_dict = add_liked_to_post(post_dict, None)
+       replies = [add_liked_to_post(reply, None) for reply in replies]
+    
+    replies.sort(key=lambda x: x['timestamp'], reverse=True)
+
+    return flask.jsonify(**{'post': post_dict, 'replies': replies}), 200
+
+@routes.route('/posts/<post_id>/like', methods=['POST'])
+def update_like(post_id):
+    #likes the post for the current user or unlikes it if they have already liked the post
+    if 'username' not in flask.session:
+        return flask.jsonify(**{'message': 'must be logged in to like a post', 'url': flask.request.path}), 401
+    
+    username = flask.session['username']
+
+    # check if the specified post exists in our database
+    post_doc = post_ref.document(post_id)
+    if not post_doc.get().exists:
+        return flask.jsonify(**{'message': 'specified post id {} not found'.format(post_id), 'url': flask.request.path}), 404
+
+    # look for an existing like in the post's subcollection
+    existing_like = post_doc.collection('likes').document(username).get()
+    # like does not exist so we add a document with id username to subcollection and increment count
+    if not existing_like.exists:
+        post_doc.collection('likes').document(username).set({})
+        post_doc.get().reference.update({'num_likes': firestore.Increment(1)})
+    # like does exist so we want to remove that document from the subcollection and decrement count
+    else:
+        existing_like.reference.delete()
+        post_doc.get().reference.update({'num_likes': firestore.Increment(-1)})
+    
+    liked = not existing_like.exists
+    # returns true if like action occurred and false if unlike action occurred
+    return flask.jsonify(**{'url': flask.request.path, 'liked': liked}), 200
+    
+def add_liked_to_post(post_dict, username):
+    if username is None:
+        post_dict['liked'] = False
+    else:
+        existing_like = post_ref.document(post_dict['post_id']).collection('likes').document(username).get()
+        post_dict['liked'] = existing_like.exists
+    
+    return post_dict
+
+
+
+
 
 
     

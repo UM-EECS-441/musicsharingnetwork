@@ -7,6 +7,7 @@ from . import routes
 from . import user_ref
 from . import follow_ref
 from . import post_ref
+from routes.posts import add_liked_to_post
 
 @routes.route('/users/create', methods=['POST'])
 def create_user():
@@ -133,10 +134,20 @@ def show_user(target_user):
 
     if (len(db_entry) == 0):
         return flask.jsonify(** {'message': 'no user {} found'.format(target_user), 'url': flask.request.path}), 404
-    
-    db_posts = list(post_ref.where('owner', '==', target_user).stream())
-    posts = [post.to_dict() for post in db_posts]
 
+    posts = [post.to_dict() for post in post_ref.where('owner', '==', target_user).stream()]
+
+    # if a user is logged in, return whether they are following the requested user (and add if the post has been liked by current user)
+    if 'username' not in flask.session:
+        follow_bool = False
+        posts = [add_liked_to_post(post_dict, None) for post_dict in posts]
+    else:
+        username = flask.session['username']
+        follow_check = list(follow_ref.where('follower', '==', username).where('followed', '==', target_user).stream())
+        follow_bool = len(follow_check) > 0
+        posts = [add_liked_to_post(post_dict, username) for post_dict in posts]
+    
+    posts.sort(key=lambda x: x['timestamp'], reverse=True)
     response = {
         'target_user': db_entry[0].get('username'),
         'full_name': db_entry[0].get('full_name'),
@@ -145,16 +156,17 @@ def show_user(target_user):
         'num_following': db_entry[0].get('num_following'),
         'num_followers': db_entry[0].get('num_followers'),
         'posts': posts,
+        'following': follow_bool,
         'url': flask.request.path
     }
     return flask.jsonify(**response), 200    
 
 
 @routes.route('/users/<target_user>/follow', methods = ['POST'])
-def follow_user(target_user):
-    """Follows the specified user for the current user."""
+def update_follow(target_user):
+    """Follows/Unfollows the specified user for the current user."""
     if 'username' not in flask.session:
-        return flask.jsonify(**{'message': 'Cannot follow user, not logged in', 'url': flask.request.path}), 401
+        return flask.jsonify(**{'message': 'Cannot follow/unfollow user, not logged in', 'url': flask.request.path}), 401
 
     username = flask.session['username']
     target_entry = list(user_ref.where('username', '==', target_user).stream())
@@ -169,50 +181,24 @@ def follow_user(target_user):
 
     # Check if the follow relationship already exists
     follow_check = list(follow_ref.where('follower', '==', username).where('followed', '==', target_user).stream())
-    if (len(follow_check) > 0):
-        return flask.jsonify(** {'message': 'user {} already follows user {}'.format(username, target_user), 
-        'url': flask.request.path}), 409
-
-    #Create database entry for following relationship and increment profile counts
-    data = {
-        'follower': username,
-        'followed': target_user
-    }
-    follow_ref.document(username + '-' + target_user).set(data)
-    user_entry[0].reference.update({'num_following': firestore.Increment(1)})
-    target_entry[0].reference.update({'num_followers': firestore.Increment(1)})
-    return flask.jsonify(**{'url': flask.request.path}), 204
-
-
-@routes.route('/users/<target_user>/unfollow', methods = ['POST'])
-def unfollow_user(target_user):
-    """Unfollows the specified user for the current user."""
-    if 'username' not in flask.session:
-        return flask.jsonify(**{'message': 'Cannot unfollow user, not logged in', 'url': flask.request.path}), 401
-
-    username = flask.session['username']
-    target_entry = list(user_ref.where('username', '==', target_user).stream())
-    user_entry = list(user_ref.where('username', '==', username).stream())
-
-    # Make sure current user and target user exist
-    if (len(target_entry) == 0):
-        return flask.jsonify(** {'message': 'no target user {} found'.format(target_user), 'url': flask.request.path}), 404
-    
-    if (len(user_entry) == 0):
-        return flask.jsonify(** {'message': 'no current user {} found'.format(username), 'url': flask.request.path}), 401
-
-    # Check if the follow relationship exists before deleting from table
-    follow_check = list(follow_ref.where('follower', '==', username).where('followed', '==', target_user).stream())
+    #if follow relationship does not exist, then follow the user
     if (len(follow_check) == 0):
-        return flask.jsonify(** {'message': 'user {} does not follow user {}'.format(username, target_user), 
-        'url': flask.request.path}), 404
-
-    
-    follow_check[0].reference.delete()
-    user_entry[0].reference.update({'num_following': firestore.Increment(-1)})
-    target_entry[0].reference.update({'num_followers': firestore.Increment(-1)})
-    return flask.jsonify(**{'url': flask.request.path}), 204     
-    
+        data = {
+            'follower': username,
+            'followed': target_user
+        }
+        follow_ref.document(username + '_' + target_user).set(data)
+        user_entry[0].reference.update({'num_following': firestore.Increment(1)})
+        target_entry[0].reference.update({'num_followers': firestore.Increment(1)})
+    # if follow relationship does exist, then unfollow the user
+    else:
+        follow_check[0].reference.delete()
+        user_entry[0].reference.update({'num_following': firestore.Increment(-1)})
+        target_entry[0].reference.update({'num_followers': firestore.Increment(-1)})
+    #Create database entry for following relationship and increment profile counts
+    followed = (len(follow_check) == 0)
+    # returns true if a follow occurred/false if an unfollow occurred
+    return flask.jsonify(**{'url': flask.request.path, 'followed': followed}), 200
 
 def hash_password(password):
     """Hash password for database storage."""
@@ -237,3 +223,5 @@ def compare_hash(password, db_credentials):
     hash_obj.update(password_salted.encode('utf-8'))
     password_hash = hash_obj.hexdigest()
     return password_hash == db_passhash
+
+
