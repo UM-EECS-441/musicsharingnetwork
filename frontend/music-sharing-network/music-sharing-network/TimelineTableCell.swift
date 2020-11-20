@@ -28,17 +28,12 @@ class TimelineTableCell: UITableViewCell {
     }
     
     @IBAction func likeTapped(_ sender: Any) {
-        
-        self.isLiked.toggle()
-        self.likeButtonAction?()
-        
-        /* HTTP Request [API endpoint needs to be made]
         // Serialize the username and password into JSON data
-        let json: [String: Any] = ["post_id": identifier]
+        let json: [String: Any] = ["post_id": self.identifier!]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/" + identifier! + "/like/"
+        let requestURL = SharedData.baseURL + "/posts/\(self.identifier!)/like"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"
@@ -56,14 +51,20 @@ class TimelineTableCell: UITableViewCell {
             
             if let httpResponse = response as? HTTPURLResponse {
                 // Check for errors
-                if httpResponse.statusCode != 201 {
+                if httpResponse.statusCode != 200 {
                     print("TimelineTableCellVC > likeTapped: HTTP STATUS: \(httpResponse.statusCode)")
                     return
                 }
-                
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                    self.isLiked = json["liked"] as! Bool
+
+                    self.likeButtonAction?()
+                } catch let error as NSError {
+                    print(error)
+                }
             }
         }
-         */
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

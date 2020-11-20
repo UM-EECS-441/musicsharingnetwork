@@ -107,6 +107,7 @@ class TimelineVC: UITableViewController {
         }
         
         let post = self.posts[indexPath.row]
+        cell.identifier = post.identifier
         cell.usernameLabel.text = post.owner
         cell.usernameLabel.sizeToFit()
         cell.timestampLabel.text = post.timestamp
@@ -114,16 +115,20 @@ class TimelineVC: UITableViewController {
         cell.textBox.text = post.message
         cell.textBox.sizeToFit()
         cell.songView.showSong(song: post.media, parentVC: self)
+        //Set num_likes for each post
+        cell.likeButton.setTitle(String(post.likes), for: .normal)
         
         //Need an endpoint to check if a post is liked by a user
-        
-        //TODO: Need to change like count too
+
         cell.likeButtonAction = { () in
             if(cell.isLiked){
                 cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                post.likes = post.likes + 1
             }else{
                 cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                post.likes = post.likes - 1
             }
+            cell.likeButton.setTitle(String(post.likes), for: .normal)
         }
         
         return cell
