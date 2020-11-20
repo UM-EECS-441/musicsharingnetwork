@@ -75,6 +75,10 @@ class SettingsVC: UIViewController {
                     return
                 }
                 
+                // Reset username
+                SharedData.username = ""
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+                
                 // Exit the settings screen since the user is now logged out
                 self.navigationController?.popViewController(animated: true)
             }

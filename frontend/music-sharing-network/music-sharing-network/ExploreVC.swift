@@ -12,8 +12,16 @@ class ExploreVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
     }
 
+    @objc func loginChanged() {
+        if !SharedData.logged_in {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+    }
+    
     // MARK:- TableView handlers
 
     override func numberOfSections(in tableView: UITableView) -> Int {

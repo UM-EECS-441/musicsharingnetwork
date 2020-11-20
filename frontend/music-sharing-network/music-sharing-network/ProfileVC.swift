@@ -41,6 +41,10 @@ class ProfileVC: UIViewController {
             self.navBar.rightBarButtonItems?.removeAll()
             self.navBar.title = self.username
             self.getProfile()
+            
+            if SharedData.username != "" && self.username == SharedData.username {
+                self.followButton.isHidden = true
+            }
         }
         
     }

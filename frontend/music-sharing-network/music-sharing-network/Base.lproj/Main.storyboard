@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OOe-JN-57G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OOe-JN-57G">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -188,6 +188,9 @@
                                                 <color key="titleColor" name="AccentColor"/>
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
                                             </state>
+                                            <connections>
+                                                <segue destination="5CP-sn-39K" kind="show" id="Qta-d0-SSY"/>
+                                            </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE3-pq-qi9" userLabel="Song" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
                                             <rect key="frame" x="20" y="56" width="374" height="75"/>
@@ -250,6 +253,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
+                    <connections>
+                        <outlet property="newPostButton" destination="Lzn-e9-qwi" id="Sow-4G-0HR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AAd-Ya-PVU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -412,6 +418,91 @@
             </objects>
             <point key="canvasLocation" x="4466.666666666667" y="1162.5"/>
         </scene>
+        <!--Comments-->
+        <scene sceneID="xQs-25-B6o">
+            <objects>
+                <tableViewController id="5CP-sn-39K" userLabel="Comments" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="u1q-sf-j0a">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="103" id="nfK-gG-PRz">
+                                <rect key="frame" x="0.0" y="28" width="414" height="103"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nfK-gG-PRz" id="uCd-il-xDo">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="103"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqA-gZ-UaA" userLabel="Username Label">
+                                            <rect key="frame" x="20" y="0.0" width="98" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is where a user's comment is shown." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2j-4w-SlH" userLabel="Comment Content">
+                                            <rect key="frame" x="20" y="42" width="374" height="41"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5CP-sn-39K" id="6oc-NH-ROz"/>
+                            <outlet property="delegate" destination="5CP-sn-39K" id="obS-SF-Dfd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Comments" id="4x1-FE-0HA">
+                        <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="LZf-hB-GmO" userLabel="New Comment Button">
+                            <connections>
+                                <segue destination="Ity-FG-bmJ" kind="show" id="hJf-KN-pUt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yfh-21-4nE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4352.1739130434789" y="-947.54464285714278"/>
+        </scene>
+        <!--New Comment-->
+        <scene sceneID="GlS-sk-jiS">
+            <objects>
+                <viewController title="New Comment" id="Ity-FG-bmJ" userLabel="New Comment" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="brb-fz-dwb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mih-xM-xVt" userLabel="Comment Label">
+                                <rect key="frame" x="36" y="100" width="102" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your comment..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3bQ-5J-tyH" userLabel="Comment Input">
+                                <rect key="frame" x="36" y="129" width="334" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="SyD-1r-GH2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="2JK-BN-vwe">
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="Bnc-AV-HDZ" userLabel="Submit Comment Button"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bJM-cG-eBb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4350.7246376811599" y="-1633.2589285714284"/>
+        </scene>
         <!--User Search-->
         <scene sceneID="KE2-CX-YjU">
             <objects>
@@ -426,21 +517,21 @@
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserSearchTableCell" rowHeight="116" id="zFJ-Rv-RI8" userLabel="UserSearchCell">
-                                <rect key="frame" x="0.0" y="72" width="414" height="116"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="UserSearchTableCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserSearchTableCell" rowHeight="82" id="zFJ-Rv-RI8" userLabel="UserSearchCell" customClass="UserSearchTableCell" customModule="music_sharing_network" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="414" height="82"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zFJ-Rv-RI8" id="dfk-PZ-3lJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="116"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONH-Ym-2rj">
-                                            <rect key="frame" x="80" y="26.5" width="136.5" height="39"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONH-Ym-2rj" userLabel="Username Label">
+                                            <rect key="frame" x="80" y="18" width="128" height="36"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="OxT-lV-60Q">
-                                            <rect key="frame" x="20" y="21.5" width="50" height="49"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="OxT-lV-60Q" userLabel="Profile Photo">
+                                            <rect key="frame" x="20" y="11.5" width="50" height="49"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="Fnw-Zl-IJW"/>
                                                 <constraint firstAttribute="height" constant="50" id="rOW-Fm-ETR"/>
@@ -449,15 +540,16 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="OxT-lV-60Q" firstAttribute="leading" secondItem="dfk-PZ-3lJ" secondAttribute="leadingMargin" id="LF8-jW-6lz"/>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="OxT-lV-60Q" secondAttribute="bottom" constant="10" id="gbb-0d-Wg6"/>
+                                        <constraint firstItem="ONH-Ym-2rj" firstAttribute="centerY" secondItem="OxT-lV-60Q" secondAttribute="centerY" id="VmZ-3z-eVG"/>
+                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="OxT-lV-60Q" secondAttribute="bottom" id="gbb-0d-Wg6"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ONH-Ym-2rj" secondAttribute="trailing" id="i8x-ob-NZr"/>
-                                        <constraint firstItem="OxT-lV-60Q" firstAttribute="top" secondItem="dfk-PZ-3lJ" secondAttribute="topMargin" constant="10" id="mUP-Ad-kCb"/>
-                                        <constraint firstItem="ONH-Ym-2rj" firstAttribute="centerY" secondItem="OxT-lV-60Q" secondAttribute="centerY" id="oW1-i7-h57"/>
+                                        <constraint firstItem="OxT-lV-60Q" firstAttribute="top" secondItem="dfk-PZ-3lJ" secondAttribute="topMargin" id="mUP-Ad-kCb"/>
                                         <constraint firstItem="ONH-Ym-2rj" firstAttribute="leading" secondItem="OxT-lV-60Q" secondAttribute="trailing" constant="10" id="zbm-dU-exU"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Euk-Kr-9CM" kind="show" identifier="UserSearchToProfileSegue" id="bd0-zA-Vk9"/>
+                                    <outlet property="profilePhoto" destination="OxT-lV-60Q" id="OMp-r4-xn0"/>
+                                    <outlet property="usernameLabel" destination="ONH-Ym-2rj" id="chK-XJ-1fp"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -470,12 +562,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YLf-CB-cX8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5258" y="-912"/>
+            <point key="canvasLocation" x="5257.971014492754" y="-912.05357142857133"/>
         </scene>
         <!--My Profile-->
         <scene sceneID="jcH-o6-lad">
             <objects>
-                <viewController id="Euk-Kr-9CM" customClass="ProfileVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileVC" id="Euk-Kr-9CM" customClass="ProfileVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Mz-ak-RFI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1008,9 +1100,6 @@
             <point key="canvasLocation" x="3671" y="1866"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="bd0-zA-Vk9"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="globe" catalog="system" width="128" height="121"/>
         <image name="heart" catalog="system" width="128" height="109"/>
