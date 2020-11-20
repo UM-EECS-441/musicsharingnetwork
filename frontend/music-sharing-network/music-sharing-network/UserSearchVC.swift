@@ -46,7 +46,7 @@ class UserSearchVC: UITableViewController {
         // event handler when a cell is tapped
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let profileVC = storyBoard.instantiateViewController(withIdentifier: "ProfileVC") as! ProfileVC
-        profileVC.mine = false
+        profileVC.myProfile = false
         profileVC.username = self.results[indexPath.row]
         self.navigationController?.show(profileVC, sender: nil)
         

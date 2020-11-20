@@ -35,8 +35,9 @@ class TimelineVC: UITableViewController {
             self.newPostButton.image = UIImage(systemName: "plus")
         } else {
             self.newPostButton.image = .none
-            self.navigationController?.popToRootViewController(animated: true)
         }
+        
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {

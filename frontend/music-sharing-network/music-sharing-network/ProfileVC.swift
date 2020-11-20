@@ -13,7 +13,7 @@ import UIKit
  */
 class ProfileVC: UIViewController {
     // Is the user viewing their own profile?
-    var mine: Bool = true
+    var myProfile: Bool = true
     // If not, whose profile are they viewing?
     var username: String = ""
     var isFollowed: Bool = false
@@ -27,26 +27,58 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        
         // If the user is viewing their own profile, hide the follow button and
         // make sure they're logged in. If the user is viewing someone else's
         // profile, hide the settings button and set the navBar title to be the
         // username of whoever we're viewing.
-        if mine {
+        if myProfile {
             self.followButton.isHidden = true
-            SharedData.login(parentVC: self) { () in
+            
+            if SharedData.logged_in {
                 self.username = SharedData.username
                 self.getProfile()
+            } else {
+                SharedData.login(parentVC: self, completion: nil)
             }
         } else {
             self.navBar.rightBarButtonItems?.removeAll()
             self.navBar.title = self.username
-            self.getProfile()
             
-            if SharedData.username != "" && self.username == SharedData.username {
+            if SharedData.logged_in {
+                self.followButton.isHidden = self.username == SharedData.username
+            } else {
                 self.followButton.isHidden = true
             }
+            
+            self.getProfile()
         }
-        
+    }
+    
+    @objc func loginChanged() {
+        if self.myProfile {
+            if SharedData.logged_in {
+                // User logged in on My Profile
+                print("ProfileVC > loginChanged: User logged in on My Profile")
+                self.username = SharedData.username
+                self.getProfile()
+            } else {
+                // User logged out on My Profile
+                print("ProfileVC > loginChanged: User logged in on My Profile")
+                self.username = ""
+            }
+        } else {
+            if SharedData.logged_in {
+                // User logged in on another profile
+                print("ProfileVC > loginChanged: User logged in on another profile")
+                self.followButton.isHidden = self.username == SharedData.username
+            } else {
+                // User logged out on another profile
+                print("ProfileVC > loginChanged: User logged out on another profile")
+                self.followButton.isHidden = false
+            }
+        }
     }
     
     /*
@@ -81,7 +113,12 @@ class ProfileVC: UIViewController {
                     self.fullNameLabel.text = json["full_name"] as? String
                     self.usernameLabel.text = self.username
                     self.bioBox.text = json["user_bio"] as? String
-                    //self.isFollowed = json["following"]
+                    self.isFollowed = false /* json["following"] */
+                    if self.isFollowed {
+                        self.followButton.setTitle("Unfollow", for: [])
+                    } else {
+                        self.followButton.setTitle("Follow", for: [])
+                    }
                 }
             }
         }
