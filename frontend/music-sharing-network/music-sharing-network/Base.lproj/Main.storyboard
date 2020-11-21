@@ -189,7 +189,7 @@
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
                                             </state>
                                             <connections>
-                                                <segue destination="5CP-sn-39K" kind="show" id="Qta-d0-SSY"/>
+                                                <segue destination="5CP-sn-39K" kind="show" identifier="segueComments" id="IjW-Wo-RSh"/>
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE3-pq-qi9" userLabel="Song" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
@@ -421,13 +421,13 @@
         <!--Comments-->
         <scene sceneID="xQs-25-B6o">
             <objects>
-                <tableViewController id="5CP-sn-39K" userLabel="Comments" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CommentVC" id="5CP-sn-39K" userLabel="Comments" customClass="CommentVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="u1q-sf-j0a">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="103" id="nfK-gG-PRz">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="103" id="nfK-gG-PRz" customClass="CommentTableCell" customModule="music_sharing_network" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="103"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nfK-gG-PRz" id="uCd-il-xDo">
@@ -449,8 +449,20 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uug-67-VjM" userLabel="Timestamp Label">
+                                            <rect key="frame" x="352" y="7" width="38" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="commentContent" destination="m2j-4w-SlH" id="bmU-Ve-QOX"/>
+                                    <outlet property="timestampLabel" destination="Uug-67-VjM" id="13r-wc-7Jl"/>
+                                    <outlet property="usernameLabel" destination="cqA-gZ-UaA" id="rEe-NS-iYO"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -461,7 +473,7 @@
                     <navigationItem key="navigationItem" title="Comments" id="4x1-FE-0HA">
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="LZf-hB-GmO" userLabel="New Comment Button">
                             <connections>
-                                <segue destination="Ity-FG-bmJ" kind="show" id="hJf-KN-pUt"/>
+                                <segue destination="Ity-FG-bmJ" kind="show" identifier="segueNewComment" id="hJf-KN-pUt"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -473,7 +485,7 @@
         <!--New Comment-->
         <scene sceneID="GlS-sk-jiS">
             <objects>
-                <viewController title="New Comment" id="Ity-FG-bmJ" userLabel="New Comment" sceneMemberID="viewController">
+                <viewController title="New Comment" id="Ity-FG-bmJ" userLabel="New Comment" customClass="NewCommentVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="brb-fz-dwb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -496,8 +508,15 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="2JK-BN-vwe">
-                        <barButtonItem key="rightBarButtonItem" title="Submit" id="Bnc-AV-HDZ" userLabel="Submit Comment Button"/>
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="Bnc-AV-HDZ" userLabel="Submit Comment Button">
+                            <connections>
+                                <action selector="addComment:" destination="Ity-FG-bmJ" id="Ale-lV-1Kb"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="commentInput" destination="3bQ-5J-tyH" id="hA8-hF-l18"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bJM-cG-eBb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

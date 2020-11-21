@@ -8,6 +8,7 @@
 import UIKit
 
 class TimelineVC: UITableViewController {
+    
     var posts = [Post]()
     
     @IBOutlet weak var newPostButton: UIBarButtonItem!
@@ -70,7 +71,7 @@ class TimelineVC: UITableViewController {
                     let postList = json["posts"] as! [[String: Any]]
 
                     for postEntry in postList {
-                        self.posts.append(Post(identifier: postEntry["post_id"] as! String, timestamp: postEntry["timestamp"] as! String, owner: postEntry["owner"] as! String, media: postEntry["content"] as! String, message: postEntry["message"] as? String ?? postEntry["messsage"] as! String, likes: postEntry["num_likes"] as! Int, reposts: postEntry["num_reposts"] as! Int))
+                        self.posts.append(Post(identifier: postEntry["post_id"] as! String, timestamp: postEntry["timestamp"] as! String, owner: postEntry["owner"] as! String, media: postEntry["content"] as! String, message: postEntry["message"] as! String, likes: postEntry["num_likes"] as! Int, reposts: postEntry["num_reposts"] as! Int))
                     }
                     DispatchQueue.main.async {
                         self.tableView.rowHeight = UITableView.automaticDimension
@@ -118,8 +119,7 @@ class TimelineVC: UITableViewController {
         //Set num_likes for each post
         cell.likeButton.setTitle(String(post.likes), for: .normal)
         
-        //Need an endpoint to check if a post is liked by a user
-
+        //Update like button icon and count for UI
         cell.likeButtonAction = { () in
             if(cell.isLiked){
                 cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
@@ -132,5 +132,16 @@ class TimelineVC: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if (segue.identifier == "segueComments"){
+            if let button = sender as? UIButton {
+                let cell = button.superview?.superview as! TimelineTableCell
+                if let commentVC = segue.destination as? CommentVC{
+                    commentVC.identifier = cell.identifier!
+                }
+            }
+        }
     }
 }

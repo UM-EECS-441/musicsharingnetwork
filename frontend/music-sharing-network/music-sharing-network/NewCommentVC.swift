@@ -1,17 +1,17 @@
 //
-//  PostVC.swift
+//  NewCommentVC.swift
 //  music-sharing-network
 //
-//  Created by Andrew on 10/30/20.
+//  Created by Andrew on 11/20/20.
 //
 
 import UIKit
 
-class NewPostVC: UIViewController {
+class NewCommentVC: UIViewController {
     
-    @IBOutlet weak var songInput: UITextField!
-    @IBOutlet weak var artistInput: UITextField!
-    @IBOutlet weak var captionTextView: UITextView!
+    @IBOutlet weak var commentInput: UITextField!
+    
+    var identifier: String = ""
     
     override func viewDidLoad() {
 
@@ -22,15 +22,10 @@ class NewPostVC: UIViewController {
         SharedData.login(parentVC: self, completion: nil)
     }
     
-    @IBAction func cancelButtonHandler(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func addPost(_ sender: Any) {
-        // Send the song title and artist as the message text
-        
+
+    @IBAction func addComment(_ sender: Any) {
         // Serialize the username and password into JSON data
-        let json: [String: Any] = ["message": self.captionTextView.text ?? "", "content": (self.artistInput.text ?? "Artist") + ":" + (self.songInput.text ?? "Song"), "reply_to": 0]
+        let json: [String: Any] = ["message": self.commentInput.text ?? "", "reply_to": Int(self.identifier) ?? 0]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
@@ -46,14 +41,14 @@ class NewPostVC: UIViewController {
         SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
             // Check for errors
             guard let _ = data, error == nil else {
-                print("NewPostVC > addPost: NETWORKING ERROR")
+                print("NewCommentVC > addComment: NETWORKING ERROR")
                 return
             }
             
             if let httpResponse = response as? HTTPURLResponse {
                 // Check for errors
                 if httpResponse.statusCode != 201 {
-                    print("NewPostVC > addPost: HTTP STATUS: \(httpResponse.statusCode)")
+                    print("NewCommentVC > addComment: HTTP STATUS: \(httpResponse.statusCode)")
                     return
                 }
                 
@@ -63,4 +58,5 @@ class NewPostVC: UIViewController {
             }
         }
     }
+    
 }

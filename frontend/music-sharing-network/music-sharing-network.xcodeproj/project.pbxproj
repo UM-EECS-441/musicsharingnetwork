@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49213B8F2568C45C00E1CE75 /* NewCommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49213B8E2568C45C00E1CE75 /* NewCommentVC.swift */; };
+		4943E123256846BC0051C7F2 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4943E122256846BC0051C7F2 /* CommentVC.swift */; };
+		4943E12625684D140051C7F2 /* CommentTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4943E12525684D140051C7F2 /* CommentTableCell.swift */; };
+		4943E129256858050051C7F2 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4943E128256858050051C7F2 /* Comment.swift */; };
 		499D84A72566E665007D3A5E /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499D84A62566E665007D3A5E /* SpotifyiOS.framework */; };
 		49CF8E5A2551E7F50001F326 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E592551E7F50001F326 /* Post.swift */; };
 		49CF8E5D2551E8520001F326 /* TimelineTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CF8E5C2551E8520001F326 /* TimelineTableCell.swift */; };
@@ -39,6 +43,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		49213B8E2568C45C00E1CE75 /* NewCommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCommentVC.swift; sourceTree = "<group>"; };
+		4943E122256846BC0051C7F2 /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
+		4943E12525684D140051C7F2 /* CommentTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableCell.swift; sourceTree = "<group>"; };
+		4943E128256858050051C7F2 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		499D84A62566E665007D3A5E /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		499D84A92566E6EB007D3A5E /* MusicSharingNetwork-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MusicSharingNetwork-Bridging-Header.h"; sourceTree = "<group>"; };
 		49CF8E592551E7F50001F326 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -125,9 +133,13 @@
 			isa = PBXGroup;
 			children = (
 				49CF8E592551E7F50001F326 /* Post.swift */,
+				4943E128256858050051C7F2 /* Comment.swift */,
 				49CF8E5C2551E8520001F326 /* TimelineTableCell.swift */,
 				D87EF55425315311008EA46A /* TimelineVC.swift */,
 				49FC01C9254C9C0600223147 /* NewPostVC.swift */,
+				4943E122256846BC0051C7F2 /* CommentVC.swift */,
+				4943E12525684D140051C7F2 /* CommentTableCell.swift */,
+				49213B8E2568C45C00E1CE75 /* NewCommentVC.swift */,
 			);
 			name = Posts;
 			sourceTree = "<group>";
@@ -256,9 +268,12 @@
 				D881926625645BFB008003E7 /* NewMessageVC.swift in Sources */,
 				49CF8E5A2551E7F50001F326 /* Post.swift in Sources */,
 				D87EF55125315311008EA46A /* AppDelegate.swift in Sources */,
+				4943E123256846BC0051C7F2 /* CommentVC.swift in Sources */,
 				D8DF6E01254A1F6B005481D9 /* LoginVC.swift in Sources */,
 				D837777725489E17000C1D05 /* ExploreVC.swift in Sources */,
 				49CF8E5D2551E8520001F326 /* TimelineTableCell.swift in Sources */,
+				4943E12625684D140051C7F2 /* CommentTableCell.swift in Sources */,
+				49213B8F2568C45C00E1CE75 /* NewCommentVC.swift in Sources */,
 				D8B90084255210D900DBBD67 /* ExploreTableCell.swift in Sources */,
 				D8C546952551FE4A00F0B3E3 /* SongView.swift in Sources */,
 				49FC01CA254C9C0600223147 /* NewPostVC.swift in Sources */,
@@ -273,6 +288,7 @@
 				49CF8E6E2551EB210001F326 /* MessageViewVC.swift in Sources */,
 				D87A877F254B41E6005EBE3C /* SettingsVC.swift in Sources */,
 				49CF8E612551E9DB0001F326 /* Conversation.swift in Sources */,
+				4943E129256858050051C7F2 /* Comment.swift in Sources */,
 				49CF8E752551EBC00001F326 /* UserSearchVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
