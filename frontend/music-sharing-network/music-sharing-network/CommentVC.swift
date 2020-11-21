@@ -18,7 +18,7 @@ class CommentVC: UITableViewController {
         // Do any additional setup after loading the view.
         
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
-        self.getComments()
+        getComments()
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
@@ -51,7 +51,7 @@ class CommentVC: UITableViewController {
                     let commentList = json["replies"] as! [[String: Any]]
 
                     for commentEntry in commentList {
-                        self.comments.append(Comment(identifier: commentEntry["post_id"] as! String, timestamp: commentEntry["timestamp"] as! String, owner: commentEntry["owner"] as! String, message: commentEntry["messsage"] as! String))
+                        self.comments.append(Comment(identifier: commentEntry["post_id"] as! String, timestamp: commentEntry["timestamp"] as! String, owner: commentEntry["owner"] as! String, message: commentEntry["message"] as! String))
                     }
                     DispatchQueue.main.async {
                         self.tableView.rowHeight = UITableView.automaticDimension

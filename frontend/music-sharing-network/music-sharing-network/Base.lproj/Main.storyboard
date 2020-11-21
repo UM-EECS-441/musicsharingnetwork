@@ -427,36 +427,50 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="103" id="nfK-gG-PRz" customClass="CommentTableCell" customModule="music_sharing_network" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="103"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CommentTableCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableCell" rowHeight="139" id="nfK-gG-PRz" customClass="CommentTableCell" customModule="music_sharing_network" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="139"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nfK-gG-PRz" id="uCd-il-xDo">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="103"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="139"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqA-gZ-UaA" userLabel="Username Label">
-                                            <rect key="frame" x="20" y="0.0" width="98" height="34"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqA-gZ-UaA" userLabel="Username Label">
+                                            <rect key="frame" x="20" y="11" width="98" height="34"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="98" id="pSf-la-m7S"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is where a user's comment is shown." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2j-4w-SlH" userLabel="Comment Content">
-                                            <rect key="frame" x="20" y="42" width="374" height="41"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is where a user's comment is shown." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2j-4w-SlH" userLabel="Comment Content">
+                                            <rect key="frame" x="20" y="63" width="374" height="65"/>
                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="65" id="Yxr-wZ-Mtt"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uug-67-VjM" userLabel="Timestamp Label">
-                                            <rect key="frame" x="352" y="7" width="38" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uug-67-VjM" userLabel="Timestamp Label">
+                                            <rect key="frame" x="342" y="17" width="38" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="cqA-gZ-UaA" firstAttribute="top" secondItem="uCd-il-xDo" secondAttribute="topMargin" id="27q-dN-3gl"/>
+                                        <constraint firstItem="cqA-gZ-UaA" firstAttribute="centerY" secondItem="Uug-67-VjM" secondAttribute="centerY" id="GPv-9d-eYj"/>
+                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="top" secondItem="cqA-gZ-UaA" secondAttribute="bottom" constant="18" id="JIG-5e-OO2"/>
+                                        <constraint firstItem="cqA-gZ-UaA" firstAttribute="leading" secondItem="m2j-4w-SlH" secondAttribute="leading" id="PBB-ym-3jy"/>
+                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="trailing" secondItem="uCd-il-xDo" secondAttribute="trailingMargin" id="QSr-6J-Inv"/>
+                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="top" secondItem="Uug-67-VjM" secondAttribute="bottom" constant="24" id="WK3-9r-EgX"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Uug-67-VjM" secondAttribute="trailing" constant="14" id="jfz-dt-dad"/>
+                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="bottom" secondItem="uCd-il-xDo" secondAttribute="bottomMargin" id="qbG-K4-I6q"/>
+                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="leading" secondItem="uCd-il-xDo" secondAttribute="leadingMargin" id="ucd-Ty-l0i"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="commentContent" destination="m2j-4w-SlH" id="bmU-Ve-QOX"/>

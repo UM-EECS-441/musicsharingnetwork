@@ -71,7 +71,9 @@ class TimelineVC: UITableViewController {
                     let postList = json["posts"] as! [[String: Any]]
 
                     for postEntry in postList {
-                        self.posts.append(Post(identifier: postEntry["post_id"] as! String, timestamp: postEntry["timestamp"] as! String, owner: postEntry["owner"] as! String, media: postEntry["content"] as? String ?? "I done messed up with the comments", message: postEntry["message"] as? String ?? "How bad did I mess this up?", likes: postEntry["num_likes"] as! Int, reposts: postEntry["num_reposts"] as! Int))
+                        if postEntry["reply_to"] as? Int == 0 {
+                            self.posts.append(Post(identifier: postEntry["post_id"] as! String, timestamp: postEntry["timestamp"] as! String, owner: postEntry["owner"] as! String, media: postEntry["content"] as! String, message: postEntry["message"] as! String, likes: postEntry["num_likes"] as! Int, reposts: postEntry["num_reposts"] as! Int))
+                        }
                     }
                     DispatchQueue.main.async {
                         self.tableView.rowHeight = UITableView.automaticDimension
