@@ -22,7 +22,10 @@ class NewCommentVC: UIViewController {
         SharedData.login(parentVC: self, completion: nil)
     }
     
-
+    @IBAction func cancelButtonHandler(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func addComment(_ sender: Any) {
         // Serialize the username and password into JSON data
         let json: [String: Any] = ["message": self.commentInput.text ?? "", "reply_to": self.identifier]

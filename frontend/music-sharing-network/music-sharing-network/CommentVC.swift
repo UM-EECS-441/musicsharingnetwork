@@ -17,12 +17,12 @@ class CommentVC: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(CommentVC.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         getComments()
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        self.getComments()
+        getComments()
     }
     
     func getComments() {
