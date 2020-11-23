@@ -1,6 +1,6 @@
 # Code for vocab related functions. This script is run after split between train and test data is complete
-import helpers
-import constants
+import sentimentanalysis.helpers as helpers
+import sentimentanalysis.constants as constants
 
 def get_vocab(filename):
     # Returns a list of all words in all reviews

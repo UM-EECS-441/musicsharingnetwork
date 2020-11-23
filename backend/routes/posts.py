@@ -4,10 +4,13 @@ from . import routes
 from . import user_ref
 from . import post_ref
 from . import follow_ref
+from . import sentiment_model
+from . import sentiment_mapping
 from firebase_admin import firestore
 import datetime
+from sentimentanalysis import get_sentiment
 
-@routes.route('/posts/create', methods=['POST'])
+@routes.route('/posts/create/', methods=['POST'])
 def create_post():
     if 'username' not in flask.session:
         return flask.jsonify(**{'message': 'must be logged in to make a new post', 'url': flask.request.path}), 401
@@ -18,6 +21,13 @@ def create_post():
         return flask.jsonify(**{'message': 'must have associated content or be a reply', 'url': flask.request.path}), 400
 
     post_id = uuid.uuid4()
+    
+    if flask.request.json.get('message') is not None:
+        direction, score = get_sentiment(sentiment_model, sentiment_mapping, flask.request.json['message'])
+    else:
+        direction = None
+        score = None
+    
     data = {
         'post_id': str(post_id),
         'owner': username,
@@ -25,6 +35,8 @@ def create_post():
         'message': flask.request.json.get('message', None),
         'content': flask.request.json.get('content', None),
         'reply_to': flask.request.json.get('reply_to', None),
+        'sentiment_dir': direction,
+        'sentiment_score': score,
         'num_likes': 0,
         'num_reposts': 0
     }
@@ -52,7 +64,7 @@ def view_posts():
     return flask.jsonify(**context), 200
 
 
-@routes.route('/posts/<post_id>/', methods=['GET'])
+@routes.route('/posts/<post_id>/info/', methods=['GET'])
 def view_post(post_id):
     # retrieves all the information (including all replies) for a single post
     post = post_ref.document(post_id).get()
@@ -74,7 +86,7 @@ def view_post(post_id):
 
     return flask.jsonify(**{'post': post_dict, 'replies': replies}), 200
 
-@routes.route('/posts/<post_id>/like', methods=['POST'])
+@routes.route('/posts/<post_id>/like/', methods=['POST'])
 def update_like(post_id):
     #likes the post for the current user or unlikes it if they have already liked the post
     if 'username' not in flask.session:

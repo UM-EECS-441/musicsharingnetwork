@@ -9,7 +9,7 @@ from . import follow_ref
 from . import post_ref
 from routes.posts import add_liked_to_post
 
-@routes.route('/users/create', methods=['POST'])
+@routes.route('/users/create/', methods=['POST'])
 def create_user():
     """Creates a new user with the specified credentials and profile information."""
     if 'username' in flask.session:
@@ -64,7 +64,7 @@ def create_user():
     return flask.jsonify(**{'url': flask.request.path}), 201
 
 
-@routes.route('/users/password', methods = ['PATCH'])
+@routes.route('/users/password/', methods = ['PATCH'])
 def change_password():
     """Modify current user credentials (password)."""
     if 'username' not in flask.session:
@@ -126,7 +126,7 @@ def logout():
     return flask.jsonify(**{'url': flask.request.path}), 200
 
 
-@routes.route('/users/<target_user>/', methods = ['GET'])
+@routes.route('/users/<target_user>/info/', methods = ['GET'])
 def show_user(target_user):
     """Returns information about a user's profile to display. """
     # We allow non-authenticated users to view another user's profile.
@@ -162,7 +162,7 @@ def show_user(target_user):
     return flask.jsonify(**response), 200    
 
 
-@routes.route('/users/<target_user>/follow', methods = ['POST'])
+@routes.route('/users/<target_user>/follow/', methods = ['POST'])
 def update_follow(target_user):
     """Follows/Unfollows the specified user for the current user."""
     if 'username' not in flask.session:

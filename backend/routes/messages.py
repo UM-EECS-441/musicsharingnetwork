@@ -64,7 +64,7 @@ def send_message():
     return flask.jsonify(**{'message': message_data, 'url': flask.request.path}), 201
 
 # Returns all messages that belong to that conversation
-@routes.route('/messages/<conversation_id>/', methods=['GET'])
+@routes.route('/messages/<conversation_id>/info/', methods=['GET'])
 def get_conversation(conversation_id):
     if 'username' not in flask.session:
         return flask.jsonify(**{'message': 'must be logged in to view direct messages', 'url': flask.request.path}), 401

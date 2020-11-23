@@ -1,8 +1,8 @@
 # Functions necessary for integration with backend. No other file is necessary for backend integration.
-import helpers
+import sentimentanalysis.helpers as helpers
 import numpy as np
-import constants
-import svc
+import sentimentanalysis.constants as constants
+import sentimentanalysis.svc as svc
 
 
 def get_model():
@@ -21,6 +21,6 @@ def get_sentiment(model, mapping, reviewText):
     prediction = model.predict(encoding)
     theta = model.coef_[0]
     dot = np.dot(encoding[0], theta)
-    return prediction[0] == 1.0, dot
+    return bool(prediction[0] == 1.0), dot
 
 

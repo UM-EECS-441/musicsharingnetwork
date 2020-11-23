@@ -3,7 +3,7 @@ from string import punctuation
 import array
 import torch
 import pickle
-import constants
+import sentimentanalysis.constants as constants
 import random
 
 def get_words(review, separator=True):

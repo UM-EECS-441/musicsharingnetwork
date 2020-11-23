@@ -1,10 +1,10 @@
 # Code for developing our model
 
-import vocab as vocab_functions
-import helpers
+import sentimentanalysis.vocab as vocab_functions
+import sentimentanalysis.helpers as helpers
 import numpy as np
-from embedder import Embedder
-from model import Model
+from sentimentanalysis.embedder import Embedder
+from sentimentanalysis.model import Model
 import torch
 
 def process_reviews(filename, vocab):

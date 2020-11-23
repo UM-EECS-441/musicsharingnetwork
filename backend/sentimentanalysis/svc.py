@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.svm import SVC
-import helpers
-import constants
+import sentimentanalysis.helpers as helpers
+import sentimentanalysis.constants as constants
 
 def create_dictionary():
     # creates a mapping of words

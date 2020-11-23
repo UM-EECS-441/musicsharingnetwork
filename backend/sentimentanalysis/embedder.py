@@ -1,7 +1,7 @@
 # Code for Embedder class
 
-import vocab
-import helpers
+import sentimentanalysis.vocab as vocab
+import sentimentanalysis.helpers as helpers
 import numpy as np
 import torch
 

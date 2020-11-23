@@ -1,0 +1,3 @@
+from sentimentanalysis.integrate import get_model
+from sentimentanalysis.integrate import get_mapping
+from sentimentanalysis.integrate import get_sentiment

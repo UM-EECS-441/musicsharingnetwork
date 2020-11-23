@@ -1,0 +1,8 @@
+flask
+firebase_admin
+uuid
+scikit-learn
+matplotlib
+tensorflow
+keras
+torch
