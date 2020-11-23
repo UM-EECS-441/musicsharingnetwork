@@ -9,6 +9,7 @@ import UIKit
 
 class SettingsVC: UIViewController {
     
+    @IBOutlet weak var spotifyButton: UIButton!
     @IBOutlet weak var oldPasswordInput: UITextField!
     @IBOutlet weak var newPasswordInput: UITextField!
     
@@ -17,6 +18,39 @@ class SettingsVC: UIViewController {
         
         // Make sure the user is logged in
         SharedData.login(parentVC: self, completion: nil)
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("SettingsVC > spotifyButtonHandler: ERROR - Unable to get AppDelegate")
+            return
+        }
+        self.spotifyButton.isHidden = !appDelegate.sessionManager.isSpotifyAppInstalled
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.spotifyPlayerChanged), name: NSNotification.Name(rawValue: "spotifySessionChanged"), object: nil)
+        self.spotifyPlayerChanged()
+    }
+    
+    @objc func spotifyPlayerChanged() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("SongView > spotifyPlayerChanged: ERROR - Unable to get app delegate")
+            return
+        }
+        
+        if appDelegate.sessionManager.session == nil {
+            self.spotifyButton.setTitle("Connect to Spotify", for: [])
+        } else {
+            self.spotifyButton.setTitle("Disconnect from Spotify", for: [])
+        }
+    }
+    
+    @IBAction func spotifyButtonHandler(_ sender: Any) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("SettingsVC > spotifyButtonHandler: ERROR - Unable to get AppDelegate")
+            return
+        }
+
+        let scope: SPTScope = [.appRemoteControl]
+        appDelegate.sessionManager.initiateSession(with: scope, options: .default)
+        appDelegate.appRemote.authorizeAndPlayURI("")
     }
     
     @IBAction func saveButtonHandler(_ sender: Any) {

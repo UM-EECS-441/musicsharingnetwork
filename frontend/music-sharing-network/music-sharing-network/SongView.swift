@@ -39,6 +39,10 @@ class SongView: UIView {
         
         self.shareButton.isHidden = !SharedData.logged_in
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.spotifyPlayerChanged), name: NSNotification.Name(rawValue: "spotifySessionChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.spotifyStateChanged), name: NSNotification.Name(rawValue: "spotifyStateChanged"), object: nil)
+        
+        self.spotifyPlayerChanged()
     }
     
     func loadViewFromNib() -> UIView? {
@@ -49,6 +53,34 @@ class SongView: UIView {
     
     @objc func loginChanged() {
         self.shareButton.isHidden = !SharedData.logged_in
+    }
+    
+    @objc func spotifyPlayerChanged() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("SongView > spotifyPlayerChanged: ERROR - Unable to get app delegate")
+            return
+        }
+        
+        self.playButton.isHidden = appDelegate.sessionManager.session == nil
+    }
+    
+    @objc func spotifyStateChanged() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("SongView > spotifyStateChanged: ERROR - Unable to get app delegate")
+            return
+        }
+        
+        appDelegate.appRemote.playerAPI?.getPlayerState({ [weak self] (playerState, error) in
+            if let error = error {
+                print("Error getting player state:" + error.localizedDescription)
+            } else if let playerState = playerState as? SPTAppRemotePlayerState {
+                if playerState.track.uri == self?.song {
+                    self?.playButton.setImage(UIImage(systemName: "pause.fill"), for: [])
+                } else {
+                    self?.playButton.setImage(UIImage(systemName: "play.fill"), for: [])
+                }
+            }
+        })
     }
     
     @IBAction func shareButtonHandler(_ sender: Any) {

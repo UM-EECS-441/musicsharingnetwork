@@ -19,6 +19,15 @@ class SharedData {
         }
     }
     
+    static var appDelegate: AppDelegate {
+        get {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                fatalError("SharedData > appDelegate: ERROR - Unable to get app delegate")
+            }
+            return appDelegate
+        }
+    }
+    
     /*
      Send an HTTP request and wait for the response.
      */
