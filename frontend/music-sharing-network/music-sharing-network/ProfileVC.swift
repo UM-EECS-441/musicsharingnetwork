@@ -123,7 +123,7 @@ class ProfileVC: UIViewController {
                     self.fullNameLabel.text = json["full_name"] as? String
                     self.usernameLabel.text = self.username
                     self.bioBox.text = json["user_bio"] as? String
-                    self.isFollowed = false /* json["following"] */
+                    self.isFollowed = json["following"] as! Bool
                     if self.isFollowed {
                         self.followButton.setTitle("Unfollow", for: [])
                     } else {
