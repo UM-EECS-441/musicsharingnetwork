@@ -48,7 +48,6 @@
 		4943E12525684D140051C7F2 /* CommentTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableCell.swift; sourceTree = "<group>"; };
 		4943E128256858050051C7F2 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		499D84A62566E665007D3A5E /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
-		499D84A92566E6EB007D3A5E /* MusicSharingNetwork-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MusicSharingNetwork-Bridging-Header.h"; sourceTree = "<group>"; };
 		49CF8E592551E7F50001F326 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		49CF8E5C2551E8520001F326 /* TimelineTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTableCell.swift; sourceTree = "<group>"; };
 		49CF8E602551E9DB0001F326 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
@@ -61,6 +60,7 @@
 		49FC01C9254C9C0600223147 /* NewPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostVC.swift; sourceTree = "<group>"; };
 		D829752B254A80CE006C87BA /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		D837777625489E17000C1D05 /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
+		D875F8BA256B028B00244310 /* MusicSharingNetwork-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MusicSharingNetwork-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		D87A877E254B41E6005EBE3C /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		D87EF54D25315311008EA46A /* music-sharing-network.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "music-sharing-network.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D87EF55025315311008EA46A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,10 +93,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D875F8B8256AFF4F00244310 /* Spotify */ = {
+			isa = PBXGroup;
+			children = (
+				D875F8BA256B028B00244310 /* MusicSharingNetwork-Bridging-Header.h */,
+			);
+			name = Spotify;
+			sourceTree = "<group>";
+		};
 		D87EF54425315311008EA46A = {
 			isa = PBXGroup;
 			children = (
-				499D84A92566E6EB007D3A5E /* MusicSharingNetwork-Bridging-Header.h */,
 				D87EF54F25315311008EA46A /* music-sharing-network */,
 				D87EF54E25315311008EA46A /* Products */,
 			);
@@ -115,6 +122,7 @@
 			children = (
 				D87EF55025315311008EA46A /* AppDelegate.swift */,
 				D87EF55225315311008EA46A /* SceneDelegate.swift */,
+				D875F8B8256AFF4F00244310 /* Spotify */,
 				D89B80822551F58000004E7F /* Reusable Components */,
 				D89B807E2551F04900004E7F /* Users */,
 				D89B807C2551F00000004E7F /* Posts */,

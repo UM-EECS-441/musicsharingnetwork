@@ -47,6 +47,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+            fatalError("SceneDelegate > scene: ERROR - No URLs")
+        }
+        
+        print("SceneDelegate > scene: Opening from url '\(url)'")
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("SceneDelegate > scene: ERROR - Unable to get AppDelegate")
+        }
+        
+        appDelegate.sessionManager.application(UIApplication.shared, open: url, options: [:])
+    }
 }
 
