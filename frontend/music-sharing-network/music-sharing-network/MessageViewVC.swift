@@ -67,7 +67,7 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     func getMessages() {
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/messages/\(self.conversation!.identifier)/"
+        let requestURL = SharedData.baseURL + "/messages/\(self.conversation!.identifier)/info/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "GET"
@@ -173,7 +173,7 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/messages/send"
+        let requestURL = SharedData.baseURL + "/messages/send/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"

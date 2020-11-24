@@ -33,7 +33,7 @@ class TimelineTableCell: UITableViewCell {
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/\(self.identifier!)/like"
+        let requestURL = SharedData.baseURL + "/posts/\(self.identifier!)/like/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"

@@ -28,11 +28,11 @@ class NewCommentVC: UIViewController {
     
     @IBAction func addComment(_ sender: Any) {
         // Serialize the username and password into JSON data
-        let json: [String: Any] = ["message": self.commentInput.text ?? "", "reply_to": self.identifier]
+        let json: [String: Any] = ["message": self.commentInput.text ?? "", "content": "COMMENT", "reply_to": self.identifier]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/create"
+        let requestURL = SharedData.baseURL + "/posts/create/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"

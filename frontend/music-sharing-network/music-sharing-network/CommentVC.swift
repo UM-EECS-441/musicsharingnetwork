@@ -27,7 +27,7 @@ class CommentVC: UITableViewController {
     
     func getComments() {
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/\(self.identifier)/"
+        let requestURL = SharedData.baseURL + "/posts/\(self.identifier)/info/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "GET"

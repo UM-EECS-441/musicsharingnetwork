@@ -31,7 +31,7 @@ class NewPostVC: UIViewController {
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/create"
+        let requestURL = SharedData.baseURL + "/posts/create/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"

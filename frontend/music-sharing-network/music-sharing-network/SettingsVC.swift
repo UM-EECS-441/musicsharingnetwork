@@ -43,7 +43,7 @@ class SettingsVC: UIViewController {
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/password"
+        let requestURL = SharedData.baseURL + "/users/password/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "PATCH"
