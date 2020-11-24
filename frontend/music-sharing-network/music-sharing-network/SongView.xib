@@ -31,21 +31,21 @@
                     </constraints>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jnw-sq-9VJ">
-                    <rect key="frame" x="105" y="56.5" width="46" height="50"/>
+                    <rect key="frame" x="105" y="56.5" width="209" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGF-O6-aUV" userLabel="Song Label">
-                            <rect key="frame" x="0.0" y="0.0" width="46" height="25"/>
+                            <rect key="frame" x="0.0" y="0.0" width="209" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="25" id="44y-4F-ScU"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="44y-4F-ScU"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DpF-r3-S13" userLabel="Artist Label">
-                            <rect key="frame" x="0.0" y="25" width="46" height="25"/>
+                            <rect key="frame" x="0.0" y="25" width="209" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="25" id="4ZX-dE-XZG"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="4ZX-dE-XZG"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
@@ -54,8 +54,9 @@
                     </subviews>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b17-qr-ipe" userLabel="Play Button">
-                    <rect key="frame" x="366" y="69" width="18" height="25"/>
+                    <rect key="frame" x="369" y="69" width="25" height="25"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="25" id="3fp-Bj-WzL"/>
                         <constraint firstAttribute="height" constant="25" id="vCu-dt-B2A"/>
                     </constraints>
                     <state key="normal" image="play.fill" catalog="system">
@@ -63,9 +64,10 @@
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgN-XM-Dlo">
-                    <rect key="frame" x="323.5" y="69" width="22.5" height="25"/>
+                    <rect key="frame" x="329" y="69" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="deI-3v-Mqx"/>
+                        <constraint firstAttribute="width" constant="25" id="mPw-fz-w5U"/>
                     </constraints>
                     <state key="normal" image="square.and.arrow.up" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
@@ -80,13 +82,14 @@
             <constraints>
                 <constraint firstItem="N2Q-Wh-1Pi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="44K-AR-bED"/>
                 <constraint firstItem="SgN-XM-Dlo" firstAttribute="centerY" secondItem="N2Q-Wh-1Pi" secondAttribute="centerY" id="6H5-GV-Tsz"/>
-                <constraint firstItem="SgN-XM-Dlo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jnw-sq-9VJ" secondAttribute="trailing" id="6kY-Xe-yt1"/>
+                <constraint firstItem="SgN-XM-Dlo" firstAttribute="leading" secondItem="jnw-sq-9VJ" secondAttribute="trailing" constant="15" id="6kY-Xe-yt1"/>
+                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="jnw-sq-9VJ" secondAttribute="bottom" id="NOf-RV-ttr"/>
                 <constraint firstItem="b17-qr-ipe" firstAttribute="centerY" secondItem="N2Q-Wh-1Pi" secondAttribute="centerY" id="a8n-4V-rAy"/>
                 <constraint firstItem="jnw-sq-9VJ" firstAttribute="leading" secondItem="N2Q-Wh-1Pi" secondAttribute="trailing" constant="10" id="ami-v1-Pxi"/>
                 <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="N2Q-Wh-1Pi" secondAttribute="bottom" id="gRX-pa-UMH"/>
                 <constraint firstItem="N2Q-Wh-1Pi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="kUd-t9-m14"/>
-                <constraint firstAttribute="trailingMargin" secondItem="b17-qr-ipe" secondAttribute="trailing" constant="10" id="rW5-UI-6Cx"/>
-                <constraint firstItem="b17-qr-ipe" firstAttribute="leading" secondItem="SgN-XM-Dlo" secondAttribute="trailing" constant="20" id="v5Y-wc-d8I"/>
+                <constraint firstAttribute="trailingMargin" secondItem="b17-qr-ipe" secondAttribute="trailing" id="rW5-UI-6Cx"/>
+                <constraint firstItem="b17-qr-ipe" firstAttribute="leading" secondItem="SgN-XM-Dlo" secondAttribute="trailing" constant="15" id="v5Y-wc-d8I"/>
                 <constraint firstItem="jnw-sq-9VJ" firstAttribute="centerY" secondItem="N2Q-Wh-1Pi" secondAttribute="centerY" id="wkN-b6-bcd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

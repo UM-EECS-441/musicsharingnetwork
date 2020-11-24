@@ -261,10 +261,10 @@
             </objects>
             <point key="canvasLocation" x="4466.666666666667" y="-242.41071428571428"/>
         </scene>
-        <!--Select a Song-->
+        <!--Song Selection-->
         <scene sceneID="kbH-uF-PUM">
             <objects>
-                <viewController storyboardIdentifier="Song Selection" id="r54-va-YhU" customClass="SongSelectionVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="r54-va-YhU" userLabel="Song Selection" customClass="SongSelectionVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="26w-lC-9tg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -479,39 +479,37 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqA-gZ-UaA" userLabel="Username Label">
-                                            <rect key="frame" x="20" y="11" width="98" height="34"/>
+                                            <rect key="frame" x="20" y="11" width="98" height="20.5"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="98" id="pSf-la-m7S"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="98" id="pSf-la-m7S"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is where a user's comment is shown." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2j-4w-SlH" userLabel="Comment Content">
-                                            <rect key="frame" x="20" y="63" width="374" height="65"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is where a user's comment is shown." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2j-4w-SlH" userLabel="Comment Content">
+                                            <rect key="frame" x="20" y="51.5" width="374" height="76.5"/>
                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="65" id="Yxr-wZ-Mtt"/>
-                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uug-67-VjM" userLabel="Timestamp Label">
-                                            <rect key="frame" x="342" y="17" width="38" height="22"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uug-67-VjM" userLabel="Timestamp Label">
+                                            <rect key="frame" x="360.5" y="11" width="33.5" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="Uug-67-VjM" firstAttribute="centerY" secondItem="cqA-gZ-UaA" secondAttribute="centerY" id="0QP-h8-YDL"/>
                                         <constraint firstItem="cqA-gZ-UaA" firstAttribute="top" secondItem="uCd-il-xDo" secondAttribute="topMargin" id="27q-dN-3gl"/>
-                                        <constraint firstItem="cqA-gZ-UaA" firstAttribute="centerY" secondItem="Uug-67-VjM" secondAttribute="centerY" id="GPv-9d-eYj"/>
-                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="top" secondItem="cqA-gZ-UaA" secondAttribute="bottom" constant="18" id="JIG-5e-OO2"/>
+                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="top" secondItem="cqA-gZ-UaA" secondAttribute="bottom" constant="20" id="JIG-5e-OO2"/>
                                         <constraint firstItem="cqA-gZ-UaA" firstAttribute="leading" secondItem="m2j-4w-SlH" secondAttribute="leading" id="PBB-ym-3jy"/>
                                         <constraint firstItem="m2j-4w-SlH" firstAttribute="trailing" secondItem="uCd-il-xDo" secondAttribute="trailingMargin" id="QSr-6J-Inv"/>
-                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="top" secondItem="Uug-67-VjM" secondAttribute="bottom" constant="24" id="WK3-9r-EgX"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Uug-67-VjM" secondAttribute="trailing" constant="14" id="jfz-dt-dad"/>
+                                        <constraint firstItem="Uug-67-VjM" firstAttribute="bottom" secondItem="cqA-gZ-UaA" secondAttribute="bottom" id="boc-3i-xPk"/>
+                                        <constraint firstItem="Uug-67-VjM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cqA-gZ-UaA" secondAttribute="trailing" id="c9l-9d-iyE"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Uug-67-VjM" secondAttribute="trailing" id="jfz-dt-dad"/>
                                         <constraint firstItem="m2j-4w-SlH" firstAttribute="bottom" secondItem="uCd-il-xDo" secondAttribute="bottomMargin" id="qbG-K4-I6q"/>
                                         <constraint firstItem="m2j-4w-SlH" firstAttribute="leading" secondItem="uCd-il-xDo" secondAttribute="leadingMargin" id="ucd-Ty-l0i"/>
                                     </constraints>
@@ -543,7 +541,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yfh-21-4nE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4352.1739130434789" y="-947.54464285714278"/>
+            <point key="canvasLocation" x="4466.666666666667" y="-912.05357142857133"/>
         </scene>
         <!--New Comment-->
         <scene sceneID="GlS-sk-jiS">
@@ -594,7 +592,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bJM-cG-eBb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4350.7246376811599" y="-1633.2589285714284"/>
+            <point key="canvasLocation" x="4467" y="-1586"/>
         </scene>
         <!--User Search-->
         <scene sceneID="KE2-CX-YjU">
@@ -618,16 +616,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONH-Ym-2rj" userLabel="Username Label">
-                                            <rect key="frame" x="80" y="18" width="128" height="36"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                            <rect key="frame" x="60" y="14" width="87.5" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="OxT-lV-60Q" userLabel="Profile Photo">
-                                            <rect key="frame" x="20" y="11.5" width="50" height="49"/>
+                                            <rect key="frame" x="20" y="11.5" width="30" height="29"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="Fnw-Zl-IJW"/>
-                                                <constraint firstAttribute="height" constant="50" id="rOW-Fm-ETR"/>
+                                                <constraint firstAttribute="width" constant="30" id="Fnw-Zl-IJW"/>
+                                                <constraint firstAttribute="height" constant="30" id="rOW-Fm-ETR"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
