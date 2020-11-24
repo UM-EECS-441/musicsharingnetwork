@@ -59,6 +59,7 @@ class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         let song: String = self.results[indexPath.row]
         cell.songView.showSong(song: song, parentVC: self)
+        cell.songView.shareButton.isHidden = true
         
         return cell
     }

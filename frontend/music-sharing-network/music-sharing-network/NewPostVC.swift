@@ -20,6 +20,7 @@ class NewPostVC: UIViewController {
         // Do any additional setup after loading the view.
         
         self.songView.showSong(song: self.song!, parentVC: self)
+        self.songView.shareButton.isHidden = true
     }
     
     @IBAction func addPost(_ sender: Any) {
