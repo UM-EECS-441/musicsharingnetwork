@@ -97,7 +97,8 @@ class ProfileVC: UIViewController {
      */
     func getProfile() {
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/\(self.username)/"
+        print(self.username)
+        let requestURL = SharedData.baseURL + "/users/\(self.username)/info/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "GET"
@@ -123,7 +124,37 @@ class ProfileVC: UIViewController {
                     self.fullNameLabel.text = json["full_name"] as? String
                     self.usernameLabel.text = self.username
                     self.bioBox.text = json["user_bio"] as? String
-                    self.isFollowed = json["following"] as! Bool
+                    // If not logged in, causes error
+                    print(type(of: json["followed"] as? Bool))
+                    
+                    //var holder: Bool? = json["followed"] as? Bool
+                    
+                    /*
+                    if json["followed"] as? Bool == true {
+                        self.isFollowed = true
+                    } else if json["followed"] as? Bool == false {
+                        self.isFollowed = false
+                    } else {
+                        print("ERROR ERROR.")
+                    }
+                    */
+                    //var thing: Bool = false;
+                    //let thing: B
+                    /*
+                    if let thing = json["followed"] {
+                        print(thing)
+                        if thing == "YES" {
+                            self.isFollowed = true
+                        } else {
+                            self.isFollowed = false
+                        }
+                    } else {
+                        print("ERROR ERROR ERROR.")
+                    }
+                    */
+                    
+                    
+                    
                     if self.isFollowed {
                         self.followButton.setTitle("Unfollow", for: [])
                     } else {
@@ -135,6 +166,8 @@ class ProfileVC: UIViewController {
     }
     
     @IBAction func followTapped(_ sender: Any) {
+        
+        print("I went")
         
         self.isFollowed.toggle()
         
@@ -202,6 +235,8 @@ class ProfileVC: UIViewController {
             followButton.setTitle("Follow", for: [])
             
         }
+        
+        print("I finished")
     }
     
 }
