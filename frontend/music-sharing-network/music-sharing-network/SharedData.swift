@@ -18,6 +18,9 @@ class SharedData {
             !self.username.isEmpty
         }
     }
+    static let spotifyClientID: String = "c0a5c9b2c5b94d00b5599dd76b092414"
+    static let spotifyClientSecret: String = "225ff590d76d4d6db2168af29e627dd4"
+    static let spotifyCallbackURI: String = "music-sharing-network://spotify-login-callback"
     
     static var appDelegate: AppDelegate {
         get {

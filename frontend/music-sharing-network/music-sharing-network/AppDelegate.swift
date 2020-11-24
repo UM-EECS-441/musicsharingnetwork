@@ -43,8 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     
     // MARK: - Spotify Integration
     
-    private let SpotifyClientID = "c0a5c9b2c5b94d00b5599dd76b092414"
-    private let SpotifyRedirectURI = URL(string: "music-sharing-network://spotify-login-callback")!
+    private let SpotifyClientID = SharedData.spotifyClientID
+    private let SpotifyRedirectURI = URL(string: SharedData.spotifyCallbackURI)!
     
     lazy var configuration: SPTConfiguration = {
         let configuration = SPTConfiguration(clientID: SpotifyClientID, redirectURL: SpotifyRedirectURI)

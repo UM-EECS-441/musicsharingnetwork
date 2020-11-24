@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -33,7 +33,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jnw-sq-9VJ">
                     <rect key="frame" x="105" y="56.5" width="46" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGF-O6-aUV" userLabel="Song Label">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGF-O6-aUV" userLabel="Song Label">
                             <rect key="frame" x="0.0" y="0.0" width="46" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="25" id="44y-4F-ScU"/>
@@ -42,7 +42,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DpF-r3-S13" userLabel="Artist Label">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DpF-r3-S13" userLabel="Artist Label">
                             <rect key="frame" x="0.0" y="25" width="46" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="25" id="4ZX-dE-XZG"/>
@@ -85,7 +85,6 @@
                 <constraint firstItem="jnw-sq-9VJ" firstAttribute="leading" secondItem="N2Q-Wh-1Pi" secondAttribute="trailing" constant="10" id="ami-v1-Pxi"/>
                 <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="N2Q-Wh-1Pi" secondAttribute="bottom" id="gRX-pa-UMH"/>
                 <constraint firstItem="N2Q-Wh-1Pi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="kUd-t9-m14"/>
-                <constraint firstItem="jnw-sq-9VJ" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="N2Q-Wh-1Pi" secondAttribute="bottom" id="rR7-ig-oXO"/>
                 <constraint firstAttribute="trailingMargin" secondItem="b17-qr-ipe" secondAttribute="trailing" constant="10" id="rW5-UI-6Cx"/>
                 <constraint firstItem="b17-qr-ipe" firstAttribute="leading" secondItem="SgN-XM-Dlo" secondAttribute="trailing" constant="20" id="v5Y-wc-d8I"/>
                 <constraint firstItem="jnw-sq-9VJ" firstAttribute="centerY" secondItem="N2Q-Wh-1Pi" secondAttribute="centerY" id="wkN-b6-bcd"/>

@@ -99,10 +99,13 @@ class SongView: UIView {
         self.parentVC = parentVC
         self.song = song
         
-        let media = song.components(separatedBy: ":")
-        self.artistLabel.text = media.first
+        let data = SpotifyWebAPI.getTrack(uri: song)
+        
+        self.artistLabel.text = data.artist
         self.artistLabel.sizeToFit()
-        self.songLabel.text = media.last
+        self.songLabel.text = data.song
         self.songLabel.sizeToFit()
+        self.albumArtImageView.image = data.image
+        self.albumArtImageView.sizeToFit()
     }
 }
