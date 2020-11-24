@@ -9,6 +9,8 @@ import UIKit
 
 class ExploreVC: UITableViewController {
 
+    var recommendations = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -21,6 +23,56 @@ class ExploreVC: UITableViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
+    
+    func getRecommendations() {
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/recommendations/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        // Send the request and read the server's response
+        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != 200 {
+                    print("ExploreVC > getRecommendations: HTTP STATUS: \(httpResponse.statusCode)")
+                    DispatchQueue.main.async {
+                        self.refreshControl?.endRefreshing()
+                    }
+                    return
+                }
+
+                do {
+                    self.recommendations = [String]()
+                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                    let recList = json["songs"] as! [String]
+                    
+                    for recEntry in recList {
+                        self.recommendations.append(recEntry)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.rowHeight = UITableView.automaticDimension
+                        self.tableView.reloadData()
+                        self.refreshControl?.endRefreshing()
+                    }
+                } catch let error as NSError {
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     // MARK:- TableView handlers
 

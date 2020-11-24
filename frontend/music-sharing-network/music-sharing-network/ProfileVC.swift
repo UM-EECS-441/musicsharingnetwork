@@ -124,34 +124,20 @@ class ProfileVC: UIViewController {
                     self.fullNameLabel.text = json["full_name"] as? String
                     self.usernameLabel.text = self.username
                     self.bioBox.text = json["user_bio"] as? String
-                    // If not logged in, causes error
-                    print(type(of: json["followed"] as? Bool))
                     
-                    //var holder: Bool? = json["followed"] as? Bool
                     
-                    /*
-                    if json["followed"] as? Bool == true {
-                        self.isFollowed = true
-                    } else if json["followed"] as? Bool == false {
-                        self.isFollowed = false
+                    
+                    // HERE
+                    // Unexpectedly found nil while unwrapping
+                    let followed = json["followed"] as? Bool
+                    
+                    if followed == nil {
+                        print("ERROR: Something weird. ProfileVC")
+                        print(json["followed"])
+                        print(followed)
                     } else {
-                        print("ERROR ERROR.")
+                        self.isFollowed = followed!
                     }
-                    */
-                    //var thing: Bool = false;
-                    //let thing: B
-                    /*
-                    if let thing = json["followed"] {
-                        print(thing)
-                        if thing == "YES" {
-                            self.isFollowed = true
-                        } else {
-                            self.isFollowed = false
-                        }
-                    } else {
-                        print("ERROR ERROR ERROR.")
-                    }
-                    */
                     
                     
                     
@@ -166,8 +152,6 @@ class ProfileVC: UIViewController {
     }
     
     @IBAction func followTapped(_ sender: Any) {
-        
-        print("I went")
         
         self.isFollowed.toggle()
         
@@ -235,8 +219,6 @@ class ProfileVC: UIViewController {
             followButton.setTitle("Follow", for: [])
             
         }
-        
-        print("I finished")
     }
     
 }
