@@ -8,7 +8,7 @@
 import UIKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate, SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -30,88 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if let _ = self.appRemote.connectionParameters.accessToken {
-            self.appRemote.connect()
-        }
+        SpotifyPlayer.shared.applicationDidBecomeActive()
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        if self.appRemote.isConnected {
-            self.appRemote.disconnect()
-        }
+        SpotifyPlayer.shared.applicationWillResignActive()
     }
     
-    // MARK: - Spotify Integration
-    
-    private let SpotifyClientID = SharedData.spotifyClientID
-    private let SpotifyRedirectURI = URL(string: SharedData.spotifyCallbackURI)!
-    
-    lazy var configuration: SPTConfiguration = {
-        let configuration = SPTConfiguration(clientID: SpotifyClientID, redirectURL: SpotifyRedirectURI)
-        // Set the playURI to a non-nil value so that Spotify plays music after authenticating and App Remote can connect
-        // otherwise another app switch will be required
-        configuration.playURI = ""
-        
-        // Set these url's to your backend which contains the secret to exchange for an access token
-        // You can use the provided ruby script spotify_token_swap.rb for testing purposes
-        configuration.tokenSwapURL = URL(string: "http://10.0.0.185:1234/swap")
-        configuration.tokenRefreshURL = URL(string: "http://10.0.0.185:1234/refresh")
-        return configuration
-    }()
-    
-    lazy var sessionManager: SPTSessionManager = {
-        let manager = SPTSessionManager(configuration: configuration, delegate: self)
-        return manager
-    }()
-    
-    func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
-        print("Spotify session failed")
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "spotifySessionChanged"), object: nil)
-    }
-
-    func sessionManager(manager: SPTSessionManager, didRenew session: SPTSession) {
-        print("Spotify session renewed")
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "spotifySessionChanged"), object: nil)
-    }
-
-    func sessionManager(manager: SPTSessionManager, didInitiate session: SPTSession) {
-        print("Spotify session succeeded")
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "spotifySessionChanged"), object: nil)
-    }
-    
-    lazy var appRemote: SPTAppRemote = {
-        let appRemote = SPTAppRemote(configuration: configuration, logLevel: .debug)
-        appRemote.delegate = self
-        return appRemote
-    }()
-    
-    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
-        print("Spotify player connected")
-        // Connection was successful, you can begin issuing commands
-        self.appRemote.playerAPI?.delegate = self
-        self.appRemote.playerAPI?.subscribe(toPlayerState: { (result, error) in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-            }
-        })
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "spotifyPlayerChanged"), object: nil)
-    }
-    
-    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
-        print("Spotify player disconnected")
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "spotifyPlayerChanged"), object: nil)
-    }
-    
-    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
-        print("Spotify player failed")
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "spotifyPlayerChanged"), object: nil)
-    }
-    
-    func playerStateDidChange(_ playerState: SPTAppRemotePlayerState) {
-        print("Spotify player state changed")
-        debugPrint("Track name: %@", playerState.track.name)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "spotifyStateChanged"), object: nil)
-    }
 }
 

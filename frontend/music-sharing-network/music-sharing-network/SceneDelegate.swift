@@ -54,11 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         print("SceneDelegate > scene: Opening from url '\(url)'")
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError("SceneDelegate > scene: ERROR - Unable to get AppDelegate")
-        }
-        
-        appDelegate.sessionManager.application(UIApplication.shared, open: url, options: [:])
+        SpotifyPlayer.shared.sessionManager.application(UIApplication.shared, open: url, options: [:])
     }
 }
 

@@ -16,26 +16,14 @@ class SettingsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Make sure the user is logged in
-        SharedData.login(parentVC: self, completion: nil)
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("SettingsVC > spotifyButtonHandler: ERROR - Unable to get AppDelegate")
-            return
-        }
-        self.spotifyButton.isHidden = !appDelegate.sessionManager.isSpotifyAppInstalled
+        self.spotifyButton.isHidden = !SpotifyPlayer.shared.sessionManager.isSpotifyAppInstalled
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.spotifyPlayerChanged), name: NSNotification.Name(rawValue: "spotifySessionChanged"), object: nil)
         self.spotifyPlayerChanged()
     }
     
     @objc func spotifyPlayerChanged() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("SongView > spotifyPlayerChanged: ERROR - Unable to get app delegate")
-            return
-        }
-        
-        if appDelegate.sessionManager.session == nil {
+        if SpotifyPlayer.shared.sessionManager.session == nil {
             self.spotifyButton.setTitle("Connect to Spotify", for: [])
         } else {
             self.spotifyButton.setTitle("Disconnect from Spotify", for: [])
@@ -43,14 +31,10 @@ class SettingsVC: UIViewController {
     }
     
     @IBAction func spotifyButtonHandler(_ sender: Any) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("SettingsVC > spotifyButtonHandler: ERROR - Unable to get AppDelegate")
-            return
-        }
 
         let scope: SPTScope = [.appRemoteControl]
-        appDelegate.sessionManager.initiateSession(with: scope, options: .default)
-        appDelegate.appRemote.authorizeAndPlayURI("")
+        SpotifyPlayer.shared.sessionManager.initiateSession(with: scope, options: .default)
+        SpotifyPlayer.shared.appRemote.authorizeAndPlayURI("")
     }
     
     @IBAction func saveButtonHandler(_ sender: Any) {

@@ -56,21 +56,12 @@ class SongView: UIView {
     }
     
     @objc func spotifyPlayerChanged() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("SongView > spotifyPlayerChanged: ERROR - Unable to get app delegate")
-            return
-        }
-        
-        self.playButton.isHidden = appDelegate.sessionManager.session == nil
+        self.playButton.isHidden = SpotifyPlayer.shared.sessionManager.session == nil
     }
     
     @objc func spotifyStateChanged() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("SongView > spotifyStateChanged: ERROR - Unable to get app delegate")
-            return
-        }
         
-        appDelegate.appRemote.playerAPI?.getPlayerState({ [weak self] (playerState, error) in
+        SpotifyPlayer.shared.appRemote.playerAPI?.getPlayerState({ [weak self] (playerState, error) in
             if let error = error {
                 print("Error getting player state:" + error.localizedDescription)
             } else if let playerState = playerState as? SPTAppRemotePlayerState {
