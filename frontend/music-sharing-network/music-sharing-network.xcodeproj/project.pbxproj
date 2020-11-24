@@ -103,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				D875F8BA256B028B00244310 /* MusicSharingNetwork-Bridging-Header.h */,
+				D81F29D7256C7C0600A48B43 /* SpotifyWebAPI.swift */,
 			);
 			name = Spotify;
 			sourceTree = "<group>";
@@ -203,7 +204,6 @@
 				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
 				D8C546972551FE8200F0B3E3 /* SongView.xib */,
 				D8C546942551FE4A00F0B3E3 /* SongView.swift */,
-				D81F29D7256C7C0600A48B43 /* SpotifyWebAPI.swift */,
 			);
 			name = "Reusable Components";
 			sourceTree = "<group>";

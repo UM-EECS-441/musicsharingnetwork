@@ -9,7 +9,7 @@ import UIKit
 
 class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var results: [String] = ["spotify:track:4eGHlplaq1ME8oetnTuFFf", "spotify:track:4svkPL62HbvyFgf0nHFXAF"]
+    var results: [String] = [String]()
     
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var searchInput: UITextField!
@@ -76,7 +76,7 @@ class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     @IBAction func executeSearch(_ sender: Any) {
-        self.results = ["spotify:track:4eGHlplaq1ME8oetnTuFFf", "spotify:track:4svkPL62HbvyFgf0nHFXAF"]
+        self.results = SpotifyWebAPI.search(query: self.searchInput.text ?? "")
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.reloadData()
         
