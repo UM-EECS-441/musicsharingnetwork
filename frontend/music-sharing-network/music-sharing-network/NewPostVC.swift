@@ -9,8 +9,9 @@ import UIKit
 
 class NewPostVC: UIViewController {
     
-    @IBOutlet weak var songInput: UITextField!
-    @IBOutlet weak var artistInput: UITextField!
+    var song: String?
+    
+    @IBOutlet weak var songView: SongView!
     @IBOutlet weak var captionTextView: UITextView!
     
     override func viewDidLoad() {
@@ -18,19 +19,14 @@ class NewPostVC: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        // Prompt the user to login if they have not already
-        SharedData.login(parentVC: self, completion: nil)
-    }
-    
-    @IBAction func cancelButtonHandler(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        self.songView.showSong(song: self.song!, parentVC: self)
     }
     
     @IBAction func addPost(_ sender: Any) {
         // Send the song title and artist as the message text
         
         // Serialize the username and password into JSON data
-        let json: [String: Any] = ["message": self.captionTextView.text ?? "", "content": (self.artistInput.text ?? "Artist") + ":" + (self.songInput.text ?? "Song"), "reply_to": 0]
+        let json: [String: Any] = ["message": self.captionTextView.text ?? "", "content": self.song!, "reply_to": 0]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
