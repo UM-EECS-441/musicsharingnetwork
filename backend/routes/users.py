@@ -200,6 +200,21 @@ def update_follow(target_user):
     # returns true if a follow occurred/false if an unfollow occurred
     return flask.jsonify(**{'url': flask.request.path, 'followed': followed}), 200
 
+@routes.route('/users/search/', methods = ['GET'])
+def search_users():
+    """Returns a list of usernames that start with the specified prefix"""
+    if 'prefix' not in flask.request.json:
+        return flask.jsonify(** {'message': 'no prefix specified for search', 'url': flask.request.path}), 400
+    
+    prefix = flask.request.json['prefix'].lower()
+    if len(prefix) == 0:
+        username_list = [doc.to_dict()['username'] for doc in user_ref.stream()]
+    else:
+        end_prefix = prefix[:-1] + chr(ord(prefix[-1]) + 1)
+        username_list = [doc.to_dict()['username'] for doc in user_ref.where('username', '>=', prefix).where('username', '<', end_prefix).stream()]
+
+    return flask.jsonify(**{'usernames': username_list, 'url': flask.request.path}), 200
+
 def hash_password(password):
     """Hash password for database storage."""
     algorithm = 'sha512'
