@@ -54,11 +54,10 @@ class CreateProfileVC: UIViewController {
                 }
             }
         }
-        //SharedData.username = usernameInput.text ?? ""
-        dismiss(animated: false, completion: {
-            self.presentingController?.dismiss(animated: false)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
-        })
+        SharedData.username = usernameInput.text ?? ""
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        self.navigationController?.popViewController(animated: true)
+        self.presentingController?.dismiss(animated: false)
     }
     
 }
