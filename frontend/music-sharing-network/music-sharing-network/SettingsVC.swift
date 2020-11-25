@@ -17,24 +17,6 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
         
         self.spotifyButton.isHidden = !SpotifyPlayer.shared.sessionManager.isSpotifyAppInstalled
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.spotifyPlayerChanged), name: NSNotification.Name(rawValue: "spotifySessionChanged"), object: nil)
-        self.spotifyPlayerChanged()
-    }
-    
-    @objc func spotifyPlayerChanged() {
-        if SpotifyPlayer.shared.sessionManager.session == nil {
-            self.spotifyButton.setTitle("Connect to Spotify", for: [])
-        } else {
-            self.spotifyButton.setTitle("Disconnect from Spotify", for: [])
-        }
-    }
-    
-    @IBAction func spotifyButtonHandler(_ sender: Any) {
-
-        let scope: SPTScope = [.appRemoteControl]
-        SpotifyPlayer.shared.sessionManager.initiateSession(with: scope, options: .default)
-        SpotifyPlayer.shared.appRemote.authorizeAndPlayURI("")
     }
     
     @IBAction func saveButtonHandler(_ sender: Any) {

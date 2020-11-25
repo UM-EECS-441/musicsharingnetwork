@@ -62,6 +62,9 @@
                     <state key="normal" image="play.fill" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
                     </state>
+                    <connections>
+                        <action selector="playButtonHandler:" destination="-1" eventType="touchUpInside" id="EiP-4C-zdI"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgN-XM-Dlo">
                     <rect key="frame" x="329" y="69" width="25" height="25"/>

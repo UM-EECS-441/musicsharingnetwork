@@ -15,6 +15,9 @@ class SongView: UIView {
     var song: String?
     weak var parentVC: UIViewController?
     
+    static var firstSong = true
+    var playing = false
+    
     @IBOutlet weak var albumArtImageView: UIImageView!
     @IBOutlet weak var songLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
@@ -39,10 +42,6 @@ class SongView: UIView {
         
         self.shareButton.isHidden = !SharedData.logged_in
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.spotifyPlayerChanged), name: NSNotification.Name(rawValue: "spotifySessionChanged"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.spotifyStateChanged), name: NSNotification.Name(rawValue: "spotifyStateChanged"), object: nil)
-        
-        self.spotifyPlayerChanged()
     }
     
     func loadViewFromNib() -> UIView? {
@@ -55,12 +54,7 @@ class SongView: UIView {
         self.shareButton.isHidden = !SharedData.logged_in
     }
     
-    @objc func spotifyPlayerChanged() {
-        self.playButton.isHidden = SpotifyPlayer.shared.sessionManager.session == nil
-    }
-    
     @objc func spotifyStateChanged() {
-        
         SpotifyPlayer.shared.appRemote.playerAPI?.getPlayerState({ [weak self] (playerState, error) in
             if let error = error {
                 print("Error getting player state:" + error.localizedDescription)
@@ -79,6 +73,42 @@ class SongView: UIView {
         let newMessageVC = storyBoard.instantiateViewController(withIdentifier: "ShareSongVC") as! ShareSongVC
         newMessageVC.song = self.song
         self.parentVC?.present(newMessageVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func playButtonHandler(_ sender: Any) {
+        if SongView.firstSong {
+            let scope: SPTScope = [.appRemoteControl]
+            SpotifyPlayer.shared.sessionManager.initiateSession(with: scope, options: .default)
+            SpotifyPlayer.shared.appRemote.authorizeAndPlayURI(self.song ?? "")
+            
+            // TODO: Set callback for player state change
+            SongView.firstSong = false
+        } else {
+            if self.playing {
+                SpotifyPlayer.shared.appRemote.playerAPI?.pause { (result, error) in
+                    self.playButton.setImage(UIImage(systemName: "play.fill"), for: [])
+                    self.playing = false
+                }
+            } else {
+                SpotifyPlayer.shared.appRemote.playerAPI?.getPlayerState({ [weak self] (playerState, error) in
+                    if let error = error {
+                        print("Error getting player state:" + error.localizedDescription)
+                    } else if let playerState = playerState as? SPTAppRemotePlayerState {
+                        if playerState.track.uri == self?.song {
+                            SpotifyPlayer.shared.appRemote.playerAPI?.resume { (result, error) in
+                                self?.playButton.setImage(UIImage(systemName: "pause.fill"), for: [])
+                                self?.playing = true
+                            }
+                        } else {
+                            SpotifyPlayer.shared.appRemote.playerAPI?.play((self?.song)!, asRadio: false) { (result, error) in
+                                self?.playButton.setImage(UIImage(systemName: "pause.fill"), for: [])
+                                self?.playing = true
+                            }
+                        }
+                    }
+                })
+            }
+        }
     }
     
     /**
