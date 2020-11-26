@@ -15,8 +15,6 @@ class SettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.spotifyButton.isHidden = !SpotifyPlayer.shared.sessionManager.isSpotifyAppInstalled
     }
     
     @IBAction func saveButtonHandler(_ sender: Any) {

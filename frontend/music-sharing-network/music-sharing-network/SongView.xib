@@ -13,9 +13,9 @@
             <connections>
                 <outlet property="albumArtImageView" destination="N2Q-Wh-1Pi" id="GFz-9w-DBg"/>
                 <outlet property="artistLabel" destination="DpF-r3-S13" id="SQn-xq-v7O"/>
-                <outlet property="playButton" destination="b17-qr-ipe" id="DCn-G3-as9"/>
                 <outlet property="shareButton" destination="SgN-XM-Dlo" id="gsN-3a-fKy"/>
                 <outlet property="songLabel" destination="RGF-O6-aUV" id="1jq-FF-QFk"/>
+                <outlet property="speakerButton" destination="b17-qr-ipe" id="DCn-G3-as9"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -53,17 +53,17 @@
                         </label>
                     </subviews>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b17-qr-ipe" userLabel="Play Button">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b17-qr-ipe" userLabel="Speaker Button">
                     <rect key="frame" x="369" y="69" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="25" id="3fp-Bj-WzL"/>
                         <constraint firstAttribute="height" constant="25" id="vCu-dt-B2A"/>
                     </constraints>
-                    <state key="normal" image="play.fill" catalog="system">
+                    <state key="normal" image="SpotifyIcon">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
                     </state>
                     <connections>
-                        <action selector="playButtonHandler:" destination="-1" eventType="touchUpInside" id="EiP-4C-zdI"/>
+                        <action selector="speakerButtonHandler:" destination="-1" eventType="touchUpInside" id="EiP-4C-zdI"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgN-XM-Dlo">
@@ -100,8 +100,8 @@
         </view>
     </objects>
     <resources>
+        <image name="SpotifyIcon" width="354.5" height="354.5"/>
         <image name="photo" catalog="system" width="128" height="93"/>
-        <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

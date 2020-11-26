@@ -58,7 +58,8 @@ class SpotifyWebAPI {
         }
     }
     
-    static func getTrack(uri: String) -> (image: UIImage, song: String, artist: String) {
+    static func getTrack(uri: String) -> (link: String, image: UIImage, song: String, artist: String) {
+        var link: String = "https://open.spotify.com"
         var image: UIImage = UIImage(systemName: "photo")!
         var song: String = "Unknown Song"
         var artist: String = "Unknown Artist"
@@ -66,12 +67,12 @@ class SpotifyWebAPI {
         if self.token == nil || self.expires == nil || self.expires! < Date() {
             self.authenticate()
             if self.token == nil || self.expires == nil || self.expires! < Date() {
-                return (image, song, artist)
+                return (link, image, song, artist)
             }
         }
         
         guard let id = uri.components(separatedBy: ":").last?.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
-            return (image, song, artist)
+            return (link, image, song, artist)
         }
         
         // Build an HTTP request
@@ -99,6 +100,12 @@ class SpotifyWebAPI {
                 
                 do {
                     let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                    
+                    if let external_urls = json["external_urls"] as? [String: Any] {
+                        if let spotifyLink = external_urls["spotify"] as? String {
+                            link = spotifyLink
+                        }
+                    }
                     
                     if let artists = json["artists"] as? [Any] {
                         if artists.count > 0 {
@@ -135,7 +142,7 @@ class SpotifyWebAPI {
             }
         }
         
-        return (image, song, artist)
+        return (link, image, song, artist)
     }
     
     static func search(query: String) -> [String] {

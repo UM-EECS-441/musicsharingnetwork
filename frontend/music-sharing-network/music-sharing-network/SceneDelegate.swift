@@ -46,15 +46,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else {
-            fatalError("SceneDelegate > scene: ERROR - No URLs")
-        }
-        
-        print("SceneDelegate > scene: Opening from url '\(url)'")
-        
-        SpotifyPlayer.shared.sessionManager.application(UIApplication.shared, open: url, options: [:])
-    }
+    
 }
 
