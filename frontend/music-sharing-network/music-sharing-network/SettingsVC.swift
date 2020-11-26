@@ -9,7 +9,6 @@ import UIKit
 
 class SettingsVC: UIViewController {
     
-    @IBOutlet weak var spotifyButton: UIButton!
     @IBOutlet weak var oldPasswordInput: UITextField!
     @IBOutlet weak var newPasswordInput: UITextField!
     

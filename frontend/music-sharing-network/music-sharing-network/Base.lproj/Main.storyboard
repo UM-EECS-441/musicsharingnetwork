@@ -247,7 +247,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is where the post's text is shown" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFU-ZO-Yfb" userLabel="Post Content">
-                                            <rect key="frame" x="20" y="166.5" width="374" height="20.5"/>
+                                            <rect key="frame" x="20" y="167" width="374" height="20"/>
                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -282,7 +282,7 @@
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE3-pq-qi9" userLabel="Song" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="56" width="374" height="90.5"/>
+                                            <rect key="frame" x="20" y="56" width="374" height="91"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="fbX-jD-6Fc"/>
@@ -329,7 +329,7 @@
                     <navigationItem key="navigationItem" title="Timeline" id="hPq-em-KOB">
                         <barButtonItem key="leftBarButtonItem" image="magnifyingglass" catalog="system" id="GAR-Bd-CtQ" userLabel="Search Button">
                             <connections>
-                                <segue destination="tuf-6g-LIu" kind="show" id="vZA-2J-NV6"/>
+                                <segue destination="B8w-n8-zqy" kind="show" id="oqq-NF-I9c"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="Lzn-e9-qwi" userLabel="New Post Button">
@@ -367,18 +367,18 @@
                                 </connections>
                             </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fZg-aG-VFn">
-                                <rect key="frame" x="20" y="130" width="374" height="658"/>
+                                <rect key="frame" x="0.0" y="130" width="414" height="678"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SongSelectionTableCell" rowHeight="133" id="Yup-4F-Obm" customClass="SongSelectionTableCell" customModule="music_sharing_network" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="374" height="133"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="133"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yup-4F-Obm" id="3Hw-3R-qLl">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="133"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="133"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="luG-zS-Lmg" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="11" width="334" height="75"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="75"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="75" id="Mnm-fH-gSl"/>
@@ -402,11 +402,11 @@
                         <viewLayoutGuide key="safeArea" id="1aA-JS-KfU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="1aA-JS-KfU" firstAttribute="bottom" secondItem="fZg-aG-VFn" secondAttribute="bottom" constant="20" id="0Iw-7M-MCA"/>
-                            <constraint firstItem="fZg-aG-VFn" firstAttribute="leading" secondItem="26w-lC-9tg" secondAttribute="leadingMargin" id="BGd-5L-Eoq"/>
+                            <constraint firstItem="1aA-JS-KfU" firstAttribute="bottom" secondItem="fZg-aG-VFn" secondAttribute="bottom" id="0Iw-7M-MCA"/>
+                            <constraint firstItem="fZg-aG-VFn" firstAttribute="leading" secondItem="1aA-JS-KfU" secondAttribute="leading" id="BGd-5L-Eoq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5mm-Ba-XdX" secondAttribute="trailing" id="G8u-FW-RRc"/>
                             <constraint firstItem="fZg-aG-VFn" firstAttribute="top" secondItem="5mm-Ba-XdX" secondAttribute="bottom" constant="20" id="KsK-cu-uhl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="fZg-aG-VFn" secondAttribute="trailing" id="bWh-qQ-mTG"/>
+                            <constraint firstItem="1aA-JS-KfU" firstAttribute="trailing" secondItem="fZg-aG-VFn" secondAttribute="trailing" id="bWh-qQ-mTG"/>
                             <constraint firstItem="5mm-Ba-XdX" firstAttribute="top" secondItem="1aA-JS-KfU" secondAttribute="top" constant="20" id="m94-vN-x3g"/>
                             <constraint firstItem="5mm-Ba-XdX" firstAttribute="leading" secondItem="26w-lC-9tg" secondAttribute="leadingMargin" id="zVn-1G-orp"/>
                         </constraints>
@@ -683,66 +683,86 @@
             </objects>
             <point key="canvasLocation" x="4467" y="-1586"/>
         </scene>
-        <!--User Search-->
-        <scene sceneID="KE2-CX-YjU">
+        <!--Search Users-->
+        <scene sceneID="oOu-IJ-lXE">
             <objects>
-                <tableViewController title="User Search" id="tuf-6g-LIu" userLabel="User Search" customClass="UserSearchVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="f0h-yL-Gk4">
+                <viewController id="B8w-n8-zqy" customClass="UserSearchVC" customModule="music_sharing_network" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q4W-Xk-cag">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search users by username" id="GeM-SI-f81">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </searchBar>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="UserSearchTableCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserSearchTableCell" rowHeight="82" id="zFJ-Rv-RI8" userLabel="UserSearchCell" customClass="UserSearchTableCell" customModule="music_sharing_network" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="414" height="82"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zFJ-Rv-RI8" id="dfk-PZ-3lJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONH-Ym-2rj" userLabel="Username Label">
-                                            <rect key="frame" x="60" y="14" width="87.5" height="24"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="OxT-lV-60Q" userLabel="Profile Photo">
-                                            <rect key="frame" x="20" y="11.5" width="30" height="29"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="30" id="Fnw-Zl-IJW"/>
-                                                <constraint firstAttribute="height" constant="30" id="rOW-Fm-ETR"/>
-                                            </constraints>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="OxT-lV-60Q" firstAttribute="leading" secondItem="dfk-PZ-3lJ" secondAttribute="leadingMargin" id="LF8-jW-6lz"/>
-                                        <constraint firstItem="ONH-Ym-2rj" firstAttribute="centerY" secondItem="OxT-lV-60Q" secondAttribute="centerY" id="VmZ-3z-eVG"/>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="OxT-lV-60Q" secondAttribute="bottom" id="gbb-0d-Wg6"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ONH-Ym-2rj" secondAttribute="trailing" id="i8x-ob-NZr"/>
-                                        <constraint firstItem="OxT-lV-60Q" firstAttribute="top" secondItem="dfk-PZ-3lJ" secondAttribute="topMargin" id="mUP-Ad-kCb"/>
-                                        <constraint firstItem="ONH-Ym-2rj" firstAttribute="leading" secondItem="OxT-lV-60Q" secondAttribute="trailing" constant="10" id="zbm-dU-exU"/>
-                                    </constraints>
-                                </tableViewCellContentView>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search by username..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gts-5b-if7">
+                                <rect key="frame" x="20" y="108" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
-                                    <outlet property="profilePhoto" destination="OxT-lV-60Q" id="OMp-r4-xn0"/>
-                                    <outlet property="usernameLabel" destination="ONH-Ym-2rj" id="chK-XJ-1fp"/>
+                                    <action selector="executeSearch:" destination="B8w-n8-zqy" eventType="primaryActionTriggered" id="Cw6-gn-8CU"/>
                                 </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="tuf-6g-LIu" id="GmN-J1-QcT"/>
-                            <outlet property="delegate" destination="tuf-6g-LIu" id="X7r-eA-egx"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Search Users" id="eY7-Z5-HYY"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YLf-CB-cX8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r7z-Mp-X3E">
+                                <rect key="frame" x="0.0" y="162" width="414" height="651"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="UserSearchTableCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserSearchTableCell" rowHeight="82" id="zFJ-Rv-RI8" userLabel="UserSearchCell" customClass="UserSearchTableCell" customModule="music_sharing_network" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="82"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zFJ-Rv-RI8" id="dfk-PZ-3lJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONH-Ym-2rj" userLabel="Username Label">
+                                                    <rect key="frame" x="60" y="11" width="87.5" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="OxT-lV-60Q" userLabel="Profile Photo">
+                                                    <rect key="frame" x="20" y="11.5" width="30" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="Fnw-Zl-IJW"/>
+                                                        <constraint firstAttribute="height" constant="30" id="rOW-Fm-ETR"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ONH-Ym-2rj" firstAttribute="bottom" secondItem="OxT-lV-60Q" secondAttribute="bottom" id="FKY-Xo-oHo"/>
+                                                <constraint firstItem="OxT-lV-60Q" firstAttribute="leading" secondItem="dfk-PZ-3lJ" secondAttribute="leadingMargin" id="LF8-jW-6lz"/>
+                                                <constraint firstItem="ONH-Ym-2rj" firstAttribute="centerY" secondItem="OxT-lV-60Q" secondAttribute="centerY" id="VmZ-3z-eVG"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="OxT-lV-60Q" secondAttribute="bottom" id="gbb-0d-Wg6"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ONH-Ym-2rj" secondAttribute="trailing" id="i8x-ob-NZr"/>
+                                                <constraint firstItem="OxT-lV-60Q" firstAttribute="top" secondItem="dfk-PZ-3lJ" secondAttribute="topMargin" id="mUP-Ad-kCb"/>
+                                                <constraint firstItem="ONH-Ym-2rj" firstAttribute="leading" secondItem="OxT-lV-60Q" secondAttribute="trailing" constant="10" id="zbm-dU-exU"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="profilePhoto" destination="OxT-lV-60Q" id="OMp-r4-xn0"/>
+                                            <outlet property="usernameLabel" destination="ONH-Ym-2rj" id="chK-XJ-1fp"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pSz-0F-7fI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="r7z-Mp-X3E" firstAttribute="top" secondItem="Gts-5b-if7" secondAttribute="bottom" constant="20" id="9yA-I4-jWU"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="r7z-Mp-X3E" secondAttribute="bottom" id="DAe-zj-mNh"/>
+                            <constraint firstItem="Gts-5b-if7" firstAttribute="top" secondItem="pSz-0F-7fI" secondAttribute="top" constant="20" id="cZL-d9-Xea"/>
+                            <constraint firstItem="Gts-5b-if7" firstAttribute="leading" secondItem="Q4W-Xk-cag" secondAttribute="leadingMargin" id="dCp-28-seU"/>
+                            <constraint firstItem="pSz-0F-7fI" firstAttribute="trailing" secondItem="r7z-Mp-X3E" secondAttribute="trailing" id="e7y-dk-JAy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Gts-5b-if7" secondAttribute="trailing" id="hF2-Ss-KcE"/>
+                            <constraint firstItem="r7z-Mp-X3E" firstAttribute="leading" secondItem="pSz-0F-7fI" secondAttribute="leading" id="uBt-hs-9Eb"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Search Users" id="ZY2-vO-Kry"/>
+                    <connections>
+                        <outlet property="searchInput" destination="Gts-5b-if7" id="vbx-g5-8wh"/>
+                        <outlet property="tableView" destination="r7z-Mp-X3E" id="nIZ-ao-yha"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wCK-uY-q42" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5257.971014492754" y="-912.05357142857133"/>
+            <point key="canvasLocation" x="3670" y="1866"/>
         </scene>
         <!--My Profile-->
         <scene sceneID="jcH-o6-lad">
@@ -831,7 +851,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ykg-r3-1IC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5376.811594202899" y="1865.625"/>
+            <point key="canvasLocation" x="5258" y="1866"/>
         </scene>
         <!--Settings-->
         <scene sceneID="HVf-eq-mF2">
@@ -900,7 +920,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g25-ib-GyM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6168.115942028986" y="1865.625"/>
+            <point key="canvasLocation" x="5977" y="1866"/>
         </scene>
         <!--Messages-->
         <scene sceneID="r6F-5r-g2G">
@@ -1280,7 +1300,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0WR-2j-1ku" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4579.7101449275369" y="1865.625"/>
+            <point key="canvasLocation" x="4467" y="1866"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VM2-4o-Ffm">
