@@ -7,13 +7,20 @@
 
 import UIKit
 
+/**
+ Interface for accessing the Spotify Web API.
+ */
 class SpotifyWebAPI {
+    // Authentication API
     private static let spotifyWebAPIBaseURL: String = "https://api.spotify.com/v1"
+    // Web API
     private static let spotifyAccountsBaseURL: String = "https://accounts.spotify.com/api"
     
+    // Developer credentials
     private static let spotifyClientID: String = "c0a5c9b2c5b94d00b5599dd76b092414"
     private static let spotifyClientSecret: String = "225ff590d76d4d6db2168af29e627dd4"
     
+    // Authentication data
     private static var token: String? = nil
     private static var expires: Date? = nil
     private static var authenticated: Bool {
@@ -22,8 +29,12 @@ class SpotifyWebAPI {
         }
     }
     
+    // Don't allow simultaneous authentication requests
     private static var authLock: NSLock = NSLock()
     
+    /**
+     Attempt to gain access to Spotify APIs by logging in with the client credentials authorization flow.
+     */
     private static func authenticate() {
         print("SpotifyWebAPI > authenticate: Attempting authentication")
         
@@ -50,11 +61,14 @@ class SpotifyWebAPI {
         SharedData.HTTPRequest(request: request, expectedResponseCode: 200) {
             (data: Data?, response: URLResponse?, error: Error?) in
             do {
+                // Read the server's response as JSON data
                 let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
                 
+                // Get the access token and expiration data
                 let token = json["access_token"] as! String
                 let expires = Date() + TimeInterval(json["expires_in"] as! Int)
                 
+                // Save the access token and expiration date
                 self.token = token
                 self.expires = expires
                 condition.signal()
@@ -74,7 +88,7 @@ class SpotifyWebAPI {
      - Parameter uri: Spotify track URI of the format 'spotify:track:<track number>'
      - Parameter callback: function to execute after receiving a response from the Spotify API
      */
-    static func getTrack(uri: String, callback: @escaping (String, UIImage, String, String) -> Void) {
+    static func getTrack(uri: String, callback: @escaping (Song) -> Void) {
         // Authenticate if necessary
         self.authLock.lock()
         if !self.authenticated {
@@ -99,24 +113,27 @@ class SpotifyWebAPI {
         // Send the request
         SharedData.HTTPRequest(request: request, expectedResponseCode: 200) { (data: Data?, response: URLResponse?, error: Error?) in
             do {
-                var link: String = "https://open.spotify.com"
-                var image: UIImage = UIImage(systemName: "photo")!
-                var song: String = "Unknown Song"
-                var artist: String = "Unknown Artist"
+                // Default values passed to the callback function
+                let song: Song = Song(uri: uri)
                 
+                // Read the server's response as JSON data
                 let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
                 
+                // Get the song link
                 let external_urls = json["external_urls"] as! [String: Any]
-                link = external_urls["spotify"] as! String
+                song.spotifyLink = external_urls["spotify"] as? String
                 
-                song = json["name"] as! String
+                // Get the song's name
+                song.name = json["name"] as? String
                 
+                // Get the song's artist
                 let artists = json["artists"] as! [Any]
                 if artists.count > 0 {
                     let artistItem = (artists[0] as! [String: Any])
-                    artist = artistItem["name"] as! String
+                    song.artist = artistItem["name"] as? String
                 }
                 
+                // Get the song's image
                 let album = json["album"] as! [String: Any]
                 let images = album["images"] as! [Any]
                 if images.count > 0 {
@@ -124,12 +141,13 @@ class SpotifyWebAPI {
                     let imageURL = imageItem["url"] as! String
                     if let imageURLObject = URL(string: imageURL) {
                         if let imageData = try? Data(contentsOf: imageURLObject) {
-                            image = UIImage(data: imageData) ?? image
+                            song.image = UIImage(data: imageData)!
                         }
                     }
                 }
                 
-                callback(link, image, song, artist)
+                // Execute the callback function with the values retrieved from Spotify
+                callback(song)
             } catch let error as NSError {
                 print("SpotifyWebAPI > getTrack - ERROR: \(error)")
             }
@@ -137,14 +155,14 @@ class SpotifyWebAPI {
     }
     
     static func search(query: String) -> [String] {
-        var results: [String] = [String]()
-        
-        if self.token == nil || self.expires == nil || self.expires! < Date() {
+        // Authenticate if necessary
+        self.authLock.lock()
+        if !self.authenticated {
             self.authenticate()
-            if self.token == nil || self.expires == nil || self.expires! < Date() {
-                return results
-            }
         }
+        self.authLock.unlock()
+        
+        var results: [String] = [String]()
         
         guard let q = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return results

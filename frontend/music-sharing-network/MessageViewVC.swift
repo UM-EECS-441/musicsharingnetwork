@@ -156,7 +156,7 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             cell.usernameLabel.text = message.owner
             cell.usernameLabel.sizeToFit()
             
-            cell.songView.showSong(song: messageData["content"] ?? "", parentVC: self)
+            cell.songView.showSong(uri: messageData["content"] ?? "", parentVC: self)
 
             return cell
         } else {

@@ -15,8 +15,7 @@ class SongView: UIView {
     let nibName = "SongView"
     var contentView: UIView?
     
-    var song: String?
-    var link: String?
+    var song: Song?
     weak var parentVC: UIViewController?
     
     // MARK: - User Interface
@@ -63,13 +62,16 @@ class SongView: UIView {
     
     @IBAction func shareButtonHandler(_ sender: Any) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let newMessageVC = storyBoard.instantiateViewController(withIdentifier: "ShareSongVC") as! ShareSongVC
-        newMessageVC.song = self.song
+        guard let newMessageVC = storyBoard.instantiateViewController(withIdentifier: "ShareSongVC") as? ShareSongVC else {
+            print("SongView > shareButtonHandler - ERROR: Failed to instantiat view controller with identifier 'ShareSongVC'")
+            return
+        }
+        newMessageVC.song = self.song?.name
         self.parentVC?.present(newMessageVC, animated: true, completion: nil)
     }
     
     @IBAction func speakerButtonHandler(_ sender: Any) {
-        if let url = URL(string: self.link ?? "https://open.spotify.com") {
+        if let url = URL(string: self.song?.spotifyLink ?? "https://open.spotify.com") {
             UIApplication.shared.open(url)
         }
     }
@@ -81,19 +83,18 @@ class SongView: UIView {
      - Parameter song: the song identifier
      - Parameter parentVC: the view controller displaying this song
      */
-    func showSong(song: String, parentVC: UIViewController?) {
+    func showSong(uri: String, parentVC: UIViewController?) {
         self.parentVC = parentVC
-        self.song = song
         
-        SpotifyWebAPI.getTrack(uri: song, callback: { (link: String, image: UIImage, song: String, artist: String) in
-            self.link = link
+        SpotifyWebAPI.getTrack(uri: uri, callback: { (song: Song) in
+            self.song = song
             
             DispatchQueue.main.async {
-                self.artistLabel.text = artist
+                self.artistLabel.text = song.artist
                 self.artistLabel.sizeToFit()
-                self.songLabel.text = song
+                self.songLabel.text = song.name
                 self.songLabel.sizeToFit()
-                self.albumArtImageView.image = image
+                self.albumArtImageView.image = song.image
                 self.albumArtImageView.sizeToFit()
             }
         })

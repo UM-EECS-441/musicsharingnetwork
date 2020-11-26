@@ -17,7 +17,7 @@ class ShareSongVC: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.songView.showSong(song: self.song!, parentVC: self)
+        self.songView.showSong(uri: self.song!, parentVC: self)
         self.songView.shareButton.isHidden = true
     }
     

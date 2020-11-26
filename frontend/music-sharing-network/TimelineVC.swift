@@ -117,7 +117,7 @@ class TimelineVC: UITableViewController {
         cell.timestampLabel.sizeToFit()
         cell.textBox.text = post.message
         cell.textBox.sizeToFit()
-        cell.songView.showSong(song: post.media, parentVC: self)
+        cell.songView.showSong(uri: post.media, parentVC: self)
         //Set num_likes for each post
         cell.likeButton.setTitle(String(post.likes), for: .normal)
         

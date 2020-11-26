@@ -97,7 +97,7 @@ class ExploreVC: UITableViewController {
             fatalError("No reusable cell!")
         }
         
-        cell.songView.showSong(song: "Artist:Song", parentVC: self)
+        cell.songView.showSong(uri: "Artist:Song", parentVC: self)
         
         return cell
     }

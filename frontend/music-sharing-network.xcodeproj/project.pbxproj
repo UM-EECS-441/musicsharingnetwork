@@ -41,6 +41,7 @@
 		D8C546952551FE4A00F0B3E3 /* SongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C546942551FE4A00F0B3E3 /* SongView.swift */; };
 		D8C546982551FE8200F0B3E3 /* SongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8C546972551FE8200F0B3E3 /* SongView.xib */; };
 		D8C5F76C256639C300F24165 /* UserSearchTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5F76B256639C300F24165 /* UserSearchTableCell.swift */; };
+		D8D941E825701128008BC05D /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D941E725701128008BC05D /* Song.swift */; };
 		D8DF6DFE254A1E10005481D9 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DF6DFD254A1E10005481D9 /* SharedData.swift */; };
 		D8DF6E01254A1F6B005481D9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DF6E00254A1F6B005481D9 /* LoginVC.swift */; };
 		D8F34BFC2548A87200B5C2A3 /* MessageListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */; };
@@ -83,6 +84,7 @@
 		D8C546942551FE4A00F0B3E3 /* SongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongView.swift; sourceTree = "<group>"; };
 		D8C546972551FE8200F0B3E3 /* SongView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SongView.xib; sourceTree = "<group>"; };
 		D8C5F76B256639C300F24165 /* UserSearchTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchTableCell.swift; sourceTree = "<group>"; };
+		D8D941E725701128008BC05D /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		D8DF6DFD254A1E10005481D9 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		D8DF6E00254A1F6B005481D9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListVC.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
+				D8D941E725701128008BC05D /* Song.swift */,
 				D8C546972551FE8200F0B3E3 /* SongView.xib */,
 				D8C546942551FE4A00F0B3E3 /* SongView.swift */,
 				D86522DE256F6B9F00890827 /* BackendAPI.swift */,
@@ -293,6 +296,7 @@
 				4943E12625684D140051C7F2 /* CommentTableCell.swift in Sources */,
 				49213B8F2568C45C00E1CE75 /* NewCommentVC.swift in Sources */,
 				D8B90084255210D900DBBD67 /* ExploreTableCell.swift in Sources */,
+				D8D941E825701128008BC05D /* Song.swift in Sources */,
 				D8C546952551FE4A00F0B3E3 /* SongView.swift in Sources */,
 				49FC01CA254C9C0600223147 /* NewPostVC.swift in Sources */,
 				D829752C254A80CE006C87BA /* ProfileVC.swift in Sources */,
