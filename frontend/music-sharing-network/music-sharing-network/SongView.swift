@@ -85,15 +85,17 @@ class SongView: UIView {
         self.parentVC = parentVC
         self.song = song
         
-        let data = SpotifyWebAPI.getTrack(uri: song)
-        
-        self.link = data.link
-        
-        self.artistLabel.text = data.artist
-        self.artistLabel.sizeToFit()
-        self.songLabel.text = data.song
-        self.songLabel.sizeToFit()
-        self.albumArtImageView.image = data.image
-        self.albumArtImageView.sizeToFit()
+        SpotifyWebAPI.getTrack(uri: song, callback: { (link: String, image: UIImage, song: String, artist: String) in
+            self.link = link
+            
+            DispatchQueue.main.async {
+                self.artistLabel.text = artist
+                self.artistLabel.sizeToFit()
+                self.songLabel.text = song
+                self.songLabel.sizeToFit()
+                self.albumArtImageView.image = image
+                self.albumArtImageView.sizeToFit()
+            }
+        })
     }
 }

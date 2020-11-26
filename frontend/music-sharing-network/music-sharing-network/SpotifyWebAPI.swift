@@ -8,18 +8,32 @@
 import UIKit
 
 class SpotifyWebAPI {
-    private static let spotifyWebAPIBaseURL = "https://api.spotify.com/v1"
-    private static let spotifyAccountsBaseURL = "https://accounts.spotify.com/api"
+    private static let spotifyWebAPIBaseURL: String = "https://api.spotify.com/v1"
+    private static let spotifyAccountsBaseURL: String = "https://accounts.spotify.com/api"
     
-    private static var expires: Date?
-    private static var token: String?
+    private static let spotifyClientID: String = "c0a5c9b2c5b94d00b5599dd76b092414"
+    private static let spotifyClientSecret: String = "225ff590d76d4d6db2168af29e627dd4"
+    
+    private static var token: String? = nil
+    private static var expires: Date? = nil
+    private static var authenticated: Bool {
+        get {
+            return self.token != nil && self.expires != nil && self.expires! > Date()
+        }
+    }
+    
+    private static var authLock: NSLock = NSLock()
     
     private static func authenticate() {
         print("SpotifyWebAPI > authenticate: Attempting authentication")
         
-        guard let base64credentials: String = "\(SharedData.spotifyClientID):\(SharedData.spotifyClientSecret)".data(using: String.Encoding.utf8)?.base64EncodedString() else {
+        // Encode credentials
+        guard let base64credentials = ("\(self.spotifyClientID):\(self.spotifyClientSecret)".data(using: String.Encoding.utf8)?.base64EncodedString()) else {
+            print("SpotifyWebAPI > authenticate - ERROR: Failed to encode credentials")
+            self.authLock.unlock()
             return
         }
+        
         // Build an HTTP request
         let requestURL = self.spotifyAccountsBaseURL + "/token?grant_type=client_credentials"
         var request = URLRequest(url: URL(string: requestURL)!)
@@ -29,50 +43,49 @@ class SpotifyWebAPI {
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.addValue("Basic \(base64credentials)", forHTTPHeaderField: "Authorization")
         
+        // Synchronize authentication with HTTP request
+        let condition: NSCondition = NSCondition()
+        
         // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("SpotifyWebAPI > authenticate: NETWORKING ERROR")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("SpotifyWebAPI > authenticate: ERROR - HTTP STATUS: \(httpResponse.statusCode)")
-                    return
-                }
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200) {
+            (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
                 
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                    
-                    self.token = json["access_token"] as? String
-                    self.expires = Date() + TimeInterval(json["expires_in"] as! Int)
-                    
-                    print("SpotifyWebAPI > authenticate: Successfully set token '\(self.token!)' to expire at '\(self.expires!)'")
-                } catch let error as NSError {
-                    print(error)
-                }
+                let token = json["access_token"] as! String
+                let expires = Date() + TimeInterval(json["expires_in"] as! Int)
+                
+                self.token = token
+                self.expires = expires
+                condition.signal()
+                
+                print("SpotifyWebAPI > authenticate: Successfully set token '\(self.token!)' to expire at '\(self.expires!)'")
+            } catch let error as NSError {
+                print("SpotifyWebAPI > authenticate - ERROR: \(error))")
             }
         }
+        
+        condition.wait()
     }
     
-    static func getTrack(uri: String) -> (link: String, image: UIImage, song: String, artist: String) {
-        var link: String = "https://open.spotify.com"
-        var image: UIImage = UIImage(systemName: "photo")!
-        var song: String = "Unknown Song"
-        var artist: String = "Unknown Artist"
-        
-        if self.token == nil || self.expires == nil || self.expires! < Date() {
+    /**
+     Get information about a track from the Spotify search API.
+     
+     - Parameter uri: Spotify track URI of the format 'spotify:track:<track number>'
+     - Parameter callback: function to execute after receiving a response from the Spotify API
+     */
+    static func getTrack(uri: String, callback: @escaping (String, UIImage, String, String) -> Void) {
+        // Authenticate if necessary
+        self.authLock.lock()
+        if !self.authenticated {
             self.authenticate()
-            if self.token == nil || self.expires == nil || self.expires! < Date() {
-                return (link, image, song, artist)
-            }
         }
+        self.authLock.unlock()
         
+        // Get the track ID
         guard let id = uri.components(separatedBy: ":").last?.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
-            return (link, image, song, artist)
+            print("SpotifyWebAPI > getTrack - ERROR: Failed to get track ID")
+            return
         }
         
         // Build an HTTP request
@@ -83,66 +96,44 @@ class SpotifyWebAPI {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("Bearer \(self.token!)", forHTTPHeaderField: "Authorization")
         
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("SpotifyWebAPI > getTrack: NETWORKING ERROR")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("SpotifyWebAPI > getTrack: ERROR - HTTP STATUS: \(httpResponse.statusCode)")
-                    return
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200) { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                var link: String = "https://open.spotify.com"
+                var image: UIImage = UIImage(systemName: "photo")!
+                var song: String = "Unknown Song"
+                var artist: String = "Unknown Artist"
+                
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
+                
+                let external_urls = json["external_urls"] as! [String: Any]
+                link = external_urls["spotify"] as! String
+                
+                song = json["name"] as! String
+                
+                let artists = json["artists"] as! [Any]
+                if artists.count > 0 {
+                    let artistItem = (artists[0] as! [String: Any])
+                    artist = artistItem["name"] as! String
                 }
                 
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                    
-                    if let external_urls = json["external_urls"] as? [String: Any] {
-                        if let spotifyLink = external_urls["spotify"] as? String {
-                            link = spotifyLink
+                let album = json["album"] as! [String: Any]
+                let images = album["images"] as! [Any]
+                if images.count > 0 {
+                    let imageItem = images[0] as! [String: Any]
+                    let imageURL = imageItem["url"] as! String
+                    if let imageURLObject = URL(string: imageURL) {
+                        if let imageData = try? Data(contentsOf: imageURLObject) {
+                            image = UIImage(data: imageData) ?? image
                         }
                     }
-                    
-                    if let artists = json["artists"] as? [Any] {
-                        if artists.count > 0 {
-                            if let a0 = artists[0] as? [String:Any] {
-                                if let artistName = a0["name"] as? String {
-                                    artist = artistName
-                                }
-                            }
-                        }
-                    }
-                    
-                    if let songName = json["name"] as? String {
-                        song = songName
-                    }
-                    
-                    if let album = json["album"] as? [String: Any] {
-                        if let images = album["images"] as? [Any] {
-                            if images.count > 0 {
-                                if let i0 = images[0] as? [String: Any] {
-                                    if let i0URL = i0["url"] as? String {
-                                        if let imageURL = URL(string: i0URL) {
-                                            if let imageData = try? Data(contentsOf: imageURL) {
-                                                image = UIImage(data: imageData) ?? image
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch let error as NSError {
-                    print(error)
                 }
+                
+                callback(link, image, song, artist)
+            } catch let error as NSError {
+                print("SpotifyWebAPI > getTrack - ERROR: \(error)")
             }
         }
-        
-        return (link, image, song, artist)
     }
     
     static func search(query: String) -> [String] {

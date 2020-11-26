@@ -75,4 +75,33 @@ class SharedData {
             completion?()
         }
     }
+    
+    /**
+     Send an asynchronous HTTP request and execute a block of code once the response is received.
+     
+     - Parameter request: the HTTP request to be sent
+     - Parameter expectedResponseCode: response code that indicates a success
+     - Parameter completionHandler: code to execute upon receiving a response
+     */
+    static func HTTPRequest(request: URLRequest, expectedResponseCode: Int, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+            // Check for errors
+            guard let _ = data, error == nil else {
+                print("SharedData > HTTPRequest - ERROR: Invalid HTTP response")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                // Check for errors
+                if httpResponse.statusCode != expectedResponseCode {
+                    print("SharedData > HTTPRequest - ERROR: Unexpected HTTP response code (\(httpResponse.statusCode))")
+                    return
+                }
+                
+                // Do something with the response
+                callback(data, response, error)
+            }
+        }
+        task.resume()
+    }
 }
