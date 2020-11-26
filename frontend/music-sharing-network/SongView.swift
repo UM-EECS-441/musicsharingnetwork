@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SafariServices
 
 @IBDesignable
 class SongView: UIView {
@@ -15,8 +14,10 @@ class SongView: UIView {
     let nibName = "SongView"
     var contentView: UIView?
     
-    var song: Song?
     weak var parentVC: UIViewController?
+    
+    var spotifyURI: String!
+    var spotifyLink: String?
     
     // MARK: - User Interface
     
@@ -66,12 +67,12 @@ class SongView: UIView {
             print("SongView > shareButtonHandler - ERROR: Failed to instantiat view controller with identifier 'ShareSongVC'")
             return
         }
-        newMessageVC.song = self.song?.name
+        newMessageVC.song = self.spotifyURI
         self.parentVC?.present(newMessageVC, animated: true, completion: nil)
     }
     
     @IBAction func speakerButtonHandler(_ sender: Any) {
-        if let url = URL(string: self.song?.spotifyLink ?? "https://open.spotify.com") {
+        if let url = URL(string: self.spotifyLink ?? "https://open.spotify.com") {
             UIApplication.shared.open(url)
         }
     }
@@ -80,23 +81,55 @@ class SongView: UIView {
     
     /**
      Show a song in this view.
-     - Parameter song: the song identifier
+     - Parameter uri: the song's Spotify URI
      - Parameter parentVC: the view controller displaying this song
      */
     func showSong(uri: String, parentVC: UIViewController?) {
         self.parentVC = parentVC
         
-        SpotifyWebAPI.getTrack(uri: uri, callback: { (song: Song) in
-            self.song = song
+        // Send a request to the Spotify API to get info about this song
+        SpotifyWebAPI.getTrack(uri: uri, callback: { (uri: String, link: String?, song: String?, album: String?, artist: String?, image: UIImage?) in
+            // Update variables
+            self.spotifyURI = uri
+            self.spotifyLink = link
             
+            // Update UI
             DispatchQueue.main.async {
-                self.artistLabel.text = song.artist
-                self.artistLabel.sizeToFit()
-                self.songLabel.text = song.name
+                self.songLabel.text = song
                 self.songLabel.sizeToFit()
-                self.albumArtImageView.image = song.image
+                self.artistLabel.text = artist
+                self.artistLabel.sizeToFit()
+                self.albumArtImageView.image = image
                 self.albumArtImageView.sizeToFit()
             }
         })
+    }
+    
+    /**
+     Show a song in this view.
+     - Parameter uri: the song's Spotify URI
+     - Parameter link: link to the song on Spotify
+     - Parameter song: song name
+     - Parameter album: album name
+     - Parameter artist: artist name
+     - Parameter image: album cover
+     - Parameter parentVC: the view controller displaying this song
+     */
+    func showSong(uri: String, link: String?, song: String?, album: String?, artist: String?, image: UIImage?, parentVC: UIViewController?) {
+        self.parentVC = parentVC
+        
+        // Update variables
+        self.spotifyURI = uri
+        self.spotifyLink = link
+        
+        // Update UI
+        DispatchQueue.main.async {
+            self.songLabel.text = song
+            self.songLabel.sizeToFit()
+            self.artistLabel.text = artist
+            self.artistLabel.sizeToFit()
+            self.albumArtImageView.image = image
+            self.albumArtImageView.sizeToFit()
+        }
     }
 }

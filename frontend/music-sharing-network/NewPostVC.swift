@@ -18,7 +18,6 @@ class NewPostVC: UIViewController {
 
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         self.songView.showSong(uri: self.song!, parentVC: self)
         self.songView.shareButton.isHidden = true
     }
@@ -27,7 +26,7 @@ class NewPostVC: UIViewController {
         // Send the song title and artist as the message text
         
         // Serialize the username and password into JSON data
-        let json: [String: Any] = ["message": self.captionTextView.text ?? "", "content": self.song!, "reply_to": 0]
+        let json: [String: Any] = ["message": self.captionTextView.text ?? "", "content": self.songView.spotifyURI!, "reply_to": 0]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request

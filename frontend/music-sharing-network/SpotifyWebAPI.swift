@@ -83,12 +83,56 @@ class SpotifyWebAPI {
     }
     
     /**
+     Parse a track object from JSON to get the fields we're interested in.
+     
+     - Parameter track: JSON object
+     - Returns: Spotify link, song name, album name, artist name, album cover
+     */
+    private static func parseTrack(track: [String: Any]) -> (link: String?, song: String?, album: String?, artist: String?, image: UIImage?) {
+        // Default values passed to the callback function
+        var link: String?
+        var song: String?
+        var album: String?
+        var artist: String?
+        var image: UIImage?
+        
+        // Get the song's link
+        let external_urls = track["external_urls"] as! [String: Any]
+        link = external_urls["spotify"] as? String
+        
+        // Get the song's name
+        song = track["name"] as? String
+        
+        // Get the song's artist
+        let artists = track["artists"] as! [Any]
+        if artists.count > 0 {
+            let artistItem = (artists[0] as! [String: Any])
+            artist = artistItem["name"] as? String
+        }
+        
+        // Get the song's image
+        let albumJSON = track["album"] as! [String: Any]
+        let images = albumJSON["images"] as! [Any]
+        if images.count > 0 {
+            let imageItem = images[0] as! [String: Any]
+            let imageURL = imageItem["url"] as! String
+            if let imageURLObject = URL(string: imageURL) {
+                if let imageData = try? Data(contentsOf: imageURLObject) {
+                    image = UIImage(data: imageData)
+                }
+            }
+        }
+        
+        return (link, song, album, artist, image)
+    }
+    
+    /**
      Get information about a track from the Spotify search API.
      
      - Parameter uri: Spotify track URI of the format 'spotify:track:<track number>'
      - Parameter callback: function to execute after receiving a response from the Spotify API
      */
-    static func getTrack(uri: String, callback: @escaping (Song) -> Void) {
+    static func getTrack(uri: String, callback: @escaping (String, String?, String?, String?, String?, UIImage?) -> Void) {
         // Authenticate if necessary
         self.authLock.lock()
         if !self.authenticated {
@@ -113,48 +157,27 @@ class SpotifyWebAPI {
         // Send the request
         SharedData.HTTPRequest(request: request, expectedResponseCode: 200) { (data: Data?, response: URLResponse?, error: Error?) in
             do {
-                // Default values passed to the callback function
-                let song: Song = Song(uri: uri)
-                
                 // Read the server's response as JSON data
                 let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
                 
-                // Get the song link
-                let external_urls = json["external_urls"] as! [String: Any]
-                song.spotifyLink = external_urls["spotify"] as? String
-                
-                // Get the song's name
-                song.name = json["name"] as? String
-                
-                // Get the song's artist
-                let artists = json["artists"] as! [Any]
-                if artists.count > 0 {
-                    let artistItem = (artists[0] as! [String: Any])
-                    song.artist = artistItem["name"] as? String
-                }
-                
-                // Get the song's image
-                let album = json["album"] as! [String: Any]
-                let images = album["images"] as! [Any]
-                if images.count > 0 {
-                    let imageItem = images[0] as! [String: Any]
-                    let imageURL = imageItem["url"] as! String
-                    if let imageURLObject = URL(string: imageURL) {
-                        if let imageData = try? Data(contentsOf: imageURLObject) {
-                            song.image = UIImage(data: imageData)!
-                        }
-                    }
-                }
+                // Parse the track data and execute the callback function
+                let track = self.parseTrack(track: json)
                 
                 // Execute the callback function with the values retrieved from Spotify
-                callback(song)
+                callback(uri, track.link, track.song, track.album, track.artist, track.image)
             } catch let error as NSError {
                 print("SpotifyWebAPI > getTrack - ERROR: \(error)")
             }
         }
     }
     
-    static func search(query: String) -> [String] {
+    /**
+     Search for songs using Spotify's search API.
+     
+     - Parameter query: search text
+     - Parameter callback: function to execute upon receibing a response
+     */
+    static func search(query: String, callback: @escaping ([(uri: String, link: String?, song: String?, album: String?, artist: String?, image: UIImage?)]) -> Void) {
         // Authenticate if necessary
         self.authLock.lock()
         if !self.authenticated {
@@ -162,10 +185,9 @@ class SpotifyWebAPI {
         }
         self.authLock.unlock()
         
-        var results: [String] = [String]()
-        
+        // Encode the query for a URL
         guard let q = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            return results
+            return
         }
         
         // Build an HTTP request
@@ -176,41 +198,30 @@ class SpotifyWebAPI {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("Bearer \(self.token!)", forHTTPHeaderField: "Authorization")
         
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("SpotifyWebAPI > search: NETWORKING ERROR")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("SpotifyWebAPI > search: ERROR - HTTP STATUS: \(httpResponse.statusCode)")
-                    return
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200) { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
+                
+                // Get the list of tracks
+                let tracks = json["tracks"] as! [String: Any]
+                let items = tracks["items"] as! [Any]
+                
+                // Map the list to get the fields we need for each track
+                let results = items.map { (item: Any) -> (String, String?, String?, String?, String?, UIImage?) in
+                    let i = item as! [String: Any]
+                    let uri = i["uri"] as! String
+                    
+                    let track = self.parseTrack(track: i)
+                    
+                    return (uri, track.link, track.song, track.album, track.artist, track.image)
                 }
                 
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                    
-                    guard let tracks = json["tracks"] as? [String: Any] else { return }
-                    guard let items = tracks["items"] as? [Any] else { return }
-                    
-                    results = items.map { (item: Any) -> String in
-                        guard let i = item as? [String: Any] else { return "" }
-                        guard let uri = i["uri"] as? String else { return "" }
-                        
-                        return uri
-                    }.filter { (item: String) -> Bool in
-                        return item != ""
-                    }
-                } catch let error as NSError {
-                    print(error)
-                }
+                // Execute the callback function with the results
+                callback(results)
+            } catch let error as NSError {
+                print("SpotifyWebAPI > search - ERROR: \(error)")
             }
         }
-        
-        return results
     }
 }

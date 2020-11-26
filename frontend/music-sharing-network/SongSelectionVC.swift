@@ -9,7 +9,7 @@ import UIKit
 
 class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var results: [String] = [String]()
+    var results = [(uri: String, link: String?, song: String?, album: String?, artist: String?, image: UIImage?)]()
     
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var searchInput: UITextField!
@@ -57,8 +57,8 @@ class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDeleg
             fatalError("No reusable cell!")
         }
         
-        let song: String = self.results[indexPath.row]
-        cell.songView.showSong(uri: song, parentVC: self)
+        let item = self.results[indexPath.row]
+        cell.songView.showSong(uri: item.uri, link: item.link, song: item.song, album: item.album, artist: item.artist, image: item.image, parentVC: self)
         cell.songView.shareButton.isHidden = true
         
         return cell
@@ -71,17 +71,21 @@ class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? NewPostVC {
-            destination.song = self.results[self.tableView.indexPathForSelectedRow!.row]
+        if let destinationVC = segue.destination as? NewPostVC {
+            destinationVC.song = self.results[self.tableView.indexPathForSelectedRow!.row].song
         }
     }
     
     @IBAction func executeSearch(_ sender: Any) {
-        self.results = SpotifyWebAPI.search(query: self.searchInput.text ?? "")
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.reloadData()
-        
-        self.nextButton.isEnabled = false
-        self.dismissKeyboard()
+        SpotifyWebAPI.search(query: self.searchInput.text ?? "") { (results: [(uri: String, link: String?, song: String?, album: String?, artist: String?, image: UIImage?)]) in
+            DispatchQueue.main.async {
+                self.results = results
+                self.tableView.rowHeight = UITableView.automaticDimension
+                self.tableView.reloadData()
+                
+                self.nextButton.isEnabled = false
+                self.dismissKeyboard()
+            }
+        }
     }
 }

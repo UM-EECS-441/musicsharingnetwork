@@ -27,7 +27,6 @@
 		D81F29E0256CBA7C00A48B43 /* SongSelectionTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81F29DF256CBA7C00A48B43 /* SongSelectionTableCell.swift */; };
 		D829752C254A80CE006C87BA /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D829752B254A80CE006C87BA /* ProfileVC.swift */; };
 		D837777725489E17000C1D05 /* ExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D837777625489E17000C1D05 /* ExploreVC.swift */; };
-		D86522DF256F6B9F00890827 /* BackendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86522DE256F6B9F00890827 /* BackendAPI.swift */; };
 		D87A877F254B41E6005EBE3C /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87A877E254B41E6005EBE3C /* SettingsVC.swift */; };
 		D87EF55125315311008EA46A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87EF55025315311008EA46A /* AppDelegate.swift */; };
 		D87EF55325315311008EA46A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87EF55225315311008EA46A /* SceneDelegate.swift */; };
@@ -41,7 +40,6 @@
 		D8C546952551FE4A00F0B3E3 /* SongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C546942551FE4A00F0B3E3 /* SongView.swift */; };
 		D8C546982551FE8200F0B3E3 /* SongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8C546972551FE8200F0B3E3 /* SongView.xib */; };
 		D8C5F76C256639C300F24165 /* UserSearchTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5F76B256639C300F24165 /* UserSearchTableCell.swift */; };
-		D8D941E825701128008BC05D /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D941E725701128008BC05D /* Song.swift */; };
 		D8DF6DFE254A1E10005481D9 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DF6DFD254A1E10005481D9 /* SharedData.swift */; };
 		D8DF6E01254A1F6B005481D9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DF6E00254A1F6B005481D9 /* LoginVC.swift */; };
 		D8F34BFC2548A87200B5C2A3 /* MessageListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */; };
@@ -68,7 +66,6 @@
 		D81F29DF256CBA7C00A48B43 /* SongSelectionTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSelectionTableCell.swift; sourceTree = "<group>"; };
 		D829752B254A80CE006C87BA /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		D837777625489E17000C1D05 /* ExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVC.swift; sourceTree = "<group>"; };
-		D86522DE256F6B9F00890827 /* BackendAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendAPI.swift; sourceTree = "<group>"; };
 		D87A877E254B41E6005EBE3C /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		D87EF54D25315311008EA46A /* music-sharing-network.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "music-sharing-network.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D87EF55025315311008EA46A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,7 +81,6 @@
 		D8C546942551FE4A00F0B3E3 /* SongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongView.swift; sourceTree = "<group>"; };
 		D8C546972551FE8200F0B3E3 /* SongView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SongView.xib; sourceTree = "<group>"; };
 		D8C5F76B256639C300F24165 /* UserSearchTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchTableCell.swift; sourceTree = "<group>"; };
-		D8D941E725701128008BC05D /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		D8DF6DFD254A1E10005481D9 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		D8DF6E00254A1F6B005481D9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListVC.swift; sourceTree = "<group>"; };
@@ -203,10 +199,8 @@
 			isa = PBXGroup;
 			children = (
 				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
-				D8D941E725701128008BC05D /* Song.swift */,
 				D8C546972551FE8200F0B3E3 /* SongView.xib */,
 				D8C546942551FE4A00F0B3E3 /* SongView.swift */,
-				D86522DE256F6B9F00890827 /* BackendAPI.swift */,
 			);
 			name = "Reusable Components";
 			sourceTree = "<group>";
@@ -296,7 +290,6 @@
 				4943E12625684D140051C7F2 /* CommentTableCell.swift in Sources */,
 				49213B8F2568C45C00E1CE75 /* NewCommentVC.swift in Sources */,
 				D8B90084255210D900DBBD67 /* ExploreTableCell.swift in Sources */,
-				D8D941E825701128008BC05D /* Song.swift in Sources */,
 				D8C546952551FE4A00F0B3E3 /* SongView.swift in Sources */,
 				49FC01CA254C9C0600223147 /* NewPostVC.swift in Sources */,
 				D829752C254A80CE006C87BA /* ProfileVC.swift in Sources */,
@@ -309,7 +302,6 @@
 				49CF8E6A2551EABE0001F326 /* MessageViewTableCellSong.swift in Sources */,
 				49CF8E6E2551EB210001F326 /* MessageViewVC.swift in Sources */,
 				D81F29D8256C7C0600A48B43 /* SpotifyWebAPI.swift in Sources */,
-				D86522DF256F6B9F00890827 /* BackendAPI.swift in Sources */,
 				D87A877F254B41E6005EBE3C /* SettingsVC.swift in Sources */,
 				D81F29E0256CBA7C00A48B43 /* SongSelectionTableCell.swift in Sources */,
 				49CF8E612551E9DB0001F326 /* Conversation.swift in Sources */,

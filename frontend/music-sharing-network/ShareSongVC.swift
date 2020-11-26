@@ -8,6 +8,7 @@
 import UIKit
 
 class ShareSongVC: UIViewController {
+    
     var song: String?
     
     @IBOutlet weak var songView: SongView!
@@ -16,7 +17,6 @@ class ShareSongVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         self.songView.showSong(uri: self.song!, parentVC: self)
         self.songView.shareButton.isHidden = true
     }
@@ -26,9 +26,7 @@ class ShareSongVC: UIViewController {
     }
     
     @IBAction func sendButtonHandler(_ sender: Any) {
-        // Send the song title and artist as the message text
-        let messageContent = (self.songView.artistLabel.text ?? "Artist") + ":" + (self.songView.songLabel.text ?? "Song")
-        let messageText = try? JSONSerialization.data(withJSONObject: ["type": "song", "content": messageContent] as [String: String])
+        let messageText = try? JSONSerialization.data(withJSONObject: ["type": "song", "content": self.songView.spotifyURI!] as [String: String])
         
         // Serialize the recipient list and message into JSON data
         let json: [String: Any] = ["recipients": [self.recipientInput.text ?? ""], "message": String(data: messageText!, encoding: .utf8) as Any]
