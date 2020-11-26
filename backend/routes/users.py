@@ -200,7 +200,7 @@ def update_follow(target_user):
     # returns true if a follow occurred/false if an unfollow occurred
     return flask.jsonify(**{'url': flask.request.path, 'followed': followed}), 200
 
-@routes.route('/users/search/', methods = ['GET'])
+@routes.route('/users/search/', methods = ['POST'])
 def search_users():
     """Returns a list of usernames that start with the specified prefix"""
     if 'prefix' not in flask.request.json:
