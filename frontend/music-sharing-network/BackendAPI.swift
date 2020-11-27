@@ -13,6 +13,43 @@ import UIKit
 class BackendAPI {
     static let baseURL: String = "https://backend-qjgo4vxcdq-uc.a.run.app"
     
+    // MARK: - Users
+    
+    /**
+     Create a new user account.
+     - Parameter username: username to claim
+     - Parameter password: user's password
+     - Parameter fullname: user's full name
+     - Parameter bio: user's biography
+     - Parameter successCallback: function to execute if account creation succeeds
+     - Parameter errorCallback: function to execute if account creation fails
+     */
+    static func createAccount(username: String, password: String, fullname: String, bio: String, successCallback: ((String) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build a JSON object
+        let json: [String: String] = ["username": username, "password": password, "full_name": fullname, "user_bio": bio]
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: json) else {
+            print("BackendAPI > createAccount - ERROR: Failed to serialize JSON data")
+            errorCallback?()
+            return
+        }
+        
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/users/create/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 201, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            successCallback?(username)
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
     /**
      Attempt to login with a username and password.
      - Parameter username: username to authenticate

@@ -122,8 +122,11 @@ class ProfileVC: UIViewController {
                 // Update the view with the data from the backend
                 if let json = try? JSONSerialization.jsonObject(with: data!) as? [String: Any] {
                     self.fullNameLabel.text = json["full_name"] as? String
+                    self.fullNameLabel.sizeToFit()
                     self.usernameLabel.text = self.username
+                    self.usernameLabel.sizeToFit()
                     self.bioBox.text = json["user_bio"] as? String
+                    self.bioBox.sizeToFit()
                     self.isFollowed = json["following"] as! Bool
                     
                     if self.isFollowed {

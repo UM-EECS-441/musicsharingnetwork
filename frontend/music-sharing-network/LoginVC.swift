@@ -50,12 +50,16 @@ class LoginVC: UIViewController {
     @IBAction func login(_ sender: Any) {
         // Send a request to the backend to login
         BackendAPI.login(username: self.usernameInput.text ?? "", password: self.passwordInput.text ?? "", successCallback: { (username: String) in
-            // Update shared username variable
-            SharedData.username = username
-            // Tell everyone else we updated it
             DispatchQueue.main.async {
+                // Update shared username variable
+                SharedData.username = username
+                // Tell everyone else we updated it
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
             }
         })
+    }
+    
+    @IBAction func continueAsGuest(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

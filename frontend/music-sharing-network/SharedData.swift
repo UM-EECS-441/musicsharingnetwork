@@ -64,8 +64,8 @@ class SharedData {
     static func login(parentVC: UIViewController, completion: (() -> Void)?) {
         if self.username == "" {
             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let loginVC = storyBoard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-            parentVC.present(loginVC, animated: true, completion: nil)
+            let loginNavController = storyBoard.instantiateViewController(withIdentifier: "LoginNavigationController")
+            parentVC.present(loginNavController, animated: true, completion: nil)
         }
     }
     
