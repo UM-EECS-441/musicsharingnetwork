@@ -88,7 +88,7 @@ class SpotifyWebAPI {
      - Parameter track: JSON object
      - Returns: Spotify link, song name, album name, artist name, album cover
      */
-    private static func parseTrack(track: [String: Any]) -> (link: String?, song: String?, album: String?, artist: String?, image: UIImage?) {
+    private static func parseTrack(json: [String: Any]) -> (link: String?, song: String?, album: String?, artist: String?, image: UIImage?) {
         // Default values passed to the callback function
         var link: String?
         var song: String?
@@ -97,21 +97,21 @@ class SpotifyWebAPI {
         var image: UIImage?
         
         // Get the song's link
-        let external_urls = track["external_urls"] as! [String: Any]
+        let external_urls = json["external_urls"] as! [String: Any]
         link = external_urls["spotify"] as? String
         
         // Get the song's name
-        song = track["name"] as? String
+        song = json["name"] as? String
         
         // Get the song's artist
-        let artists = track["artists"] as! [Any]
+        let artists = json["artists"] as! [Any]
         if artists.count > 0 {
             let artistItem = (artists[0] as! [String: Any])
             artist = artistItem["name"] as? String
         }
         
         // Get the song's image
-        let albumJSON = track["album"] as! [String: Any]
+        let albumJSON = json["album"] as! [String: Any]
         let images = albumJSON["images"] as! [Any]
         if images.count > 0 {
             let imageItem = images[0] as! [String: Any]
@@ -161,7 +161,7 @@ class SpotifyWebAPI {
                 let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
                 
                 // Parse the track data and execute the callback function
-                let track = self.parseTrack(track: json)
+                let track = self.parseTrack(json: json)
                 
                 // Execute the callback function with the values retrieved from Spotify
                 callback(uri, track.link, track.song, track.album, track.artist, track.image)
@@ -198,6 +198,7 @@ class SpotifyWebAPI {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("Bearer \(self.token!)", forHTTPHeaderField: "Authorization")
         
+        // Send the request
         SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
             do {
                 // Read the server's response as JSON
@@ -212,7 +213,7 @@ class SpotifyWebAPI {
                     let i = item as! [String: Any]
                     let uri = i["uri"] as! String
                     
-                    let track = self.parseTrack(track: i)
+                    let track = self.parseTrack(json: i)
                     
                     return (uri, track.link, track.song, track.album, track.artist, track.image)
                 }

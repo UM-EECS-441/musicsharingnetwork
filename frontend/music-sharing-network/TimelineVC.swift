@@ -18,6 +18,7 @@ class TimelineVC: UITableViewController {
         // Do any additional setup after loading the view.
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.followChanged), name: NSNotification.Name(rawValue: "followChanged"), object: nil)
         
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         
@@ -27,65 +28,43 @@ class TimelineVC: UITableViewController {
             self.newPostButton.image = .none
         }
         self.newPostButton.isEnabled = SharedData.logged_in
-        getPosts()
+        self.getPosts()
     }
     
     @objc func loginChanged() {
         self.newPostButton.isEnabled = SharedData.logged_in
+        
         if SharedData.logged_in {
             self.newPostButton.image = UIImage(systemName: "plus")
+            self.getPosts()
         } else {
             self.newPostButton.image = .none
+            self.getPosts()
         }
         
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+    @objc func followChanged() {
         self.getPosts()
     }
     
-    func getPosts() {
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("TimelineVC > getPosts: HTTP STATUS: \(httpResponse.statusCode)")
-                    DispatchQueue.main.async {
-                        self.refreshControl?.endRefreshing()
-                    }
-                    return
-                }
-
-                do {
-                    self.posts = [Post]()
-                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                    let postList = json["posts"] as! [[String: Any]]
-
-                    for postEntry in postList {
-                        if postEntry["reply_to"] as? Int == 0 {
-                            self.posts.append(Post(identifier: postEntry["post_id"] as! String, timestamp: postEntry["timestamp"] as! String, owner: postEntry["owner"] as! String, media: postEntry["content"] as! String, message: postEntry["message"] as! String, likes: postEntry["num_likes"] as! Int, reposts: postEntry["num_reposts"] as! Int))
-                        }
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.rowHeight = UITableView.automaticDimension
-                        self.tableView.reloadData()
-                        self.refreshControl?.endRefreshing()
-                    }
-                } catch let error as NSError {
-                    print(error)
-                }
-            }
-        }
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        self.getPosts()
+        self.refreshControl?.endRefreshing()
     }
+    
+    func getPosts() {
+        // Send a request to the get posts API
+        BackendAPI.getPosts(successCallback: { (posts: [Post]) in
+            DispatchQueue.main.async {
+                self.posts = posts
+                self.tableView.rowHeight = UITableView.automaticDimension
+                self.tableView.reloadData()
+            }
+        })
+    }
+    
     // MARK:- TableView handlers
 
     override func numberOfSections(in tableView: UITableView) -> Int {

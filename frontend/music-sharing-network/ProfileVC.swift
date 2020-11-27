@@ -176,6 +176,8 @@ class ProfileVC: UIViewController {
         } else {
             followButton.setTitle("Follow", for: [])
         }
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
     }
     
 }

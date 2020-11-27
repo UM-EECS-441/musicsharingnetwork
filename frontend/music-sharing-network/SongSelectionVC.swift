@@ -72,7 +72,7 @@ class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? NewPostVC {
-            destinationVC.song = self.results[self.tableView.indexPathForSelectedRow!.row].song
+            destinationVC.song = self.results[self.tableView.indexPathForSelectedRow!.row].uri
         }
     }
     

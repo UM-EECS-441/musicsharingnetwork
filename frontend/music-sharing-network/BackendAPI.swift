@@ -136,4 +136,109 @@ class BackendAPI {
             errorCallback?()
         })
     }
+    
+    // MARK: - Posts
+    
+    /**
+     Parse a post from JSON data.
+     - Parameter json: JSON object
+     - Returns: post object
+     */
+    static func parsePost(json: [String: Any]) -> Post? {
+        // Ignore comments
+        if json["reply_to"] as? Int == 0 {
+            // Create a new post
+            return Post(
+                identifier: json["post_id"] as! String,
+                timestamp: json["timestamp"] as! String,
+                owner: json["owner"] as! String,
+                media: json["content"] as! String,
+                message: json["message"] as! String,
+                likes: json["num_likes"] as! Int,
+                reposts: json["num_reposts"] as! Int
+            )
+        } else {
+            return nil
+        }
+    }
+    
+    /**
+     Get posts from people the current user follows.
+     - Parameter successCallback: function to execute if post retrieval succeeds
+     - Parameter errorCallback: function to execute if post retrieval fails
+     */
+    static func getPosts(successCallback: (([Post]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/posts/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                
+                // Get posts array
+                let postList = json["posts"] as! [[String: Any]]
+                
+                // Convert it to an array of post objects
+                var posts = [Post]()
+                for postEntry in postList {
+                    if let post = self.parsePost(json: postEntry) {
+                        posts.append(post)
+                    }
+                }
+                
+                successCallback?(posts)
+            } catch let error as NSError {
+                print("BackendAPI > getPosts - ERROR: \(error)")
+                errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    /**
+     Create a new post.
+     - Parameter content: Spotify URI
+     - Parameter message: post text
+     - Parameter replyTo: post ID to this replies to
+     - Parameter successCallback: function to execute if post creation succeeds
+     - Parameter errorCallback: function to execute if post creation fails
+     */
+    static func createPost(content: String, message: String, replyTo: Int = 0, successCallback: ((Post) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Serialize the post as JSON data
+        let json: [String: Any] = ["message": message, "content": content, "reply_to": replyTo]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/posts/create/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 201, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
+                
+                if let post = parsePost(json: json["post"] as! [String: Any]) {
+                    successCallback?(post)
+                }
+            } catch let error as NSError {
+                print("BackendAPI > createPost - ERROR: \(error)")
+                errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
 }

@@ -23,40 +23,12 @@ class NewPostVC: UIViewController {
     }
     
     @IBAction func addPost(_ sender: Any) {
-        // Send the song title and artist as the message text
-        
-        // Serialize the username and password into JSON data
-        let json: [String: Any] = ["message": self.captionTextView.text ?? "", "content": self.songView.spotifyURI!, "reply_to": 0]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/create/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("NewPostVC > addPost: NETWORKING ERROR")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 201 {
-                    print("NewPostVC > addPost: HTTP STATUS: \(httpResponse.statusCode)")
-                    return
-                }
-                
-                // Mark the user as logged in by saving their username,
-                // and dismiss the login screen
+        // Send a request to the create post API
+        BackendAPI.createPost(content: self.songView.spotifyURI!, message: self.captionTextView.text ?? "", successCallback: { (post: Post) in
+            // If it succeeds, dismiss the view
+            DispatchQueue.main.async {
                 self.dismiss(animated: true, completion: nil)
             }
-        }
+        })
     }
 }
