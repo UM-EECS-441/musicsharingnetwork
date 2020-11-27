@@ -42,6 +42,7 @@
 		D8C5F76C256639C300F24165 /* UserSearchTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C5F76B256639C300F24165 /* UserSearchTableCell.swift */; };
 		D8DF6DFE254A1E10005481D9 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DF6DFD254A1E10005481D9 /* SharedData.swift */; };
 		D8DF6E01254A1F6B005481D9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DF6E00254A1F6B005481D9 /* LoginVC.swift */; };
+		D8E5516C25706F8B00D49958 /* BackendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E5516B25706F8B00D49958 /* BackendAPI.swift */; };
 		D8F34BFC2548A87200B5C2A3 /* MessageListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		D8C5F76B256639C300F24165 /* UserSearchTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchTableCell.swift; sourceTree = "<group>"; };
 		D8DF6DFD254A1E10005481D9 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		D8DF6E00254A1F6B005481D9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		D8E5516B25706F8B00D49958 /* BackendAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendAPI.swift; sourceTree = "<group>"; };
 		D8F34BFB2548A87200B5C2A3 /* MessageListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -201,6 +203,7 @@
 				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
 				D8C546972551FE8200F0B3E3 /* SongView.xib */,
 				D8C546942551FE4A00F0B3E3 /* SongView.swift */,
+				D8E5516B25706F8B00D49958 /* BackendAPI.swift */,
 			);
 			name = "Reusable Components";
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				49CF8E6A2551EABE0001F326 /* MessageViewTableCellSong.swift in Sources */,
 				49CF8E6E2551EB210001F326 /* MessageViewVC.swift in Sources */,
 				D81F29D8256C7C0600A48B43 /* SpotifyWebAPI.swift in Sources */,
+				D8E5516C25706F8B00D49958 /* BackendAPI.swift in Sources */,
 				D87A877F254B41E6005EBE3C /* SettingsVC.swift in Sources */,
 				D81F29E0256CBA7C00A48B43 /* SongSelectionTableCell.swift in Sources */,
 				49CF8E612551E9DB0001F326 /* Conversation.swift in Sources */,

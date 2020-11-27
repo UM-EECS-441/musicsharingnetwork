@@ -65,14 +65,7 @@ class SharedData {
         if self.username == "" {
             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let loginVC = storyBoard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-            loginVC.completion = { (_ username: String) in
-                self.username = username
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
-                completion?()
-            }
             parentVC.present(loginVC, animated: true, completion: nil)
-        } else {
-            completion?()
         }
     }
     
@@ -81,13 +74,15 @@ class SharedData {
      
      - Parameter request: the HTTP request to be sent
      - Parameter expectedResponseCode: response code that indicates a success
-     - Parameter completionHandler: code to execute upon receiving a response
+     - Parameter successCallback: function to execute if the request succeeds
+     - Parameter errorCallback: function to execute if the request fails
      */
-    static func HTTPRequest(request: URLRequest, expectedResponseCode: Int, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    static func HTTPRequest(request: URLRequest, expectedResponseCode: Int, successCallback: ((Data?, URLResponse?, Error?) -> Void)? = nil, errorCallback: ((Data?, URLResponse?, Error?) -> Void)? = nil) {
         let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             // Check for errors
             guard let _ = data, error == nil else {
                 print("SharedData > HTTPRequest - ERROR: Invalid HTTP response")
+                errorCallback?(data, response, error)
                 return
             }
             
@@ -99,9 +94,28 @@ class SharedData {
                 }
                 
                 // Do something with the response
-                callback(data, response, error)
+                successCallback?(data, response, error)
+            } else {
+                print("SharedData > HTTPRequest - ERROR: Failed to read HTTP response")
+                errorCallback?(data, response, error)
             }
         }
         task.resume()
+    }
+    
+    /**
+     Present an alert.
+     - Parameter title: alert title
+     - Parameter message: alert message
+     - Parameter buttonTitle: text to display on button
+     - Parameter parentVC: view controller presenting the alert
+     */
+    static func presentAlertController(title: String, message: String, buttonTitle: String, parentVC: UIViewController) {
+        DispatchQueue.main.async {
+            let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let action = UIAlertAction(title: buttonTitle, style: .default, handler: nil)
+            controller.addAction(action)
+            parentVC.present(controller, animated: true)
+        }
     }
 }

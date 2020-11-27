@@ -58,7 +58,7 @@ class SpotifyWebAPI {
         let condition: NSCondition = NSCondition()
         
         // Send the request and read the server's response
-        SharedData.HTTPRequest(request: request, expectedResponseCode: 200) {
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: {
             (data: Data?, response: URLResponse?, error: Error?) in
             do {
                 // Read the server's response as JSON data
@@ -77,7 +77,7 @@ class SpotifyWebAPI {
             } catch let error as NSError {
                 print("SpotifyWebAPI > authenticate - ERROR: \(error))")
             }
-        }
+        }, errorCallback: nil)
         
         condition.wait()
     }
@@ -155,7 +155,7 @@ class SpotifyWebAPI {
         request.addValue("Bearer \(self.token!)", forHTTPHeaderField: "Authorization")
         
         // Send the request
-        SharedData.HTTPRequest(request: request, expectedResponseCode: 200) { (data: Data?, response: URLResponse?, error: Error?) in
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
             do {
                 // Read the server's response as JSON data
                 let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
@@ -168,7 +168,7 @@ class SpotifyWebAPI {
             } catch let error as NSError {
                 print("SpotifyWebAPI > getTrack - ERROR: \(error)")
             }
-        }
+        }, errorCallback: nil)
     }
     
     /**
@@ -198,7 +198,7 @@ class SpotifyWebAPI {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("Bearer \(self.token!)", forHTTPHeaderField: "Authorization")
         
-        SharedData.HTTPRequest(request: request, expectedResponseCode: 200) { (data: Data?, response: URLResponse?, error: Error?) in
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
             do {
                 // Read the server's response as JSON
                 let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
@@ -222,6 +222,6 @@ class SpotifyWebAPI {
             } catch let error as NSError {
                 print("SpotifyWebAPI > search - ERROR: \(error)")
             }
-        }
+        }, errorCallback: nil)
     }
 }

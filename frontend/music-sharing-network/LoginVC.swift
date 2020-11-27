@@ -32,64 +32,32 @@ class LoginVC: UIViewController {
         
         // Hide the continue as guest button if necessary
         continueAsGuestButton.isHidden = !allowGuest
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        self.isModalInPresentation = !allowGuest
     }
     
     @objc func loginChanged() {
         if SharedData.logged_in {
-            self.close()
+            print("LoginVC > loginChanged: User logged in")
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            print("LoginVC > loginChanged: User logged out")
         }
-    }
-    
-    @objc func objc_close() {
-        self.close()
-    }
-    
-    func close() {
-        print("Dismissing LoginVC")
-        self.dismiss(animated: true, completion: nil)
     }
     
     /*
      Sign in with the username and password supplied by the user.
      */
     @IBAction func login(_ sender: Any) {
-        // Serialize the username and password into JSON data
-        let json: [String: String] = ["username": self.usernameInput.text ?? "", "password": self.passwordInput.text ?? ""]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/login/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("LoginVC > login: NETWORKING ERROR")
-                return
+        // Send a request to the backend to login
+        BackendAPI.login(username: self.usernameInput.text ?? "", password: self.passwordInput.text ?? "", successCallback: { (username: String) in
+            // Update shared username variable
+            SharedData.username = username
+            // Tell everyone else we updated it
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
             }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("LoginVC > login: HTTP STATUS: \(httpResponse.statusCode)")
-                    return
-                }
-                
-                // Mark the user as logged in by saving their username,
-                // and dismiss the login screen
-                self.completion?(self.usernameInput.text!)
-                self.close()
-            }
-        }
+        }, errorCallback: {
+            SharedData.presentAlertController(title: "Login Failed", message: "Login did not succeed. Did you type the correct username and password?", buttonTitle: "ok", parentVC: self)
+        })
     }
 }
