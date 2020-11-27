@@ -72,7 +72,7 @@ class ProfileVC: UIViewController {
                 self.navBar.rightBarButtonItem?.isEnabled = true
             } else {
                 // User logged out on My Profile
-                print("ProfileVC > loginChanged: User logged in on My Profile")
+                print("ProfileVC > loginChanged: User logged out on My Profile")
                 self.username = ""
                 
                 self.navBar.rightBarButtonItem?.title = nil

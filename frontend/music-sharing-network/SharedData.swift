@@ -102,20 +102,4 @@ class SharedData {
         }
         task.resume()
     }
-    
-    /**
-     Present an alert.
-     - Parameter title: alert title
-     - Parameter message: alert message
-     - Parameter buttonTitle: text to display on button
-     - Parameter parentVC: view controller presenting the alert
-     */
-    static func presentAlertController(title: String, message: String, buttonTitle: String, parentVC: UIViewController) {
-        DispatchQueue.main.async {
-            let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let action = UIAlertAction(title: buttonTitle, style: .default, handler: nil)
-            controller.addAction(action)
-            parentVC.present(controller, animated: true)
-        }
-    }
 }

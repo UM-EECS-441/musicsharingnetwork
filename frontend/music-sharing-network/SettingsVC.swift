@@ -14,72 +14,40 @@ class SettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+    }
+    
+    @IBAction func loginChanged() {
+        if SharedData.logged_in {
+            print("SettingsVC > loginChanged: User logged in")
+        } else {
+            print("SettingsVC > loginChanged: User logged out")
+            
+            // Exit the settings screen since the user is now logged out
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func saveButtonHandler(_ sender: Any) {
-        // Serialize the username and password into JSON data
-        let json: [String: String] = ["old_password": self.oldPasswordInput.text ?? "", "new_password": self.newPasswordInput.text ?? ""]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        // Send a request to the change pasword API
+        BackendAPI.changePassword(old: self.oldPasswordInput.text ?? "", new: self.newPasswordInput.text ?? "")
         
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/password/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "PATCH"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request){ (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("SettingsVC > saveButtonHandler: NETWORKING ERROR")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 204 {
-                    print("SettingsVC > saveButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
-                    return
-                }
-            }
-        }
-        
+        // Reset the password fields
+        self.oldPasswordInput.text = nil
+        self.newPasswordInput.text = nil
     }
     
     @IBAction func logoutButtonHandler(_ sender: Any) {
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/logout/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("SettingsVC > logoutButtonHandler: NETWORKING ERROR")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("SettingsVC > logoutButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
-                    return
-                }
-                
-                // Reset username
-                SharedData.username = ""
+        // Send a request to the logout API
+        BackendAPI.logout(successCallback: { () in
+            // Reset username
+            SharedData.username = ""
+            // Tell everyone we changed it
+            DispatchQueue.main.async {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
-                
-                // Exit the settings screen since the user is now logged out
-                self.navigationController?.popViewController(animated: true)
             }
-        }
+        })
     }
 }
 

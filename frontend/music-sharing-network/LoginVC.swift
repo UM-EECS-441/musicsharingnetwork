@@ -56,8 +56,6 @@ class LoginVC: UIViewController {
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
             }
-        }, errorCallback: {
-            SharedData.presentAlertController(title: "Login Failed", message: "Login did not succeed. Did you type the correct username and password?", buttonTitle: "ok", parentVC: self)
         })
     }
 }

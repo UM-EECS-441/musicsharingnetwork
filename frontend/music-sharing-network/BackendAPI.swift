@@ -25,6 +25,7 @@ class BackendAPI {
         let json: [String: String] = ["username": username, "password": password]
         guard let jsonData = try? JSONSerialization.data(withJSONObject: json) else {
             print("BackendAPI > login - ERROR: Failed to serialize JSON data")
+            errorCallback?()
             return
         }
         
@@ -40,6 +41,60 @@ class BackendAPI {
         // Send the request
         SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
             successCallback?(username)
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    /**
+     Log out of the current user's account.
+     - Parameter successCallback: function to execute if login succeeds
+     - Parameter errorCallback: function to execute if login fails
+     */
+    static func logout(successCallback: (() -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/users/logout/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            successCallback?()
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    /**
+     Change the current user's password.
+     - Parameter old: user's old password
+     - Parameter new: user's new password
+     - Parameter successCallback: function to execute if password change succeeds
+     - Parameter errorCallback: function to execute if password change fails
+     */
+    static func changePassword(old: String, new: String, successCallback: (() -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Serialize the username and password into JSON data
+        let json: [String: String] = ["old_password": old, "new_password": new]
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: json) else {
+            print("BackendAPI > changePassword - ERROR: Failed to serialize JSON data")
+            errorCallback?()
+            return
+        }
+        
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/users/password/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "PATCH"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 204, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            successCallback?()
         }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
             errorCallback?()
         })
