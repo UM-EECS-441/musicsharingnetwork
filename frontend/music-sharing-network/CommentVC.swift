@@ -44,7 +44,9 @@ class CommentVC: UITableViewController {
                 self.comments = replies
                 self.tableView.rowHeight = UITableView.automaticDimension
                 self.tableView.reloadData()
-                self.tableView.scrollToRow(at: IndexPath(row: self.comments.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+                if self.comments.count > 0 {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.comments.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+                }
             }
         })
     }

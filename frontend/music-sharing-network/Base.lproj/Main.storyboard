@@ -253,14 +253,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is where the post's text is shown" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFU-ZO-Yfb" userLabel="Post Content">
-                                            <rect key="frame" x="20" y="166.5" width="374" height="20.5"/>
+                                            <rect key="frame" x="20" y="176" width="374" height="21"/>
                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C0t-SD-sLq" userLabel="Like Button">
-                                            <rect key="frame" x="20" y="197" width="33" height="14"/>
+                                            <rect key="frame" x="20" y="207" width="33" height="14"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="14" id="wt4-L3-9Il"/>
                                             </constraints>
@@ -274,7 +274,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfb-Ni-keY" userLabel="Comment Button">
-                                            <rect key="frame" x="63" y="197" width="121.5" height="14"/>
+                                            <rect key="frame" x="63" y="207" width="121.5" height="14"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="14" id="btY-w6-pRW"/>
                                             </constraints>
@@ -288,10 +288,10 @@
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE3-pq-qi9" userLabel="Song" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="56" width="374" height="90.5"/>
+                                            <rect key="frame" x="20" y="56" width="374" height="100"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="fbX-jD-6Fc"/>
+                                                <constraint firstAttribute="height" constant="100" id="fbX-jD-6Fc"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -302,7 +302,7 @@
                                         <constraint firstItem="JE3-pq-qi9" firstAttribute="trailing" secondItem="nU3-Ze-Xj1" secondAttribute="trailingMargin" id="CZ3-Mr-tqs"/>
                                         <constraint firstItem="aQk-mC-MxI" firstAttribute="centerY" secondItem="iLF-sg-fYd" secondAttribute="centerY" id="HMe-L9-a5r"/>
                                         <constraint firstItem="aFU-ZO-Yfb" firstAttribute="top" secondItem="JE3-pq-qi9" secondAttribute="bottom" constant="20" id="IkK-HF-u9y"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="C0t-SD-sLq" secondAttribute="bottom" constant="10" id="ME9-mu-S9l"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="C0t-SD-sLq" secondAttribute="bottom" id="ME9-mu-S9l"/>
                                         <constraint firstItem="C0t-SD-sLq" firstAttribute="top" secondItem="aFU-ZO-Yfb" secondAttribute="bottom" constant="10" id="RR3-ft-40L"/>
                                         <constraint firstItem="JE3-pq-qi9" firstAttribute="top" secondItem="iLF-sg-fYd" secondAttribute="bottom" constant="20" id="SXQ-WM-txY"/>
                                         <constraint firstItem="1TC-Cv-fcX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aQk-mC-MxI" secondAttribute="trailing" constant="10" id="SeA-PU-mzT"/>
@@ -384,10 +384,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="luG-zS-Lmg" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="11" width="374" height="75"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="100"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="75" id="Mnm-fH-gSl"/>
+                                                        <constraint firstAttribute="height" constant="100" id="Mnm-fH-gSl"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -448,7 +448,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BBU-Bf-Tbb" userLabel="Text Box">
-                                <rect key="frame" x="20" y="171" width="374" height="617"/>
+                                <rect key="frame" x="20" y="196" width="374" height="592"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <accessibility key="accessibilityConfiguration" identifier="captionTextView"/>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -456,10 +456,10 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BfR-ME-D8n" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                <rect key="frame" x="20" y="76" width="374" height="75"/>
+                                <rect key="frame" x="20" y="76" width="374" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="75" id="L9K-Eh-TzA"/>
+                                    <constraint firstAttribute="height" constant="100" id="L9K-Eh-TzA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -519,26 +519,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExploreTableCell" rowHeight="117" id="CfI-ih-fFN" customClass="ExploreTableCell" customModule="music_sharing_network" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="117"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExploreTableCell" rowHeight="155" id="CfI-ih-fFN" customClass="ExploreTableCell" customModule="music_sharing_network" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="155"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CfI-ih-fFN" id="5CW-Ui-c8F">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="117"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="155"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h77-nf-pOf" userLabel="Song" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="11" width="374" height="75"/>
+                                            <rect key="frame" x="20" y="11" width="374" height="100"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="75" id="VSm-jb-AyW"/>
+                                                <constraint firstAttribute="height" constant="100" id="VSm-jb-AyW"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="h77-nf-pOf" firstAttribute="top" secondItem="5CW-Ui-c8F" secondAttribute="topMargin" id="5ic-Ef-Yr4"/>
                                         <constraint firstItem="h77-nf-pOf" firstAttribute="leading" secondItem="5CW-Ui-c8F" secondAttribute="leadingMargin" id="P5r-Kd-Nnb"/>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="h77-nf-pOf" secondAttribute="bottom" id="mwh-12-XTi"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="h77-nf-pOf" secondAttribute="trailing" id="nzH-60-a0a"/>
+                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="h77-nf-pOf" secondAttribute="bottom" id="w6L-nf-Wdl"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -649,22 +649,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mih-xM-xVt" userLabel="Comment Label">
-                                <rect key="frame" x="36" y="100" width="102" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mih-xM-xVt" userLabel="Comment Label">
+                                <rect key="frame" x="20" y="76" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your comment..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3bQ-5J-tyH" userLabel="Comment Input">
-                                <rect key="frame" x="36" y="129" width="334" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your comment..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3bQ-5J-tyH" userLabel="Comment Input">
+                                <rect key="frame" x="20" y="117" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x0c-B9-GHh">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0c-B9-GHh">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                 <items>
                                     <navigationItem title="New Comment" id="ZJo-uQ-WX8">
                                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="djh-JK-mzV">
@@ -683,6 +680,17 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SyD-1r-GH2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Mih-xM-xVt" firstAttribute="leading" secondItem="brb-fz-dwb" secondAttribute="leadingMargin" id="A78-Cb-ZsF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Mih-xM-xVt" secondAttribute="trailing" id="HrH-cI-YBM"/>
+                            <constraint firstItem="3bQ-5J-tyH" firstAttribute="leading" secondItem="brb-fz-dwb" secondAttribute="leadingMargin" id="KpB-JC-FoR"/>
+                            <constraint firstItem="Mih-xM-xVt" firstAttribute="top" secondItem="x0c-B9-GHh" secondAttribute="bottom" constant="20" id="Uc9-C8-6sA"/>
+                            <constraint firstItem="x0c-B9-GHh" firstAttribute="top" secondItem="SyD-1r-GH2" secondAttribute="top" id="ecV-7i-aJV"/>
+                            <constraint firstItem="x0c-B9-GHh" firstAttribute="trailing" secondItem="SyD-1r-GH2" secondAttribute="trailing" id="fZT-Cs-1Pp"/>
+                            <constraint firstItem="3bQ-5J-tyH" firstAttribute="top" secondItem="Mih-xM-xVt" secondAttribute="bottom" constant="20" id="iXU-vB-TBi"/>
+                            <constraint firstItem="x0c-B9-GHh" firstAttribute="leading" secondItem="SyD-1r-GH2" secondAttribute="leading" id="rO6-cU-MTE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3bQ-5J-tyH" secondAttribute="trailing" id="ymY-ga-ZRa"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="commentInput" destination="3bQ-5J-tyH" id="hA8-hF-l18"/>
@@ -1053,10 +1061,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yfB-xS-a5B" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="41.5" width="374" height="75"/>
+                                                    <rect key="frame" x="20" y="41.5" width="374" height="100"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="75" id="GKl-rP-5aF"/>
+                                                        <constraint firstAttribute="height" constant="100" id="GKl-rP-5aF"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -1249,21 +1257,21 @@
                                 </items>
                             </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send To:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaz-IA-g3X" userLabel="Recipient Label">
-                                <rect key="frame" x="20" y="210" width="66.5" height="20.5"/>
+                                <rect key="frame" x="20" y="235" width="66.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Recipient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yQJ-7k-vXl">
-                                <rect key="frame" x="96.5" y="203" width="297.5" height="34"/>
+                                <rect key="frame" x="96.5" y="228" width="297.5" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HoQ-2k-xgv" userLabel="Song" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                <rect key="frame" x="20" y="108" width="374" height="75"/>
+                                <rect key="frame" x="20" y="108" width="374" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="75" id="8PG-Uh-A1A"/>
+                                    <constraint firstAttribute="height" constant="100" id="8PG-Uh-A1A"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1272,6 +1280,7 @@
                         <constraints>
                             <constraint firstItem="6Xs-Ss-QOp" firstAttribute="leading" secondItem="Epu-bK-lil" secondAttribute="leading" id="6eN-Y9-ffF"/>
                             <constraint firstItem="6Xs-Ss-QOp" firstAttribute="trailing" secondItem="Epu-bK-lil" secondAttribute="trailing" id="E3l-JI-vGc"/>
+                            <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="yQJ-7k-vXl" secondAttribute="bottom" id="HEW-GZ-Zrm"/>
                             <constraint firstItem="kaz-IA-g3X" firstAttribute="leading" secondItem="QjN-RE-hDB" secondAttribute="leadingMargin" id="NcR-de-ZWg"/>
                             <constraint firstItem="HoQ-2k-xgv" firstAttribute="top" secondItem="6Xs-Ss-QOp" secondAttribute="bottom" constant="20" id="WXq-fJ-D50"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HoQ-2k-xgv" secondAttribute="trailing" id="ZPa-1H-w3O"/>

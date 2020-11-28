@@ -23,6 +23,7 @@ class MessageListVC: UITableViewController {
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.messageSent), name: NSNotification.Name(rawValue: "messageSent"), object: nil)
 
         // Check whether the user is logged in
         if SharedData.logged_in {
@@ -38,6 +39,10 @@ class MessageListVC: UITableViewController {
             // If they're not, prompt them to login
             SharedData.login(parentVC: self, completion: nil)
         }
+    }
+    
+    @objc func messageSent() {
+        self.getConversations()
     }
     
     @objc func loginChanged() {

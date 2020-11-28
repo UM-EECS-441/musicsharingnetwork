@@ -26,39 +26,18 @@ class ShareSongVC: UIViewController {
     }
     
     @IBAction func sendButtonHandler(_ sender: Any) {
-        let messageText = try? JSONSerialization.data(withJSONObject: ["type": "song", "content": self.songView.spotifyURI!] as [String: String])
+        // Serialize the song as a message in JSON data
+        let messageText = try? JSONSerialization.data(withJSONObject: ["type": "song", "content": self.songView.spotifyURI] as [String: String])
         
-        // Serialize the recipient list and message into JSON data
-        let json: [String: Any] = ["recipients": [self.recipientInput.text ?? ""], "message": String(data: messageText!, encoding: .utf8) as Any]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/messages/send/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("ShareSongVC > sendButtonHandler: NETWORKING ERROR")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 201 {
-                    print("ShareSongVC > sendButtonHandler: HTTP STATUS: \(httpResponse.statusCode)")
-                    return
-                }
-                
-                // Dismiss the screen once the message has been sent
+        // Send a request to the backend API to send a message
+        BackendAPI.sendMessage(recipients: [self.recipientInput.text ?? ""], message: String(data: messageText!, encoding: .utf8) ?? "", successCallback: { (message: Message) in
+            // Dismiss the screen once the message has been sent
+            DispatchQueue.main.async {
                 self.dismiss(animated: true, completion: nil)
+                
+                // Also notify the message displays that there's a new message
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "messageSent"), object: nil)
             }
-        }
+        })
     }
 }

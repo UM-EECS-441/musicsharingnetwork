@@ -319,11 +319,15 @@ class BackendAPI {
                 // Convert it to conversation objects
                 var conversations = [Conversation]()
                 for convo in conversationList {
-                    // Get the list of members in the conversation and remove the current user
+                    // Get the list of members in the conversation
                     var members = convo["members"] as! [String]
-                    members = members.filter({ (username: String) -> Bool in
-                        return username != SharedData.username
-                    })
+                    // Remove the current user from the members list unless
+                    // it's a conversation with themself
+                    if members.count > 1 {
+                        members = members.filter({ (username: String) -> Bool in
+                            return username != SharedData.username
+                        })
+                    }
                     
                     conversations.append(Conversation(identifier: convo["conversation_id"] as! String, members: members))
                 }

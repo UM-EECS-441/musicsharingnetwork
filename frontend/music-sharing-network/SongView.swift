@@ -16,14 +16,14 @@ class SongView: UIView {
     
     weak var parentVC: UIViewController?
     
-    var spotifyURI: String!
-    var spotifyLink: String?
+    var spotifyURI: String = ""
+    var spotifyLink: String = "https://open.spotify.com"
     
     // MARK: - User Interface
     
     @IBOutlet weak var albumArtImageView: UIImageView!
     @IBOutlet weak var songLabel: UILabel!
-    @IBOutlet weak var artistLabel: UILabel!
+    @IBOutlet weak var artistAndAlbumLabel: UILabel!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var speakerButton: UIButton!
     
@@ -72,7 +72,7 @@ class SongView: UIView {
     }
     
     @IBAction func speakerButtonHandler(_ sender: Any) {
-        if let url = URL(string: self.spotifyLink ?? "https://open.spotify.com") {
+        if let url = URL(string: self.spotifyLink) {
             UIApplication.shared.open(url)
         }
     }
@@ -85,23 +85,10 @@ class SongView: UIView {
      - Parameter parentVC: the view controller displaying this song
      */
     func showSong(uri: String, parentVC: UIViewController?) {
-        self.parentVC = parentVC
-        
         // Send a request to the Spotify API to get info about this song
         SpotifyWebAPI.getTrack(uri: uri, callback: { (uri: String, link: String?, song: String?, album: String?, artist: String?, image: UIImage?) in
-            // Update variables
-            self.spotifyURI = uri
-            self.spotifyLink = link
-            
-            // Update UI
-            DispatchQueue.main.async {
-                self.songLabel.text = song
-                self.songLabel.sizeToFit()
-                self.artistLabel.text = artist
-                self.artistLabel.sizeToFit()
-                self.albumArtImageView.image = image
-                self.albumArtImageView.sizeToFit()
-            }
+            // Display the song
+            self.showSong(uri: uri, link: link, song: song, album: album, artist: artist, image: image, parentVC: parentVC)
         })
     }
     
@@ -120,14 +107,14 @@ class SongView: UIView {
         
         // Update variables
         self.spotifyURI = uri
-        self.spotifyLink = link
+        self.spotifyLink = link ?? self.spotifyLink
         
         // Update UI
         DispatchQueue.main.async {
             self.songLabel.text = song
             self.songLabel.sizeToFit()
-            self.artistLabel.text = artist
-            self.artistLabel.sizeToFit()
+            self.artistAndAlbumLabel.text = "\(artist ?? "") - \(album ?? "")"
+            self.artistAndAlbumLabel.sizeToFit()
             self.albumArtImageView.image = image
             self.albumArtImageView.sizeToFit()
         }

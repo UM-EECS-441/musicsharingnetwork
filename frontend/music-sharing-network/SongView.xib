@@ -12,7 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
             <connections>
                 <outlet property="albumArtImageView" destination="N2Q-Wh-1Pi" id="GFz-9w-DBg"/>
-                <outlet property="artistLabel" destination="DpF-r3-S13" id="SQn-xq-v7O"/>
+                <outlet property="artistAndAlbumLabel" destination="DpF-r3-S13" id="SQn-xq-v7O"/>
                 <outlet property="shareButton" destination="SgN-XM-Dlo" id="gsN-3a-fKy"/>
                 <outlet property="songLabel" destination="RGF-O6-aUV" id="1jq-FF-QFk"/>
                 <outlet property="speakerButton" destination="b17-qr-ipe" id="DCn-G3-as9"/>
@@ -33,7 +33,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jnw-sq-9VJ">
                     <rect key="frame" x="105" y="56.5" width="209" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGF-O6-aUV" userLabel="Song Label">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unknown Song" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGF-O6-aUV" userLabel="Song Label">
                             <rect key="frame" x="0.0" y="0.0" width="209" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="44y-4F-ScU"/>
@@ -42,7 +42,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DpF-r3-S13" userLabel="Artist Label">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unknown Album" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DpF-r3-S13" userLabel="Artist/Album Label">
                             <rect key="frame" x="0.0" y="25" width="209" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="4ZX-dE-XZG"/>
@@ -86,6 +86,7 @@
                 <constraint firstItem="N2Q-Wh-1Pi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="44K-AR-bED"/>
                 <constraint firstItem="SgN-XM-Dlo" firstAttribute="centerY" secondItem="N2Q-Wh-1Pi" secondAttribute="centerY" id="6H5-GV-Tsz"/>
                 <constraint firstItem="SgN-XM-Dlo" firstAttribute="leading" secondItem="jnw-sq-9VJ" secondAttribute="trailing" constant="15" id="6kY-Xe-yt1"/>
+                <constraint firstItem="jnw-sq-9VJ" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="N2Q-Wh-1Pi" secondAttribute="bottom" id="Kfo-1w-KXI"/>
                 <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="jnw-sq-9VJ" secondAttribute="bottom" id="NOf-RV-ttr"/>
                 <constraint firstItem="b17-qr-ipe" firstAttribute="centerY" secondItem="N2Q-Wh-1Pi" secondAttribute="centerY" id="a8n-4V-rAy"/>
                 <constraint firstItem="jnw-sq-9VJ" firstAttribute="leading" secondItem="N2Q-Wh-1Pi" secondAttribute="trailing" constant="10" id="ami-v1-Pxi"/>

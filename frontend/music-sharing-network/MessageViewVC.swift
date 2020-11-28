@@ -31,6 +31,8 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.messageSent), name: NSNotification.Name(rawValue: "messageSent"), object: nil)
 
         self.tableView.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         
@@ -47,6 +49,10 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: self.view.window)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: self.view.window)
+    }
+    
+    @objc func messageSent() {
+        self.getMessages()
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
@@ -76,7 +82,9 @@ class MessageViewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 self.messages = messages
                 self.tableView.rowHeight = UITableView.automaticDimension
                 self.tableView.reloadData()
-                self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+                if self.messages.count > 0 {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+                }
             }
         })
     }

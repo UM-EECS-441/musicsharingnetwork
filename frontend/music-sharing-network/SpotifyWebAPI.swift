@@ -110,8 +110,9 @@ class SpotifyWebAPI {
             artist = artistItem["name"] as? String
         }
         
-        // Get the song's image
+        // Get the song's album name and image
         let albumJSON = json["album"] as! [String: Any]
+        album = albumJSON["name"] as? String
         let images = albumJSON["images"] as! [Any]
         if images.count > 0 {
             let imageItem = images[0] as! [String: Any]

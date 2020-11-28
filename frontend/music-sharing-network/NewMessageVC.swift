@@ -30,6 +30,9 @@ class NewMessageVC: UIViewController {
             // Dismiss the screen once the message has been sent
             DispatchQueue.main.async {
                 self.dismiss(animated: true, completion: nil)
+                
+                // Also notify the message displays that there's a new message
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "messageSent"), object: nil)
             }
         })
     }
