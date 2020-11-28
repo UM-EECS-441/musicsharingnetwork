@@ -99,6 +99,7 @@ class TimelineVC: UITableViewController {
         cell.songView.showSong(uri: post.media, parentVC: self)
         //Set num_likes for each post
         cell.likeButton.setTitle(String(post.likes), for: .normal)
+        // FIXME: Determine whether to show the post as liked or unliked
         
         //Update like button icon and count for UI
         cell.likeButtonAction = { () in

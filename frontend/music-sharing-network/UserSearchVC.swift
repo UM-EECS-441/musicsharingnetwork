@@ -78,51 +78,19 @@ class UserSearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
     @IBAction func executeSearch(_ sender: Any) {
-        // Build an HTTP request
-        let json: [String: Any] = ["prefix": self.searchInput.text ?? ""]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        let requestURL = SharedData.baseURL + "/users/search"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.httpBody = jsonData
-
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("UserSearchVC > executeSearch: HTTP STATUS: \(httpResponse.statusCode)")
-                    return
-                }
-
-                do {
-                    self.results = [String]()
-                    guard let json = try JSONSerialization.jsonObject(with: data!) as? [String:Any] else {
-                        print("UserSearchVC > executeSearch: ERROR - JSON not in response from server")
-                        return
-                    }
-                    guard let username_list = json["usernames"] as? [String] else {
-                        print("UserSearchVC > executeSearch: ERROR - Usernames not in response from server")
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.results = username_list
-                        self.tableView.rowHeight = UITableView.automaticDimension
-                        self.tableView.reloadData()
-                        
-                        self.dismissKeyboard()
-                        self.searchInput.text = nil
-                    }
-                } catch let error as NSError {
-                    print(error)
-                }
+        // Send a request to the backend API to search users
+        BackendAPI.searchUsers(query: self.searchInput.text ?? "", successCallback: { (results: [String]) in
+            // Show search results
+            DispatchQueue.main.async {
+                self.results = results
+                self.tableView.rowHeight = UITableView.automaticDimension
+                self.tableView.reloadData()
             }
-        }
+        })
+        
+        // Dismiss keyboard and clear search input
+        self.dismissKeyboard()
+        self.searchInput.text = nil
     }
     
 }

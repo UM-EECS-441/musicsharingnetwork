@@ -11,7 +11,7 @@ import UIKit
  Interface for making calls to our backend APIs.
  */
 class BackendAPI {
-    static let baseURL: String = "https://backend-qjgo4vxcdq-uc.a.run.app"
+    private static let baseURL: String = "https://backend-qjgo4vxcdq-uc.a.run.app"
     
     // MARK: - Users
     
@@ -34,7 +34,7 @@ class BackendAPI {
         }
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/create/"
+        let requestURL = self.baseURL + "/users/create/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"
@@ -67,7 +67,7 @@ class BackendAPI {
         }
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/login/"
+        let requestURL = self.baseURL + "/users/login/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"
@@ -90,7 +90,7 @@ class BackendAPI {
      */
     static func logout(successCallback: (() -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/logout/"
+        let requestURL = self.baseURL + "/users/logout/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"
@@ -121,7 +121,7 @@ class BackendAPI {
         }
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/password/"
+        let requestURL = self.baseURL + "/users/password/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "PATCH"
@@ -132,6 +132,114 @@ class BackendAPI {
         // Send the request
         SharedData.HTTPRequest(request: request, expectedResponseCode: 204, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
             successCallback?()
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    /**
+     Search users by username.
+     - Parameter query: search query
+     - Parameter successCallback: function to execute if search succeeds
+     - Parameter errorCallback: function to execute if search fails
+     */
+    static func searchUsers(query: String, successCallback: (([String]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Serialize the search query into JSON data
+        let json: [String: Any] = ["prefix": query]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        // Build an HTTP request
+        let requestURL = self.baseURL + "/users/search"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpBody = jsonData
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
+                
+                // Get the search results
+                let results = json["usernames"] as! [String]
+                
+                successCallback?(results)
+            } catch let error as NSError {
+                print("BackendAPI > searchUsers - ERROR: \(error)")
+                errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    /**
+     Get a user's profile.
+     - Parameter username: user to fetch
+     - Parameter successCallback: function to execute if profile retrieval succeeds
+     - Parameter errorCallback: function to execute if profile retrieval fails
+     */
+    static func getProfile(username: String, successCallback: ((String, String, String, Bool) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build an HTTP request
+        let requestURL = self.baseURL + "/users/\(username)/info/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
+                
+                // Parse the user's profile info
+                let username_ = json["target_user"] as! String
+                let fullname = json["full_name"] as! String
+                let bio = json["user_bio"] as! String
+                let following = json["following"] as! Bool
+                
+                successCallback?(username_, fullname, bio, following)
+            } catch let error as NSError {
+                print("BackendAPI > getProfile - ERROR: \(error)")
+                errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    /**
+     Follow or unfollow a user.
+     - Parameter username: user to follow/unfollow
+     - Parameter successCallback: function to execute if follow/unfollow succeeds
+     - Parameter errorCallback: function to execute if follow/unfollow fails
+     */
+    static func followUser(username: String, successCallback: ((Bool) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build an HTTP request
+        let requestURL = self.baseURL + "/users/" + username + "/follow/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
+                
+                // Determine whether the user was followed or unfollowed
+                let followed = json["followed"] as! Bool
+                
+                successCallback?(followed)
+            } catch let error as NSError {
+                print("BackendAPI > followUser - ERROR: \(error)")
+                errorCallback?()
+            }
         }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
             errorCallback?()
         })
@@ -171,7 +279,7 @@ class BackendAPI {
      */
     static func getPosts(successCallback: (([Post]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/"
+        let requestURL = self.baseURL + "/posts/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "GET"
@@ -213,7 +321,7 @@ class BackendAPI {
      */
     static func getPostInfo(identifier: String, successCallback: ((Post, [Post]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/\(identifier)/info/"
+        let requestURL = self.baseURL + "/posts/\(identifier)/info/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "GET"
@@ -266,7 +374,7 @@ class BackendAPI {
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/create/"
+        let requestURL = self.baseURL + "/posts/create/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"
@@ -293,6 +401,39 @@ class BackendAPI {
         })
     }
     
+    /**
+     Like or unlike a post.
+     - Parameter identifier: post identifier
+     - Parameter successCallback: function to execute if like/unlike succeeds
+     - Parameter errorCallback: function to execute if like/unlike fails
+     */
+    static func likePost(identifier: String, successCallback: ((Bool) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build an HTTP request
+        let requestURL = self.baseURL + "/posts/\(identifier)/like/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
+                
+                // Determine whether the post was liked or unliked
+                let liked = json["liked"] as! Bool
+                
+                successCallback?(liked)
+            } catch let error as NSError {
+                print("BackendAPI > likePost - ERROR: \(error)")
+                errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
     // MARK: - Messages
     
     /**
@@ -302,7 +443,7 @@ class BackendAPI {
      */
     static func getConversations(successCallback: (([Conversation]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/messages/"
+        let requestURL = self.baseURL + "/messages/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "GET"
@@ -350,7 +491,7 @@ class BackendAPI {
      */
     static func getMessages(identifier: String, successCallback: (([Message]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/messages/\(identifier)/info/"
+        let requestURL = self.baseURL + "/messages/\(identifier)/info/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "GET"
@@ -393,7 +534,7 @@ class BackendAPI {
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/messages/send/"
+        let requestURL = self.baseURL + "/messages/send/"
         var request = URLRequest(url: URL(string: requestURL)!)
         request.httpShouldHandleCookies = true
         request.httpMethod = "POST"
@@ -416,6 +557,39 @@ class BackendAPI {
             } catch let error as NSError {
                 print("BackendAPI > sendMessage - ERROR: \(error)")
                 errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    // MARK: - Recommendations
+    
+    /**
+     Get song recommendations.
+     - Parameter successCallback: funciton to execute if recommendation retrieval succeeds
+     - Parameter errorCallback: function to execute if recommendation retrieval fails
+     */
+    static func getRecommendations(successCallback: (([String]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build an HTTP request
+        let requestURL = self.baseURL + "/recommendations/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
+                
+                // Get the list of recommended songs
+                let recommendations = json["recommendations"] as! [String]
+                
+                successCallback?(recommendations)
+            } catch let error as NSError {
+                print("BackendAPI > getRecommendations - ERROR: \(error)")
             }
         }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
             errorCallback?()

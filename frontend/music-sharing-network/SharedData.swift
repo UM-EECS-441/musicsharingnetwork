@@ -11,48 +11,11 @@ import UIKit
  Store data and implementation that is used across many view controllers.
  */
 class SharedData {
-    static let baseURL: String = "https://backend-qjgo4vxcdq-uc.a.run.app"
     static var username: String = ""
     static var logged_in: Bool {
         get {
             !self.username.isEmpty
         }
-    }
-    static let spotifyClientID: String = "c0a5c9b2c5b94d00b5599dd76b092414"
-    static let spotifyClientSecret: String = "225ff590d76d4d6db2168af29e627dd4"
-    static let spotifyCallbackURI: String = "music-sharing-network://spotify-login-callback"
-    
-    static var appDelegate: AppDelegate {
-        get {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                fatalError("SharedData > appDelegate: ERROR - Unable to get app delegate")
-            }
-            return appDelegate
-        }
-    }
-    
-    /*
-     Send an HTTP request and wait for the response.
-     */
-    static func SynchronousHTTPRequest(_ request: URLRequest,  completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        
-        let sem = DispatchSemaphore.init(value: 0)
-        
-        var data: Data?
-        var response: URLResponse?
-        var error: Error?
-        
-        let task = URLSession.shared.dataTask(with: request) {(_data, _response, _error) in
-            data = _data
-            response = _response
-            error = _error
-            sem.signal()
-        }
-        
-        task.resume()
-        sem.wait()
-        
-        completionHandler(data, response, error)
     }
     
     /**

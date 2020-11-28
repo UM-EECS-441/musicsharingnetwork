@@ -9,70 +9,41 @@ import UIKit
 
 class ExploreVC: UITableViewController {
 
-    var recommendations = [String]()
+    private var recommendations = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: NSNotification.Name(rawValue: "followChanged"), object: nil)
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        
+        self.getRecommendations()
     }
 
-    @objc func loginChanged() {
-        if !SharedData.logged_in {
-            self.navigationController?.popToRootViewController(animated: true)
-        }
+    @objc private func reload() {
+        self.getRecommendations()
     }
     
-    func getRecommendations() {
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/recommendations/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("ExploreVC > getRecommendations: HTTP STATUS: \(httpResponse.statusCode)")
-                    DispatchQueue.main.async {
-                        self.refreshControl?.endRefreshing()
-                    }
-                    return
-                }
-
-                do {
-                    self.recommendations = [String]()
-                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                    let recList = json["songs"] as! [String]
-                    
-                    for recEntry in recList {
-                        self.recommendations.append(recEntry)
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.rowHeight = UITableView.automaticDimension
-                        self.tableView.reloadData()
-                        self.refreshControl?.endRefreshing()
-                    }
-                } catch let error as NSError {
-                    print(error)
-                }
+    @objc private func handleRefresh(_ refreshControl: UIRefreshControl) {
+        self.getRecommendations()
+        self.refreshControl?.endRefreshing()
+    }
+    
+    private func getRecommendations() {
+        // Send a request to the backend API to get recommendations
+        BackendAPI.getRecommendations(successCallback: { (recommendations: [String]) in
+            // Show the recommendations
+            DispatchQueue.main.async {
+                self.recommendations = recommendations
+                self.tableView.rowHeight = UITableView.automaticDimension
+                self.tableView.reloadData()
             }
-        }
+        })
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     // MARK:- TableView handlers
 
@@ -83,7 +54,7 @@ class ExploreVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // how many rows per section
-        return 2
+        return self.recommendations.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -97,7 +68,7 @@ class ExploreVC: UITableViewController {
             fatalError("No reusable cell!")
         }
         
-        cell.songView.showSong(uri: "Artist:Song", parentVC: self)
+        cell.songView.showSong(uri: self.recommendations[indexPath.row], parentVC: self)
         
         return cell
     }

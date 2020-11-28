@@ -24,49 +24,27 @@ class TimelineTableCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.likeButton.addTarget(self, action: #selector(likeTapped(_:)), for: .touchUpInside)
+        self.likeButton.addTarget(self, action: #selector(self.likeTapped(_:)), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        
+        self.likeButton.isHidden = !SharedData.logged_in
+    }
+    
+    @objc func loginChanged() {
+        self.likeButton.isHidden = !SharedData.logged_in
     }
     
     @IBAction func likeTapped(_ sender: Any) {
-        // Serialize the username and password into JSON data
-        let json: [String: Any] = ["post_id": self.identifier!]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/\(self.identifier!)/like/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("TimelineTableCellVC > likeTapped: NETWORKING ERROR")
-                return
+        // Send a request to the backend API to like or unlike the post
+        BackendAPI.likePost(identifier: self.identifier!, successCallback: { (liked: Bool) in
+            // Update the UI
+            DispatchQueue.main.async {
+                self.isLiked = liked
+                self.likeButtonAction?()
             }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("TimelineTableCellVC > likeTapped: HTTP STATUS: \(httpResponse.statusCode)")
-                    return
-                }
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                    self.isLiked = json["liked"] as! Bool
-
-                    self.likeButtonAction?()
-                } catch let error as NSError {
-                    print(error)
-                }
-            }
-        }
+        })
     }
-    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

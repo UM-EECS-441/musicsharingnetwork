@@ -96,88 +96,46 @@ class ProfileVC: UIViewController {
      accordingly.
      */
     func getProfile() {
-        // Build an HTTP request
-        print(self.username)
-        let requestURL = SharedData.baseURL + "/users/\(self.username)/info/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("ProfileVC > getProfile: NETWORKING ERROR")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("ProfileVC > getProfile: HTTP STATUS: \(httpResponse.statusCode)")
-                    return
+        // Send a request to the backend API to get the user's profile
+        BackendAPI.getProfile(username: self.username, successCallback: { (username: String, fullname: String, bio: String, following: Bool) in
+            // Update UI
+            DispatchQueue.main.async {
+                if !self.myProfile {
+                    self.navBar.title = username
                 }
+                self.usernameLabel.text = username
+                self.usernameLabel.sizeToFit()
+                self.fullNameLabel.text = fullname
+                self.fullNameLabel.sizeToFit()
+                self.bioBox.text = bio
+                self.bioBox.sizeToFit()
+                self.isFollowed = following
                 
-                // Update the view with the data from the backend
-                if let json = try? JSONSerialization.jsonObject(with: data!) as? [String: Any] {
-                    self.fullNameLabel.text = json["full_name"] as? String
-                    self.fullNameLabel.sizeToFit()
-                    self.usernameLabel.text = self.username
-                    self.usernameLabel.sizeToFit()
-                    self.bioBox.text = json["user_bio"] as? String
-                    self.bioBox.sizeToFit()
-                    self.isFollowed = json["following"] as! Bool
-                    
-                    if self.isFollowed {
-                        self.followButton.setTitle("Unfollow", for: [])
-                    } else {
-                        self.followButton.setTitle("Follow", for: [])
-                    }
+                if self.isFollowed {
+                    self.followButton.setTitle("Unfollow", for: [])
+                } else {
+                    self.followButton.setTitle("Follow", for: [])
                 }
             }
-        }
+        })
     }
     
-    
     @IBAction func followTapped(_ sender: Any) {
-        
-        self.isFollowed.toggle()
-        
-        // API request to follow user
-        
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/users/" + self.username + "/follow/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("TimelineTableCellVC > followTapped: NETWORKING ERROR")
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 201 {
-                    print("TimelineTableCellVC > followTapped: HTTP STATUS: \(httpResponse.statusCode)")
-                    return
+        // Send a request to the backend API to follow the user
+        BackendAPI.followUser(username: self.username, successCallback: { (followed: Bool) in
+            // Update UI and reload timeline
+            DispatchQueue.main.async {
+                if followed {
+                    self.isFollowed = true
+                    self.followButton.setTitle("Unfollow", for: [])
+                } else {
+                    self.isFollowed = false
+                    self.followButton.setTitle("Follow", for: [])
                 }
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "followChanged"), object: nil)
             }
-        }
-        
-        if isFollowed {
-            followButton.setTitle("Unfollow", for: [])
-        } else {
-            followButton.setTitle("Follow", for: [])
-        }
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        })
     }
     
 }
