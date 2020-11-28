@@ -142,23 +142,25 @@ class BackendAPI {
     /**
      Parse a post from JSON data.
      - Parameter json: JSON object
-     - Returns: post object
+     - Returns: post object, whether it represents a reply (false => post; true => reply)
      */
-    static func parsePost(json: [String: Any]) -> Post? {
-        // Ignore comments
+    static func parsePost(json: [String: Any]) -> (data: Post, isReply: Bool) {
+        // Parse the post
+        let post: Post = Post(
+            identifier: json["post_id"] as! String,
+            timestamp: json["timestamp"] as! String,
+            owner: json["owner"] as! String,
+            media: json["content"] as? String ?? "",
+            message: json["message"] as? String ?? "",
+            likes: json["num_likes"] as! Int,
+            reposts: json["num_reposts"] as! Int
+        )
+        
+        // Determine whether it's an original post or a reply
         if json["reply_to"] as? Int == 0 {
-            // Create a new post
-            return Post(
-                identifier: json["post_id"] as! String,
-                timestamp: json["timestamp"] as! String,
-                owner: json["owner"] as! String,
-                media: json["content"] as! String,
-                message: json["message"] as! String,
-                likes: json["num_likes"] as! Int,
-                reposts: json["num_reposts"] as! Int
-            )
+            return (post, false)
         } else {
-            return nil
+            return (post, true)
         }
     }
     
@@ -187,14 +189,62 @@ class BackendAPI {
                 // Convert it to an array of post objects
                 var posts = [Post]()
                 for postEntry in postList {
-                    if let post = self.parsePost(json: postEntry) {
-                        posts.append(post)
+                    let post = self.parsePost(json: postEntry)
+                    if !post.isReply {
+                        posts.append(post.data)
                     }
                 }
                 
                 successCallback?(posts)
             } catch let error as NSError {
                 print("BackendAPI > getPosts - ERROR: \(error)")
+                errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    /**
+     Get a post and its replies.
+     - Parameter identifier: post identifier
+     - Parameter successCallback: function to execute if post retrieval succeeds
+     - Parameter errorCallback: function to execute if post retrieval fails
+     */
+    static func getPostInfo(identifier: String, successCallback: ((Post, [Post]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/posts/\(identifier)/info/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                
+                // Get the post
+                let postEntry = json["post"] as? [String: Any]
+                let post = self.parsePost(json: postEntry!)
+                
+                // Get replies
+                let repliesEntry = json["replies"] as! [[String: Any]]
+                // Convert them an array of post objects
+                var replies = [Post]()
+                for replyEntry in repliesEntry {
+                    let reply = self.parsePost(json: replyEntry)
+                    if reply.isReply {
+                        replies.append(reply.data)
+                    }
+                }
+                // Reverse the order so we have the newest reply last
+                replies.reverse()
+                
+                successCallback?(post.data, replies)
+            } catch let error as NSError {
+                print("BackendAPI > getInfo - ERROR: \(error)")
                 errorCallback?()
             }
         }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
@@ -210,9 +260,9 @@ class BackendAPI {
      - Parameter successCallback: function to execute if post creation succeeds
      - Parameter errorCallback: function to execute if post creation fails
      */
-    static func createPost(content: String, message: String, replyTo: Int = 0, successCallback: ((Post) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+    static func createPost(content: String, message: String, replyTo: String? = nil, successCallback: ((Post) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
         // Serialize the post as JSON data
-        let json: [String: Any] = ["message": message, "content": content, "reply_to": replyTo]
+        let json: [String: Any] = ["message": message, "content": content, "reply_to": replyTo ?? 0]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
@@ -230,9 +280,10 @@ class BackendAPI {
                 // Read the server's response as JSON data
                 let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
                 
-                if let post = parsePost(json: json["post"] as! [String: Any]) {
-                    successCallback?(post)
-                }
+                // Read the newly created post
+                let post = parsePost(json: json["post"] as! [String: Any])
+                
+                successCallback?(post.data)
             } catch let error as NSError {
                 print("BackendAPI > createPost - ERROR: \(error)")
                 errorCallback?()

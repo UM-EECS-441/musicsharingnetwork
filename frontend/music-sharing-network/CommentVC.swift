@@ -8,62 +8,47 @@
 
 import UIKit
 
-
 class CommentVC: UITableViewController {
-    var comments = [Comment]()
+    var comments = [Post]()
     var identifier: String = ""
+    
+    @IBOutlet weak var newCommentButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.refreshControl?.addTarget(self, action: #selector(CommentVC.handleRefresh(_:)), for: UIControl.Event.valueChanged)
-        getComments()
+        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        
+        if SharedData.logged_in {
+            self.newCommentButton.image = UIImage(systemName: "plus")
+            self.newCommentButton.isEnabled = true
+        } else {
+            self.newCommentButton.image = .none
+            self.newCommentButton.isEnabled = false
+        }
+        
+        self.getComments()
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        getComments()
+        self.getComments()
+        self.refreshControl?.endRefreshing()
     }
     
     func getComments() {
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/posts/\(self.identifier)/info/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("CommentVC > getComments: HTTP STATUS: \(httpResponse.statusCode)")
-                    DispatchQueue.main.async {
-                        self.refreshControl?.endRefreshing()
-                    }
-                    return
-                }
-
-                do {
-                    self.comments = [Comment]()
-                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                    let commentList = json["replies"] as! [[String: Any]]
-
-                    for commentEntry in commentList {
-                        self.comments.append(Comment(identifier: commentEntry["post_id"] as! String, timestamp: commentEntry["timestamp"] as! String, owner: commentEntry["owner"] as! String, message: commentEntry["message"] as! String))
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.rowHeight = UITableView.automaticDimension
-                        self.tableView.reloadData()
-                        self.refreshControl?.endRefreshing()
-                    }
-                } catch let error as NSError {
-                    print(error)
-                }
+        // Send a request to the get post info API
+        BackendAPI.getPostInfo(identifier: self.identifier, successCallback: { (post: Post, replies: [Post]) in
+            // Show the comments
+            DispatchQueue.main.async {
+                self.comments = replies
+                self.tableView.rowHeight = UITableView.automaticDimension
+                self.tableView.reloadData()
+                self.tableView.scrollToRow(at: IndexPath(row: self.comments.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
             }
-        }
+        })
     }
+    
     // MARK:- TableView handlers
 
     override func numberOfSections(in tableView: UITableView) -> Int {
