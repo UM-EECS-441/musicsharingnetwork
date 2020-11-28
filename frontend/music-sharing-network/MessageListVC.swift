@@ -6,7 +6,8 @@
 //
 
 import UIKit
-/*
+
+/**
  Controls a view that shows a list of all the conversations the user is a member
  of. Conversations are identified by the set of members in them.
  */
@@ -63,55 +64,18 @@ class MessageListVC: UITableViewController {
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         self.getConversations()
+        self.refreshControl?.endRefreshing()
     }
 
     func getConversations() {
-        // Build an HTTP request
-        let requestURL = SharedData.baseURL + "/messages/"
-        var request = URLRequest(url: URL(string: requestURL)!)
-        request.httpShouldHandleCookies = true
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-
-        // Send the request and read the server's response
-        SharedData.SynchronousHTTPRequest(request) { (data, response, error) in
-            // Check for errors
-            guard let _ = data, error == nil else {
-                print("MessageListVC > getConversations: NETWORKING ERROR")
-                DispatchQueue.main.async {
-                    self.refreshControl?.endRefreshing()
-                }
-                return
+        // Send a request to the backend API to get conversations
+        BackendAPI.getConversations(successCallback: { (conversations: [Conversation]) in
+            DispatchQueue.main.async {
+                self.conversations = conversations
+                self.tableView.rowHeight = UITableView.automaticDimension
+                self.tableView.reloadData()
             }
-
-            if let httpResponse = response as? HTTPURLResponse {
-                // Check for errors
-                if httpResponse.statusCode != 200 {
-                    print("MessageListVC > getConversations: HTTP STATUS: \(httpResponse.statusCode)")
-                    DispatchQueue.main.async {
-                        self.refreshControl?.endRefreshing()
-                    }
-                    return
-                }
-
-                do {
-                    self.conversations = [Conversation]()
-                    let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
-                    let conversations = json["conversations"] as! [[String: Any]]
-
-                    for convo in conversations {
-                        self.conversations.append(Conversation(identifier: convo["conversation_id"] as! String, members: convo["members"] as! [String]))
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.rowHeight = UITableView.automaticDimension
-                        self.tableView.reloadData()
-                        self.refreshControl?.endRefreshing()
-                    }
-                } catch let error as NSError {
-                    print(error)
-                }
-            }
-        }
+        })
     }
 
     // MARK:- TableView handlers

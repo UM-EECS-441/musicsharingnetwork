@@ -244,7 +244,7 @@ class BackendAPI {
                 
                 successCallback?(post.data, replies)
             } catch let error as NSError {
-                print("BackendAPI > getInfo - ERROR: \(error)")
+                print("BackendAPI > getPostInfo - ERROR: \(error)")
                 errorCallback?()
             }
         }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
@@ -286,6 +286,131 @@ class BackendAPI {
                 successCallback?(post.data)
             } catch let error as NSError {
                 print("BackendAPI > createPost - ERROR: \(error)")
+                errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    // MARK: - Messages
+    
+    /**
+     Get a list of all conversations the current user is a member of.
+     - Parameter successCallback: function to execute if conversation retrieval succeeds
+     - Parameter errorCallback: function to execute if conversation retrieval fails
+     */
+    static func getConversations(successCallback: (([Conversation]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/messages/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                
+                // Get the list of the user's conversayions
+                let conversationList = json["conversations"] as! [[String: Any]]
+                // Convert it to conversation objects
+                var conversations = [Conversation]()
+                for convo in conversationList {
+                    // Get the list of members in the conversation and remove the current user
+                    var members = convo["members"] as! [String]
+                    members = members.filter({ (username: String) -> Bool in
+                        return username != SharedData.username
+                    })
+                    
+                    conversations.append(Conversation(identifier: convo["conversation_id"] as! String, members: members))
+                }
+                
+                successCallback?(conversations)
+            } catch let error as NSError {
+                print("BackendAPI > getConversations - ERROR: \(error)")
+                errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    /**
+     Get messages that belong to a conversation.
+     - Parameter identifier: conversation identifier
+     - Parameter successCallback: function to execute if message retrieval succeeds
+     - Parameter errorCallback: function to execute if message retrieval fails
+     */
+    static func getMessages(identifier: String, successCallback: (([Message]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/messages/\(identifier)/info/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 200, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                
+                // Get the list of messages
+                let jsonMessages = json["messages"] as! [[String: Any]]
+                // Convert it to message objects
+                var messages = [Message]()
+                for message in jsonMessages {
+                    messages.append(Message(identifier: message["id"] as! String, timestamp: message["timestamp"] as! String, owner: message["owner"] as! String, text: message["message"] as! String))
+                }
+                
+                successCallback?(messages)
+            } catch let error as NSError {
+                print("BackendAPI > getMessages - ERROR: \(error)")
+                errorCallback?()
+            }
+        }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            errorCallback?()
+        })
+    }
+    
+    /**
+     Send a new message.
+     - Parameter recipients: list of users to send the message to
+     - Parameter message: message text
+     - Parameter successCallback: function to execute if message sends successfully
+     - Parameter errorCallback: function to execute if message fails to send
+     */
+    static func sendMessage(recipients: [String], message: String, successCallback: ((Message) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+        // Serialize the recipient list and message into JSON data
+        let json: [String: Any] = ["recipients": recipients, "message": message]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        // Build an HTTP request
+        let requestURL = SharedData.baseURL + "/messages/send/"
+        var request = URLRequest(url: URL(string: requestURL)!)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        // Send the request
+        SharedData.HTTPRequest(request: request, expectedResponseCode: 201, successCallback: { (data: Data?, response: URLResponse?, error: Error?) in
+            do {
+                // Read the server's response as JSON data
+                let json = try JSONSerialization.jsonObject(with: data!) as! [String:Any]
+                
+                // Get the newly created message
+                let jsonMessage = json["message"] as! [String: Any]
+                // Convert it to a message object
+                let message: Message = Message(identifier: jsonMessage["id"] as! String, timestamp: jsonMessage["timestamp"] as! String, owner: jsonMessage["owner"] as! String, text: jsonMessage["message"] as! String)
+                
+                successCallback?(message)
+            } catch let error as NSError {
+                print("BackendAPI > sendMessage - ERROR: \(error)")
                 errorCallback?()
             }
         }, errorCallback: { (data: Data?, response: URLResponse?, error: Error?) in

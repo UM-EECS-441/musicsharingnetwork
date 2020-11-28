@@ -253,7 +253,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is where the post's text is shown" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFU-ZO-Yfb" userLabel="Post Content">
-                                            <rect key="frame" x="20" y="167" width="374" height="20"/>
+                                            <rect key="frame" x="20" y="166.5" width="374" height="20.5"/>
                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -288,7 +288,7 @@
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE3-pq-qi9" userLabel="Song" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="56" width="374" height="91"/>
+                                            <rect key="frame" x="20" y="56" width="374" height="90.5"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="fbX-jD-6Fc"/>
