@@ -14,16 +14,18 @@ class Post {
     var media: String
     var message: String
     var likes: Int
+    var liked: Bool
     var reposts: Int
     
     init(identifier: String, timestamp: String, owner: String, media: String,
-         message: String, likes: Int, reposts: Int) {
+         message: String, likes: Int, liked: Bool, reposts: Int) {
         self.identifier = identifier
         self.timestamp = timestamp
         self.owner = owner
         self.media = media
         self.message = message
         self.likes = likes
+        self.liked = liked
         self.reposts = reposts
     }
 }

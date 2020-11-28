@@ -18,32 +18,25 @@ class TimelineTableCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
     
-    var likeButtonAction : (() -> Void)?
-    var isLiked: Bool = false
+    var likeButtonAction : ((Bool) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         self.likeButton.addTarget(self, action: #selector(self.likeTapped(_:)), for: .touchUpInside)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
-        
-        self.likeButton.isHidden = !SharedData.logged_in
-    }
-    
-    @objc func loginChanged() {
-        self.likeButton.isHidden = !SharedData.logged_in
     }
     
     @IBAction func likeTapped(_ sender: Any) {
-        // Send a request to the backend API to like or unlike the post
-        BackendAPI.likePost(identifier: self.identifier!, successCallback: { (liked: Bool) in
-            // Update the UI
-            DispatchQueue.main.async {
-                self.isLiked = liked
-                self.likeButtonAction?()
-            }
-        })
+        // Don't do anything if the user is not logged in
+        if SharedData.logged_in {
+            // Send a request to the backend API to like or unlike the post
+            BackendAPI.likePost(identifier: self.identifier!, successCallback: { (liked: Bool) in
+                // Update the UI
+                DispatchQueue.main.async {
+                    self.likeButtonAction?(liked)
+                }
+            })
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
