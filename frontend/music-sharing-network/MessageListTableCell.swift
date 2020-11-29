@@ -20,7 +20,6 @@ class MessageListTableCell: UITableViewCell {
     // MARK: - User Interface
     
     @IBOutlet weak var membersLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
     
     // MARK: - Initialization
     
