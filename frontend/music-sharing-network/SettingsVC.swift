@@ -53,10 +53,13 @@ class SettingsVC: UIViewController {
     @IBAction func logoutButtonHandler(_ sender: Any) {
         // Send a request to the logout API
         BackendAPI.logout(successCallback: { () in
-            // Reset username
-            SharedData.username = ""
-            // Tell everyone we changed it
             DispatchQueue.main.async {
+                // Reset username
+                SharedData.username = ""
+                // Reset saved credentials
+                UserDefaults.standard.removeObject(forKey: "username")
+                UserDefaults.standard.removeObject(forKey: "password")
+                // Tell everyone we changed it
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
             }
         })

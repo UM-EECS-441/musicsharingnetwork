@@ -163,6 +163,8 @@
 		D89B807E2551F04900004E7F /* Users */ = {
 			isa = PBXGroup;
 			children = (
+				D8AAF77325731B7C0011A1F9 /* LoginPromptView.xib */,
+				D8AAF77625731B9E0011A1F9 /* LoginPromptView.swift */,
 				D8DF6E00254A1F6B005481D9 /* LoginVC.swift */,
 				49DD32DF256DC5DE008B9DF9 /* CreateProfileVC.swift */,
 				D8C5F76B256639C300F24165 /* UserSearchTableCell.swift */,
@@ -203,8 +205,6 @@
 			children = (
 				D8C546972551FE8200F0B3E3 /* SongView.xib */,
 				D8C546942551FE4A00F0B3E3 /* SongView.swift */,
-				D8AAF77325731B7C0011A1F9 /* LoginPromptView.xib */,
-				D8AAF77625731B9E0011A1F9 /* LoginPromptView.swift */,
 				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
 				D8E5516B25706F8B00D49958 /* BackendAPI.swift */,
 			);

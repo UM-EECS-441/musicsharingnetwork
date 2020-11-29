@@ -48,12 +48,19 @@ class LoginVC: UIViewController {
      Sign in with the username and password supplied by the user.
      */
     @IBAction func login(_ sender: Any) {
+        // Get the username and password from the input fields
+        let username_input: String = self.usernameInput.text ?? ""
+        let password_input: String = self.passwordInput.text ?? ""
+        
         // Send a request to the backend to login
-        BackendAPI.login(username: self.usernameInput.text ?? "", password: self.passwordInput.text ?? "", successCallback: { (username: String) in
+        BackendAPI.login(username: username_input, password: password_input, successCallback: { (username: String) in
             DispatchQueue.main.async {
                 // Update shared username variable
                 SharedData.username = username
-                // Tell everyone else we updated it
+                // Save credentials
+                UserDefaults.standard.setValue(username_input, forKey: "username")
+                UserDefaults.standard.setValue(password_input, forKey: "password")
+                // Tell everyone we logged in
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
             }
         })
