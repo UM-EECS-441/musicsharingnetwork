@@ -7,13 +7,15 @@ from . import routes
 from . import user_ref
 from . import follow_ref
 from . import post_ref
+from . import FEATURES
+from . import spotify_ref
 from routes.posts import add_liked_to_post
 
 @routes.route('/users/create/', methods=['POST'])
 def create_user():
     """Creates a new user with the specified credentials and profile information."""
+
     if 'username' in flask.session:
-        # redirect them to the settings page or something eventually 
         return flask.jsonify(**{'message': 'user is currently logged in', 'url': flask.request.path}), 400
 
     #make sure the request has necessary parameters
@@ -21,18 +23,15 @@ def create_user():
         return flask.jsonify(**{'message': 'requires username and password', 'url': flask.request.path}), 400
 
     username = flask.request.json['username'].lower()
-    # TODO: validate username format
     
     existing_users = list(user_ref.where('username', '==', username).stream())
     if (len(existing_users) > 0):
         return flask.jsonify(**{'message': 'existing user {}'.format(username), 'url': flask.request.path}), 409
 
     password = flask.request.json['password']
-    # TODO: validate the password
     
     # hash the password
     password_db_entry = hash_password(password)
-    # TODO: take in profile picture and upload to storage
 
     # set database entry
     data = {
@@ -48,12 +47,10 @@ def create_user():
         'num_following': 0,
         'num_followers': 0,
         'direct_messages': [],
-        'recommendations': [],
-        'archived_recommendations': [],
-        'sentiment_weights': {}
+        'feature_vector': init_buckets()
     }
     user_ref.document(username).set(data)
-    # have the user follow themselves (representational purposes) (SEE IF THIS WORKS)
+    # have the user follow themselves (representational purposes)
     data = {
         'follower': username,
         'followed': username
@@ -67,6 +64,7 @@ def create_user():
 @routes.route('/users/password/', methods = ['PATCH'])
 def change_password():
     """Modify current user credentials (password)."""
+
     if 'username' not in flask.session:
         return flask.jsonify(**{'message': 'user is currently not logged in', 'url': flask.request.path}), 400
 
@@ -82,7 +80,6 @@ def change_password():
         return flask.jsonify(**{'message': 'invalid password', 'url': flask.request.path}), 401
     
     new_password = flask.request.json['new_password']
-    #TODO: validate new password
 
     password_db_entry = hash_password(new_password)
     db_credentials[0].reference.update({'password': password_db_entry})
@@ -92,8 +89,8 @@ def change_password():
 @routes.route('/users/login/', methods = ['POST'])
 def login():
     """Authenticate user credentials to start a session."""
+
     if 'username' in flask.session:
-        # redirect them to the settings page or something eventually 
         return flask.jsonify(**{'message': 'user is currently logged in', 'url': flask.request.path}), 400
     
     #make sure the request has necessary parameters
@@ -119,6 +116,7 @@ def login():
 @routes.route('/users/logout/', methods = ['POST'])
 def logout():
     """Clear flask session for current user."""
+
     if 'username' not in flask.session:
         return flask.jsonify(**{'message': 'user is currently not logged in'}), 400
     # Clear flask session and logout user
@@ -129,6 +127,7 @@ def logout():
 @routes.route('/users/<target_user>/info/', methods = ['GET'])
 def show_user(target_user):
     """Returns information about a user's profile to display. """
+
     # We allow non-authenticated users to view another user's profile.
     db_entry = list(user_ref.where('username', '==', target_user).stream())
 
@@ -137,7 +136,7 @@ def show_user(target_user):
 
     posts = [post.to_dict() for post in post_ref.where('owner', '==', target_user).stream()]
 
-    # if a user is logged in, return whether they are following the requested user (and add if the post has been liked by current user)
+    # if a user is logged in, return whether they are following the requested user (and add if their posts have been liked by current user)
     if 'username' not in flask.session:
         follow_bool = False
         posts = [add_liked_to_post(post_dict, None) for post_dict in posts]
@@ -165,6 +164,7 @@ def show_user(target_user):
 @routes.route('/users/<target_user>/follow/', methods = ['POST'])
 def update_follow(target_user):
     """Follows/Unfollows the specified user for the current user."""
+
     if 'username' not in flask.session:
         return flask.jsonify(**{'message': 'Cannot follow/unfollow user, not logged in', 'url': flask.request.path}), 401
 
@@ -202,7 +202,8 @@ def update_follow(target_user):
 
 @routes.route('/users/search/', methods = ['POST'])
 def search_users():
-    """Returns a list of usernames that start with the specified prefix"""
+    """Returns a list of usernames that start with the specified prefix."""
+
     if 'prefix' not in flask.request.json:
         return flask.jsonify(** {'message': 'no prefix specified for search', 'url': flask.request.path}), 400
     
@@ -217,6 +218,7 @@ def search_users():
 
 def hash_password(password):
     """Hash password for database storage."""
+
     algorithm = 'sha512'
     salt = uuid.uuid4().hex
     hash_obj = hashlib.new(algorithm)
@@ -239,4 +241,13 @@ def compare_hash(password, db_credentials):
     password_hash = hash_obj.hexdigest()
     return password_hash == db_passhash
 
+def init_buckets():
+    """Initializes the bucket structure for each user (upon creation)."""
+    feature_dict = {}
+    for feature in FEATURES:
+        if feature == 'tempo':
+            feature_dict[feature] = [0]*21
+        else:
+            feature_dict[feature] = [0]*11
+    return feature_dict
 

@@ -6,9 +6,10 @@ from . import routes
 from . import conversation_ref
 from . import user_ref
 
-# Sends a message to the specified recipients
 @routes.route('/messages/send/', methods=['POST'])
 def send_message():
+    """ Sends a direct message to the specified users. Creates a new conversation if one does not exist."""
+
     # check if user is logged in
     if 'username' not in flask.session:
         return flask.jsonify(**{'message': 'must be logged in to send direct messages', 'url': flask.request.path}), 401
@@ -66,6 +67,8 @@ def send_message():
 # Returns all messages that belong to that conversation
 @routes.route('/messages/<conversation_id>/info/', methods=['GET'])
 def get_conversation(conversation_id):
+    """ Retrieves all the messages for a conversation."""
+
     if 'username' not in flask.session:
         return flask.jsonify(**{'message': 'must be logged in to view direct messages', 'url': flask.request.path}), 401
     
@@ -88,9 +91,10 @@ def get_conversation(conversation_id):
 
     return flask.jsonify(**context), 200
 
-# Returns previews of all conversations that the user is a part of
 @routes.route('/messages/', methods=['GET'])
 def get_messages():
+    """Returns previews of all conversations that the user is a part of."""
+    
     if 'username' not in flask.session:
         return flask.jsonify(**{'message': 'must be logged in to view direct messages', 'url': flask.request.path}), 401
     
