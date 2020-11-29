@@ -11,7 +11,9 @@ import UIKit
  Store data and implementation that is used across many view controllers.
  */
 class SharedData {
+    // Current user's username (empty if not logged in)
     static var username: String = ""
+    // Computed property to quickly check whether the user is logged in
     static var logged_in: Bool {
         get {
             !self.username.isEmpty
@@ -19,16 +21,16 @@ class SharedData {
     }
     
     /**
-     If the user is not logged in, prompt them to log in.
-     
-     - Parameter parentVC: the view controller requesting the user to log in
-     - Parameter completion: closure to run after the user logs in
+     Prompt the user to login by displaying a login button in the center of the screen.
+     - Parameter parentVC: view controller prompting the user to log in
      */
-    static func login(parentVC: UIViewController, completion: (() -> Void)?) {
-        if self.username == "" {
-            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let loginNavController = storyBoard.instantiateViewController(withIdentifier: "LoginNavigationController")
-            parentVC.present(loginNavController, animated: true, completion: nil)
+    static func promptLogin(parentVC: UIViewController) {
+        DispatchQueue.main.async {
+            let loginView = LoginPromptView(frame: parentVC.view.bounds)
+            loginView.backgroundColor = UIColor.white
+            loginView.parentVC = parentVC
+            parentVC.view.addSubview(loginView)
+            parentVC.view.bringSubviewToFront(loginView)
         }
     }
     

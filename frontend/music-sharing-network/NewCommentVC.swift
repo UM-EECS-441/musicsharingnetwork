@@ -17,9 +17,6 @@ class NewCommentVC: UIViewController {
 
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        // Prompt the user to login if they have not already
-        SharedData.login(parentVC: self, completion: nil)
     }
     
     @IBAction func cancelButtonHandler(_ sender: Any) {

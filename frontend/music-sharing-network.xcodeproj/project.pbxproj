@@ -35,6 +35,8 @@
 		D87EF55D25315314008EA46A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D87EF55B25315314008EA46A /* LaunchScreen.storyboard */; };
 		D8819261256446D4008003E7 /* MessageViewTableCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8819260256446D4008003E7 /* MessageViewTableCellText.swift */; };
 		D881926625645BFB008003E7 /* NewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D881926525645BFB008003E7 /* NewMessageVC.swift */; };
+		D8AAF77425731B7C0011A1F9 /* LoginPromptView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8AAF77325731B7C0011A1F9 /* LoginPromptView.xib */; };
+		D8AAF77725731B9E0011A1F9 /* LoginPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AAF77625731B9E0011A1F9 /* LoginPromptView.swift */; };
 		D8B90084255210D900DBBD67 /* ExploreTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B90083255210D900DBBD67 /* ExploreTableCell.swift */; };
 		D8C546952551FE4A00F0B3E3 /* SongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C546942551FE4A00F0B3E3 /* SongView.swift */; };
 		D8C546982551FE8200F0B3E3 /* SongView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8C546972551FE8200F0B3E3 /* SongView.xib */; };
@@ -76,6 +78,8 @@
 		D87EF55E25315314008EA46A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8819260256446D4008003E7 /* MessageViewTableCellText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewTableCellText.swift; sourceTree = "<group>"; };
 		D881926525645BFB008003E7 /* NewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVC.swift; sourceTree = "<group>"; };
+		D8AAF77325731B7C0011A1F9 /* LoginPromptView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginPromptView.xib; sourceTree = "<group>"; };
+		D8AAF77625731B9E0011A1F9 /* LoginPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPromptView.swift; sourceTree = "<group>"; };
 		D8B90083255210D900DBBD67 /* ExploreTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTableCell.swift; sourceTree = "<group>"; };
 		D8C546942551FE4A00F0B3E3 /* SongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongView.swift; sourceTree = "<group>"; };
 		D8C546972551FE8200F0B3E3 /* SongView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SongView.xib; sourceTree = "<group>"; };
@@ -127,7 +131,7 @@
 				D87EF55025315311008EA46A /* AppDelegate.swift */,
 				D87EF55225315311008EA46A /* SceneDelegate.swift */,
 				D875F8B8256AFF4F00244310 /* Spotify */,
-				D89B80822551F58000004E7F /* Reusable Components */,
+				D89B80822551F58000004E7F /* General */,
 				D89B807E2551F04900004E7F /* Users */,
 				D89B807C2551F00000004E7F /* Posts */,
 				D89B807F2551F07400004E7F /* Messages */,
@@ -194,15 +198,17 @@
 			name = Recommendations;
 			sourceTree = "<group>";
 		};
-		D89B80822551F58000004E7F /* Reusable Components */ = {
+		D89B80822551F58000004E7F /* General */ = {
 			isa = PBXGroup;
 			children = (
-				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
 				D8C546972551FE8200F0B3E3 /* SongView.xib */,
 				D8C546942551FE4A00F0B3E3 /* SongView.swift */,
+				D8AAF77325731B7C0011A1F9 /* LoginPromptView.xib */,
+				D8AAF77625731B9E0011A1F9 /* LoginPromptView.swift */,
+				D8DF6DFD254A1E10005481D9 /* SharedData.swift */,
 				D8E5516B25706F8B00D49958 /* BackendAPI.swift */,
 			);
-			name = "Reusable Components";
+			name = General;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +271,7 @@
 				D87EF55D25315314008EA46A /* LaunchScreen.storyboard in Resources */,
 				D87EF55A25315314008EA46A /* Assets.xcassets in Resources */,
 				D87EF55825315311008EA46A /* Main.storyboard in Resources */,
+				D8AAF77425731B7C0011A1F9 /* LoginPromptView.xib in Resources */,
 				D8C546982551FE8200F0B3E3 /* SongView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +293,7 @@
 				4943E123256846BC0051C7F2 /* CommentVC.swift in Sources */,
 				D8DF6E01254A1F6B005481D9 /* LoginVC.swift in Sources */,
 				D837777725489E17000C1D05 /* ExploreVC.swift in Sources */,
+				D8AAF77725731B9E0011A1F9 /* LoginPromptView.swift in Sources */,
 				49CF8E5D2551E8520001F326 /* TimelineTableCell.swift in Sources */,
 				4943E12625684D140051C7F2 /* CommentTableCell.swift in Sources */,
 				49213B8F2568C45C00E1CE75 /* NewCommentVC.swift in Sources */,

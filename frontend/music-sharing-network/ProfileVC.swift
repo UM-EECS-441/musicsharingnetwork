@@ -43,7 +43,7 @@ class ProfileVC: UIViewController {
                 self.username = SharedData.username
                 self.getProfile()
             } else {
-                SharedData.login(parentVC: self, completion: nil)
+                SharedData.promptLogin(parentVC: self)
             }
         } else {
             self.navBar.rightBarButtonItem?.title = nil
@@ -77,6 +77,8 @@ class ProfileVC: UIViewController {
                 
                 self.navBar.rightBarButtonItem?.title = nil
                 self.navBar.rightBarButtonItem?.isEnabled = false
+                
+                SharedData.promptLogin(parentVC: self)
             }
         } else {
             if SharedData.logged_in {

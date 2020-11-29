@@ -37,7 +37,7 @@ class MessageListVC: UITableViewController {
             self.composeButton.isEnabled = false
             
             // If they're not, prompt them to login
-            SharedData.login(parentVC: self, completion: nil)
+            SharedData.promptLogin(parentVC: self)
         }
     }
     
@@ -64,6 +64,8 @@ class MessageListVC: UITableViewController {
             self.composeButton.image = .none
             self.composeButton.isEnabled = false
             self.navigationController?.popToRootViewController(animated: true)
+            
+            SharedData.promptLogin(parentVC: self)
         }
     }
 
