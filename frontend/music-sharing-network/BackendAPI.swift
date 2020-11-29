@@ -261,11 +261,11 @@ class BackendAPI {
             media: json["content"] as? String ?? "",
             message: json["message"] as? String ?? "",
             likes: json["num_likes"] as! Int,
-            liked: json["liked"] as! Bool
+            liked: json["liked"] as? Bool ?? false
         )
         
         // Determine whether it's an original post or a reply
-        if json["reply_to"] as? Int == 0 {
+        if json["reply_to"] as? String == "" {
             return (post, false)
         } else {
             return (post, true)
@@ -370,7 +370,7 @@ class BackendAPI {
      */
     static func createPost(content: String, message: String, replyTo: String? = nil, successCallback: ((Post) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
         // Serialize the post as JSON data
-        let json: [String: Any] = ["message": message, "content": content, "reply_to": replyTo ?? 0]
+        let json: [String: Any] = ["message": message, "content": content, "reply_to": replyTo ?? ""]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request
