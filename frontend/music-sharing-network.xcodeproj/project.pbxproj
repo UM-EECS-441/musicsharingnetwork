@@ -153,8 +153,8 @@
 				D81F29DF256CBA7C00A48B43 /* SongSelectionTableCell.swift */,
 				D81F29DB256CB8A400A48B43 /* SongSelectionVC.swift */,
 				49FC01C9254C9C0600223147 /* NewPostVC.swift */,
-				4943E122256846BC0051C7F2 /* CommentVC.swift */,
 				4943E12525684D140051C7F2 /* CommentTableCell.swift */,
+				4943E122256846BC0051C7F2 /* CommentVC.swift */,
 				49213B8E2568C45C00E1CE75 /* NewCommentVC.swift */,
 			);
 			name = Posts;

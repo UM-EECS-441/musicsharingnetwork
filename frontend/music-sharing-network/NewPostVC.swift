@@ -53,9 +53,11 @@ class NewPostVC: UIViewController {
     @IBAction func addPost(_ sender: Any) {
         // Send a request to the create post API
         BackendAPI.createPost(content: self.songView.spotifyURI, message: self.captionTextView.text ?? "", successCallback: { (post: Post) in
-            // If it succeeds, dismiss the view
             DispatchQueue.main.async {
+                // If it succeeds, dismiss the view
                 self.dismiss(animated: true, completion: nil)
+                // And reload the timeline
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newPost"), object: nil)
             }
         })
     }

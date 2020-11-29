@@ -79,6 +79,16 @@ class CommentVC: UITableViewController {
         if (segue.identifier == "segueNewComment"){
             if let newCommentVC = segue.destination as? NewCommentVC{
                 newCommentVC.identifier = self.identifier
+                newCommentVC.commentCreated = { (comment: Post) in
+                    DispatchQueue.main.async {
+                        self.comments.append(comment)
+                        self.tableView.rowHeight = UITableView.automaticDimension
+                        self.tableView.reloadData()
+                        if self.comments.count > 0 {
+                            self.tableView.scrollToRow(at: IndexPath(row: self.comments.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+                        }
+                    }
+                }
             }
         }
     }

@@ -22,15 +22,16 @@ class SharedData {
     
     /**
      Prompt the user to login by displaying a login button in the center of the screen.
-     - Parameter parentVC: view controller prompting the user to log in
+     - Parameter parentVC: view controller to present the login form
+     - Parameter parentView: view in which to show the login prompt
      */
-    static func promptLogin(parentVC: UIViewController) {
+    static func promptLogin(parentVC: UIViewController, parentView: UIView) {
         DispatchQueue.main.async {
-            let loginView = LoginPromptView(frame: parentVC.view.bounds)
+            let loginView = LoginPromptView(frame: parentView.bounds)
             loginView.backgroundColor = UIColor.white
             loginView.parentVC = parentVC
-            parentVC.view.addSubview(loginView)
-            parentVC.view.bringSubviewToFront(loginView)
+            parentView.addSubview(loginView)
+            parentView.bringSubviewToFront(loginView)
         }
     }
     

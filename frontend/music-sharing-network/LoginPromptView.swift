@@ -46,7 +46,9 @@ class LoginPromptView: UIView {
     // MARK: - Event Handlers
     
     @objc func loginChanged() {
-        self.removeFromSuperview()
+        if SharedData.logged_in {
+            self.removeFromSuperview()
+        }
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {

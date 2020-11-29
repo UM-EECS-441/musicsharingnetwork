@@ -31,7 +31,9 @@ class TimelineVC: UITableViewController {
         // Respond when the user logs in or out
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
         // Respond when the user follows or unfollows another user
-        NotificationCenter.default.addObserver(self, selector: #selector(self.followChanged), name: NSNotification.Name(rawValue: "followChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: NSNotification.Name(rawValue: "followChanged"), object: nil)
+        // Respond when the user creates a new post
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: NSNotification.Name(rawValue: "newPost"), object: nil)
         
         // Let the user refresh their feed
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
@@ -85,9 +87,9 @@ class TimelineVC: UITableViewController {
     }
     
     /**
-     Reload the feed if the user follows or unfollows another user.
+     Reload the feed if the user follows or unfollows another user or creates a post.
      */
-    @objc private func followChanged() {
+    @objc private func reload() {
         self.getPosts()
     }
     
