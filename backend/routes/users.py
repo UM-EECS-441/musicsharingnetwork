@@ -49,6 +49,7 @@ def create_user():
         'direct_messages': [],
         'feature_vector': init_buckets()
     }
+
     user_ref.document(username).set(data)
     # have the user follow themselves (representational purposes)
     data = {
@@ -205,9 +206,10 @@ def search_users():
     """Returns a list of usernames that start with the specified prefix."""
 
     if 'prefix' not in flask.request.json:
-        return flask.jsonify(** {'message': 'no prefix specified for search', 'url': flask.request.path}), 400
+        prefix = ""
+    else:
+        prefix = flask.request.json['prefix'].lower()
     
-    prefix = flask.request.json['prefix'].lower()
     if len(prefix) == 0:
         username_list = [doc.to_dict()['username'] for doc in user_ref.stream()]
     else:

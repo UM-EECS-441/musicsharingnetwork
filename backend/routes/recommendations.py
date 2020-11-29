@@ -1,28 +1,36 @@
 import flask
 import random
 from . import user_ref
+from . import post_ref
 from . import routes
 from . import FEATURES
+from . import SEED_GENRES
 from . import spotify_ref
 
 @routes.route('/recommendations/', methods=['GET'])
 def get_recommendations():
     """ Returns recommendations for songs on Spotify based on user's attribute vector."""
 
-    # returns the top 15 songs in the United States if a user is not logged in
+    # returns the top 15 songs in the United States if a user is not logged in (or has not created a post)
     if 'username' not in flask.session:
+        standard_recs = True
+    else:
+        username = flask.session['username']
+        num_posts = len(list(post_ref.where('owner', '==', username).stream()))
+        standard_recs = num_posts < 1
+
+    if standard_recs:
         recommendations = spotify_ref.playlist_items('16wsvPYpJg1dmLhz0XTOmX', fields=['items.track.uri'], limit=15)
         recommendation_ids = [item['track']['uri'] for item in recommendations['items']]
         return flask.jsonify(**{'recommendations': recommendation_ids, 'url': flask.request.path}), 200
     
-    # gets query vector and genre seeds to fetch recommendationms
-    username = flask.session['username']
+    # gets query vector and genre seeds to fetch recommendations
     query_vector = build_query_vector(username)
     genres = get_genres()
     print(query_vector)
     
     # gets recommendations and calculates accuracy of recommendations
-    recommendations = spotify_ref.recommendations(seed_genres=genres, limit=15, **query_vector)
+    recommendations = spotify_ref.recommendations(seed_genres=genres, limit=15, country='US', **query_vector)
     track_ids = [track['uri'] for track in recommendations['tracks']]
     accuracy_dict = calculate_accuracy(query_vector, track_ids)
     print(accuracy_dict)
@@ -63,18 +71,14 @@ def get_feature_values(feature, lst):
 def get_genres(specify_genres=[], mode='random'):
     """ Selects genres to seed the recommendations request."""
 
-    # get all genres from spotify
-    genres = spotify_ref.recommendation_genre_seeds()
-    genres = genres['genres']
-
     # get_recommendations allows only five genres
     # you can specify which genres
     if mode == 'match':
         # genres = specified genres that are also in spotify
-        genres = list(set(genres) & set(specify_genres))
+        genres = list(set(SEED_GENRES) & set(specify_genres))
     # or get five random genres
     elif mode == 'random':
-        genres = random.sample(genres, 5)
+        genres = random.sample(SEED_GENRES, 5)
     return genres
 
 def calculate_accuracy(query_vector, track_ids):

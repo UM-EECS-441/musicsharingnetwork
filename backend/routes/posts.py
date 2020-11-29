@@ -7,6 +7,7 @@ from . import follow_ref
 from . import sentiment_model
 from . import sentiment_mapping
 from . import FEATURES
+from . import SEED_GENRES
 from . import spotify_ref
 from firebase_admin import firestore
 import datetime
@@ -142,15 +143,43 @@ def add_liked_to_post(post_dict, username):
     return post_dict
 
 def update_attributes(username, track_id, score):
-    """ Updates user's attribute vector based on the features of the song and sentiment score of their post."""
+    """ Updates user's attribute vectors based on the features of the song and sentiment score of their post."""
 
     feature_dict = user_ref.document(username).get().to_dict()['feature_vector']
+    # get or initialize genre vector and artist vector for user
+    genre_dict = user_ref.document(username).get().to_dict().get('genre_vector', {})
+    artist_dict = user_ref.document(username).get().to_dict().get('artist_vector', {})
+
+    # get the audio features for that track
     track = spotify_ref.audio_features(tracks=[track_id])[0]
+    # get artist ids for artists on this track
+    artist_ids = [artist['uri'] for artist in spotify_ref.track(track_id)['artists']]
+    # get genres affiliated with those artists
+    genres = set()
+    artist_genres = [artist['genres'] for artist in spotify_ref.artists(artist_ids)['artists']]
+    for genre_list in artist_genres:
+        genres.update(genre_list)
+    # filter genres to only contain seedable values for recommendations
+    genres = genres.intersection(set(SEED_GENRES))
+    print(genres)
+
     # increments/decrements the corresponding bucket value for each attribute based on sentiment score
     for feature in FEATURES:
         index = get_index(feature, track[feature])
+        print(feature, index)
         feature_dict[feature][index] += score
+
+    # updates the user's genre vector
+    for genre in genres:
+        genre_dict[genre] = genre_dict.get(genre, 0) + score
+    
+    for artist_id in artist_ids:
+        artist_dict[artist_id] = artist_dict.get(artist_id, 0) + score
+    
     user_ref.document(username).update({'feature_vector': feature_dict})
+    user_ref.document(username).update({'genre_vector': genre_dict})
+    user_ref.document(username).update({'artist_vector': artist_dict})
+    
 
 def get_index(feature, value):
     """ Calculates the corresponding bucket for a specific song attribute."""
