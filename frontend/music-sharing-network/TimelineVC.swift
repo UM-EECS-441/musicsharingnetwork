@@ -7,54 +7,54 @@
 
 import UIKit
 
+/**
+ Display the user's feed. All posts by the user themself or by anyone they follow are included. If the user is not
+ logged in, show all posts from all users.
+ */
 class TimelineVC: UITableViewController {
     
-    var posts = [Post]()
+    // MARK: - Variables
+    
+    // List of posts to display
+    private var posts = [Post]()
+    
+    // MARK: - User Interface
     
     @IBOutlet weak var newPostButton: UIBarButtonItem!
+    
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        // Respond when the user logs in or out
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        // Respond when the user follows or unfollows another user
         NotificationCenter.default.addObserver(self, selector: #selector(self.followChanged), name: NSNotification.Name(rawValue: "followChanged"), object: nil)
         
+        // Let the user refresh their feed
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         
+        // Show the button to create a new post only if the user is logged in
         if SharedData.logged_in {
             self.newPostButton.image = UIImage(systemName: "plus")
+            self.newPostButton.isEnabled = true
         } else {
             self.newPostButton.image = .none
-        }
-        self.newPostButton.isEnabled = SharedData.logged_in
-        self.getPosts()
-    }
-    
-    @objc func loginChanged() {
-        self.newPostButton.isEnabled = SharedData.logged_in
-        
-        if SharedData.logged_in {
-            self.newPostButton.image = UIImage(systemName: "plus")
-            self.getPosts()
-        } else {
-            self.newPostButton.image = .none
-            self.getPosts()
+            self.newPostButton.isEnabled = false
         }
         
-        self.navigationController?.popToRootViewController(animated: true)
-    }
-    
-    @objc func followChanged() {
+        // Load posts
         self.getPosts()
     }
     
-    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        self.getPosts()
-        self.refreshControl?.endRefreshing()
-    }
+    // MARK: - Helpers
     
-    func getPosts() {
+    /**
+     Load posts.
+     */
+    private func getPosts() {
         // Send a request to the get posts API
         BackendAPI.getPosts(successCallback: { (posts: [Post]) in
             DispatchQueue.main.async {
@@ -65,7 +65,53 @@ class TimelineVC: UITableViewController {
         })
     }
     
-    // MARK:- TableView handlers
+    // MARK: - Event Handlers
+    
+    /**
+     Show or hide the appropriate UI elements and reload the feed when the user logs in or out.
+     */
+    @objc private func loginChanged() {
+        if SharedData.logged_in {
+            self.newPostButton.image = UIImage(systemName: "plus")
+            self.newPostButton.isEnabled = true
+        } else {
+            self.newPostButton.image = .none
+            self.newPostButton.isEnabled = false
+        }
+        
+        self.getPosts()
+        
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    /**
+     Reload the feed if the user follows or unfollows another user.
+     */
+    @objc private func followChanged() {
+        self.getPosts()
+    }
+    
+    /**
+     Reload the feed and end refreshing if the user initiates a refresh.
+     - Parameter refreshControl: refresh control that triggered this event
+     */
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        self.getPosts()
+        self.refreshControl?.endRefreshing()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if (segue.identifier == "segueComments"){
+            if let button = sender as? UIButton {
+                let cell = button.superview?.superview as! TimelineTableCell
+                if let commentVC = segue.destination as? CommentVC{
+                    commentVC.identifier = cell.identifier!
+                }
+            }
+        }
+    }
+    
+    // MARK:- TableView Handlers
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // how many sections are in table
@@ -123,14 +169,4 @@ class TimelineVC: UITableViewController {
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        if (segue.identifier == "segueComments"){
-            if let button = sender as? UIButton {
-                let cell = button.superview?.superview as! TimelineTableCell
-                if let commentVC = segue.destination as? CommentVC{
-                    commentVC.identifier = cell.identifier!
-                }
-            }
-        }
-    }
 }

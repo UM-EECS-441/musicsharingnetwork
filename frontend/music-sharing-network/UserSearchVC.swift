@@ -7,9 +7,8 @@
 
 import UIKit
 
-/*
- Controls a view that shows a list of users similar to the username typed in
- the search bar.
+/**
+ Display a list of users whose username begins with the text entered in the search bar.
  */
 class UserSearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -31,13 +30,14 @@ class UserSearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(self.dismissKeyboard))
+        
+        // Dismiss the keyboard when the user taps anywhere else
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
     }
 
-    // MARK:- TableView handlers
+    // MARK: - TableView Handlers
 
     func numberOfSections(in tableView: UITableView) -> Int {
         // how many sections are in table
@@ -73,10 +73,17 @@ class UserSearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     // MARK: - Event Handlers
     
+    /**
+     Dismiss the keyboard.
+     */
     @objc func dismissKeyboard() {
         self.view.endEditing(false)
     }
     
+    /**
+     Search users by username.
+     - Parameter sender: the object that triggered this event
+     */
     @IBAction func executeSearch(_ sender: Any) {
         // Send a request to the backend API to search users
         BackendAPI.searchUsers(query: self.searchInput.text ?? "", successCallback: { (results: [String]) in

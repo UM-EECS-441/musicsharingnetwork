@@ -7,7 +7,13 @@
 
 import UIKit
 
+/**
+ Represents a post, which can be an original post or a reply to another post.
+ */
 class Post {
+    
+    // MARK: - Variables
+    
     var identifier: String
     var timestamp: String
     var owner: String
@@ -15,10 +21,21 @@ class Post {
     var message: String
     var likes: Int
     var liked: Bool
-    var reposts: Int
     
+    // MARK: - Initilization
+    
+    /**
+     Create a new Post object.
+     - Parameter identifier: post ID
+     - Parameter timestamp: when the post was created
+     - Parameter owner: the user who created the post
+     - Parameter media: Spotify URI
+     - Parameter message: text of the post
+     - Parameter likes: how many users have liked the post
+     - Parameter liked: whether the current user liked the post
+     */
     init(identifier: String, timestamp: String, owner: String, media: String,
-         message: String, likes: Int, liked: Bool, reposts: Int) {
+         message: String, likes: Int, liked: Bool) {
         self.identifier = identifier
         self.timestamp = timestamp
         self.owner = owner
@@ -26,6 +43,5 @@ class Post {
         self.message = message
         self.likes = likes
         self.liked = liked
-        self.reposts = reposts
     }
 }

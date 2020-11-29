@@ -7,20 +7,48 @@
 
 import UIKit
 
+/**
+ Display a form for the user to send a message.
+ */
 class NewMessageVC: UIViewController {
+    
+    // MARK: - User Interface
     
     @IBOutlet weak var recipientInput: UITextField!
     @IBOutlet weak var messageInput: UITextView!
     
+    // MARK: - Initialization
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // Dismiss the keyboard when the user taps anywhere else
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
     }
     
+    // MARK: - Event Handlers
+    
+    /**
+     Dismiss the keyboard.
+     */
+    @objc private func dismissKeyboard() {
+        self.view.endEditing(false)
+    }
+    
+    /**
+     Cancel new message by dismissing the view.
+     - Parameter sender: object that triggered this event
+     */
     @IBAction func cancelButtonHandler(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    /**
+     Send the message.
+     - Parameter sender: object that triggered this event
+     */
     @IBAction func sendButtonHandler(_ sender: Any) {
         // Serialize the message into JSON data
         let messageText = try? JSONSerialization.data(withJSONObject: ["type": "text", "content": self.messageInput.text ?? ""] as [String: String])
@@ -36,4 +64,5 @@ class NewMessageVC: UIViewController {
             }
         })
     }
+    
 }

@@ -7,32 +7,39 @@
 
 import UIKit
 
+/**
+ Display song recommendations.
+ */
 class ExploreVC: UITableViewController {
 
+    // MARK: - Variables
+    
+    // List of song recommendations
     private var recommendations = [String]()
+    
+    // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
+        // Respond when the user logs in or out
         NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: NSNotification.Name(rawValue: "followChanged"), object: nil)
+        // Respond when the user follows or unfollows another user
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: NSNotification.Name(rawValue: "followChanged"), object: nil) // TODO: Is this necessary?
         
+        // Let the user refresh their recommendations
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         
-        self.getRecommendations()
-    }
-
-    @objc private func reload() {
+        // Load recommendations
         self.getRecommendations()
     }
     
-    @objc private func handleRefresh(_ refreshControl: UIRefreshControl) {
-        self.getRecommendations()
-        self.refreshControl?.endRefreshing()
-    }
+    // MARK: - Helpers
     
+    /**
+     Load recommendations.
+     */
     private func getRecommendations() {
         // Send a request to the backend API to get recommendations
         BackendAPI.getRecommendations(successCallback: { (recommendations: [String]) in
@@ -45,7 +52,7 @@ class ExploreVC: UITableViewController {
         })
     }
     
-    // MARK:- TableView handlers
+    // MARK:- TableView Handlers
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // how many sections are in table
@@ -72,4 +79,23 @@ class ExploreVC: UITableViewController {
         
         return cell
     }
+    
+    // MARK: - Event Handlers
+    
+    /**
+     Reload recommendations when the user logs in/out or follows/unfollows another user.
+     */
+    @objc private func reload() {
+        self.getRecommendations()
+    }
+    
+    /**
+     Reload recommendations when the user initiates a refresh.
+     - Parameter refreshControl: refresh control that triggered this event
+     */
+    @objc private func handleRefresh(_ refreshControl: UIRefreshControl) {
+        self.getRecommendations()
+        self.refreshControl?.endRefreshing()
+    }
+    
 }

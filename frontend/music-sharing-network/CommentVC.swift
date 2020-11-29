@@ -5,21 +5,33 @@
 //  Created by Andrew on 11/20/20.
 //
 
-
 import UIKit
 
+/**
+ Display replies to a post.
+ */
 class CommentVC: UITableViewController {
-    var comments = [Post]()
+    
+    // MARK: - Variables
+    
+    // ID of the post
     var identifier: String = ""
+    // Comments on the post
+    private var comments = [Post]()
+    
+    // MARK: - User Interface
     
     @IBOutlet weak var newCommentButton: UIBarButtonItem!
     
+    // MARK: - Initialization
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
+        // Let the user refresh comments
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         
+        // Hide or show the new comment button depending on whether the user is logged in
         if SharedData.logged_in {
             self.newCommentButton.image = UIImage(systemName: "plus")
             self.newCommentButton.isEnabled = true
@@ -28,15 +40,16 @@ class CommentVC: UITableViewController {
             self.newCommentButton.isEnabled = false
         }
         
+        // Load comments
         self.getComments()
     }
     
-    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        self.getComments()
-        self.refreshControl?.endRefreshing()
-    }
+    // MARK: - Helpers
     
-    func getComments() {
+    /**
+     Load comments.
+     */
+    private func getComments() {
         // Send a request to the get post info API
         BackendAPI.getPostInfo(identifier: self.identifier, successCallback: { (post: Post, replies: [Post]) in
             // Show the comments
@@ -49,6 +62,25 @@ class CommentVC: UITableViewController {
                 }
             }
         })
+    }
+    
+    // MARK: - Event Handlers
+    
+    /**
+     Reload comments when the user initiates a refresh.
+     - Parameter refreshControl: the refresh control that triggered this event
+     */
+    @objc private func handleRefresh(_ refreshControl: UIRefreshControl) {
+        self.getComments()
+        self.refreshControl?.endRefreshing()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if (segue.identifier == "segueNewComment"){
+            if let newCommentVC = segue.destination as? NewCommentVC{
+                newCommentVC.identifier = self.identifier
+            }
+        }
     }
     
     // MARK:- TableView handlers
@@ -86,12 +118,5 @@ class CommentVC: UITableViewController {
         return cell
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        if (segue.identifier == "segueNewComment"){
-            if let newCommentVC = segue.destination as? NewCommentVC{
-                newCommentVC.identifier = self.identifier
-            }
-        }
-    }
 }
 

@@ -261,8 +261,7 @@ class BackendAPI {
             media: json["content"] as? String ?? "",
             message: json["message"] as? String ?? "",
             likes: json["num_likes"] as! Int,
-            liked: json["liked"] as! Bool,
-            reposts: json["num_reposts"] as! Int
+            liked: json["liked"] as! Bool
         )
         
         // Determine whether it's an original post or a reply

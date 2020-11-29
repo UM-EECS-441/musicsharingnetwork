@@ -7,9 +7,17 @@
 
 import UIKit
 
+/**
+ Display an interface for the user to search songs.
+ */
 class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var results = [(uri: String, link: String?, song: String?, album: String?, artist: String?, image: UIImage?)]()
+    // MARK: - Variables
+    
+    // Search results
+    private var results = [(uri: String, link: String?, song: String?, album: String?, artist: String?, image: UIImage?)]()
+    
+    // MARK: - User Interface
     
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var searchInput: UITextField!
@@ -20,18 +28,18 @@ class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         }
     }
     
+    // MARK: - Initialization
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // Disable the next button until the user selects a song
         self.nextButton.isEnabled = false
         
+        // Dismiss the keyboard when the user taps anywhere else
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard() {
-        self.view.endEditing(false)
     }
     
     // MARK: TableView Handlers
@@ -66,16 +74,25 @@ class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     // MARK: Event Handlers
     
+    /**
+     Dismiss the keyboard.
+     */
+    @objc func dismissKeyboard() {
+        self.view.endEditing(false)
+    }
+    
+    /**
+     Cancel song selection by dismissing the view.
+     - Parameter sender: object that triggered this event
+     */
     @IBAction func cancelButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationVC = segue.destination as? NewPostVC {
-            destinationVC.song = self.results[self.tableView.indexPathForSelectedRow!.row].uri
-        }
-    }
-    
+    /**
+     Execute a search.
+     - Parameter sender: object that triggered this event
+     */
     @IBAction func executeSearch(_ sender: Any) {
         SpotifyWebAPI.search(query: self.searchInput.text ?? "") { (results: [(uri: String, link: String?, song: String?, album: String?, artist: String?, image: UIImage?)]) in
             DispatchQueue.main.async {
@@ -86,6 +103,12 @@ class SongSelectionVC: UIViewController, UITableViewDataSource, UITableViewDeleg
                 self.nextButton.isEnabled = false
                 self.dismissKeyboard()
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? NewPostVC {
+            destinationVC.song = self.results[self.tableView.indexPathForSelectedRow!.row].uri
         }
     }
 }

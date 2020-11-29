@@ -9,26 +9,34 @@ import UIKit
 
 class SettingsVC: UIViewController {
     
+    // MARK: - User Interface
+    
     @IBOutlet weak var oldPasswordInput: UITextField!
     @IBOutlet weak var newPasswordInput: UITextField!
+    
+    // MARK: - Initilization
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
+        // Dismiss the keyboard when the user taps anywhere else
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
     }
     
-    @IBAction func loginChanged() {
-        if SharedData.logged_in {
-            print("SettingsVC > loginChanged: User logged in")
-        } else {
-            print("SettingsVC > loginChanged: User logged out")
-            
-            // Exit the settings screen since the user is now logged out
-            self.navigationController?.popViewController(animated: true)
-        }
+    // MARK: - Event Handlers
+    
+    /**
+     Dismiss the keyboard.
+     */
+    @objc func dismissKeyboard() {
+        self.view.endEditing(false)
     }
     
+    /**
+     Change the user's password.
+     */
     @IBAction func saveButtonHandler(_ sender: Any) {
         // Send a request to the change pasword API
         BackendAPI.changePassword(old: self.oldPasswordInput.text ?? "", new: self.newPasswordInput.text ?? "")
@@ -38,6 +46,10 @@ class SettingsVC: UIViewController {
         self.newPasswordInput.text = nil
     }
     
+    /**
+     Log out of the current user's account.
+     - Parameter sender: the object that triggered this event
+     */
     @IBAction func logoutButtonHandler(_ sender: Any) {
         // Send a request to the logout API
         BackendAPI.logout(successCallback: { () in

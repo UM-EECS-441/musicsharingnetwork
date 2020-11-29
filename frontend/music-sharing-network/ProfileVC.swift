@@ -12,11 +12,17 @@ import UIKit
  profile or another user's profile.
  */
 class ProfileVC: UIViewController {
+    
+    // MARK: - Variables
+    
     // Is the user viewing their own profile?
     var myProfile: Bool = true
     // If not, whose profile are they viewing?
     var username: String = ""
+    // Do they follow the user?
     var isFollowed: Bool = false
+    
+    // MARK: - User Interface
     
     @IBOutlet weak var navBar: UINavigationItem!
     @IBOutlet weak var fullNameLabel: UILabel!
@@ -24,15 +30,18 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var bioBox: UILabel!
     
+    // MARK: - Initialization
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Respond when the user logs in or out
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
         
         // If the user is viewing their own profile, hide the follow button and
         // make sure they're logged in. If the user is viewing someone else's
         // profile, hide the settings button and set the navBar title to be the
-        // username of whoever we're viewing.
+        // username of whoever they're viewing.
         if myProfile {
             self.followButton.isHidden = true
             
@@ -60,44 +69,13 @@ class ProfileVC: UIViewController {
         }
     }
     
-    @objc func loginChanged() {
-        if self.myProfile {
-            if SharedData.logged_in {
-                // User logged in on My Profile
-                print("ProfileVC > loginChanged: User logged in on My Profile")
-                self.username = SharedData.username
-                self.getProfile()
-                
-                self.navBar.rightBarButtonItem?.title = "Settings"
-                self.navBar.rightBarButtonItem?.isEnabled = true
-            } else {
-                // User logged out on My Profile
-                print("ProfileVC > loginChanged: User logged out on My Profile")
-                self.username = ""
-                
-                self.navBar.rightBarButtonItem?.title = nil
-                self.navBar.rightBarButtonItem?.isEnabled = false
-                
-                SharedData.promptLogin(parentVC: self)
-            }
-        } else {
-            if SharedData.logged_in {
-                // User logged in on another profile
-                print("ProfileVC > loginChanged: User logged in on another profile")
-                self.followButton.isHidden = self.username == SharedData.username
-            } else {
-                // User logged out on another profile
-                print("ProfileVC > loginChanged: User logged out on another profile")
-                self.followButton.isHidden = false
-            }
-        }
-    }
+    // MARK: - Helpers
     
-    /*
-     Retrieve a user's profile information from the backend, and update the view
+    /**
+     Retrieve a user's profile information from the backend, and update the user interface
      accordingly.
      */
-    func getProfile() {
+    private func getProfile() {
         // Send a request to the backend API to get the user's profile
         BackendAPI.getProfile(username: self.username, successCallback: { (username: String, fullname: String, bio: String, following: Bool) in
             // Update UI
@@ -122,6 +100,50 @@ class ProfileVC: UIViewController {
         })
     }
     
+    // MARK: - Event Handlers
+    
+    /**
+     Hide or show the appropriate UI elemtents when the user logs in or out.
+     */
+    @objc private func loginChanged() {
+        if self.myProfile {
+            if SharedData.logged_in {
+                // User logged in on My Profile
+                print("ProfileVC > loginChanged: User logged in on My Profile")
+                self.username = SharedData.username
+                self.getProfile()
+                
+                self.navBar.rightBarButtonItem?.title = "Settings"
+                self.navBar.rightBarButtonItem?.isEnabled = true
+            } else {
+                // User logged out on My Profile
+                print("ProfileVC > loginChanged: User logged out on My Profile")
+                self.username = ""
+                
+                self.navBar.rightBarButtonItem?.title = nil
+                self.navBar.rightBarButtonItem?.isEnabled = false
+                
+                self.navigationController?.popToRootViewController(animated: true)
+                
+                SharedData.promptLogin(parentVC: self)
+            }
+        } else {
+            if SharedData.logged_in {
+                // User logged in on another profile
+                print("ProfileVC > loginChanged: User logged in on another profile")
+                self.followButton.isHidden = self.username == SharedData.username
+            } else {
+                // User logged out on another profile
+                print("ProfileVC > loginChanged: User logged out on another profile")
+                self.followButton.isHidden = false
+            }
+        }
+    }
+    
+    /**
+     Follow or unfollow a user.
+     - Parameter sender: the object that triggered this event
+     */
     @IBAction func followTapped(_ sender: Any) {
         // Send a request to the backend API to follow the user
         BackendAPI.followUser(username: self.username, successCallback: { (followed: Bool) in

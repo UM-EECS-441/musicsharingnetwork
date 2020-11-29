@@ -7,9 +7,20 @@
 
 import UIKit
 
+/**
+ Display a post in the user's feed.
+ */
 class TimelineTableCell: UITableViewCell {
     
+    // MARK: - Variables
+    
+    // Post identifier
     var identifier: String?
+    
+    // Function to execute when the like button is tapped
+    var likeButtonAction : ((Bool) -> Void)?
+    
+    // MARK: - User Interface
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
@@ -18,14 +29,18 @@ class TimelineTableCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var commentButton: UIButton!
     
-    var likeButtonAction : ((Bool) -> Void)?
+    // MARK: - Initilization
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.likeButton.addTarget(self, action: #selector(self.likeTapped(_:)), for: .touchUpInside)
     }
     
+    // MARK: - Event Handlers
+    
+    /**
+     If the like button is tapped, tell the backend, and then execute the function we were given.
+     */
     @IBAction func likeTapped(_ sender: Any) {
         // Don't do anything if the user is not logged in
         if SharedData.logged_in {
