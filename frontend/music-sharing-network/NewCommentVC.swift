@@ -58,7 +58,7 @@ class NewCommentVC: UIViewController {
      */
     @IBAction func addComment(_ sender: Any) {
         // Send a request to the backend create post API
-        BackendAPI.createPost(content: "COMMENT", message: self.commentInput.text ?? "", replyTo: self.identifier, successCallback: { (comment: Post) in
+        BackendAPI.createPost(message: self.commentInput.text ?? "", replyTo: self.identifier, successCallback: { (comment: Post) in
             // Dismiss the view since the comment has been created
             DispatchQueue.main.async {
                 self.dismiss(animated: true, completion: nil)

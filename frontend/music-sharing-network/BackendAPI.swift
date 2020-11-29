@@ -198,9 +198,9 @@ class BackendAPI {
                 
                 // Parse the user's profile info
                 let username_ = json["target_user"] as! String
-                let fullname = json["full_name"] as! String
-                let bio = json["user_bio"] as! String
-                let following = json["following"] as! Bool
+                let fullname = json["full_name"] as? String ?? ""
+                let bio = json["user_bio"] as? String ?? ""
+                let following = json["following"] as? Bool ?? false
                 
                 successCallback?(username_, fullname, bio, following)
             } catch let error as NSError {
@@ -250,7 +250,7 @@ class BackendAPI {
     /**
      Parse a post from JSON data.
      - Parameter json: JSON object
-     - Returns: post object, whether it represents a reply (false => post; true => reply)
+     - Returns: post object, whether it represents a reply (false => original post; true => reply)
      */
     static func parsePost(json: [String: Any]) -> (data: Post, isReply: Bool) {
         // Parse the post
@@ -265,7 +265,7 @@ class BackendAPI {
         )
         
         // Determine whether it's an original post or a reply
-        if json["reply_to"] as? String == "" {
+        if json["reply_to"] as? String == nil {
             return (post, false)
         } else {
             return (post, true)
@@ -368,9 +368,17 @@ class BackendAPI {
      - Parameter successCallback: function to execute if post creation succeeds
      - Parameter errorCallback: function to execute if post creation fails
      */
-    static func createPost(content: String, message: String, replyTo: String? = nil, successCallback: ((Post) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+    static func createPost(content: String? = nil, message: String, replyTo: String? = nil, successCallback: ((Post) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
         // Serialize the post as JSON data
-        let json: [String: Any] = ["message": message, "content": content, "reply_to": replyTo ?? ""]
+        var json: [String: Any] = ["message": message]
+        // Skip content field for comments
+        if content != nil {
+            json["content"] = content
+        }
+        // Skip reply_to field for original posts
+        if replyTo != nil {
+            json["reply_to"] = replyTo
+        }
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         // Build an HTTP request

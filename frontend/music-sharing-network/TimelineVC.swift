@@ -45,6 +45,11 @@ class TimelineVC: UITableViewController {
         } else {
             self.newPostButton.image = .none
             self.newPostButton.isEnabled = false
+            
+            // The first time the view loads, request that the user logs in
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let loginNavController = storyBoard.instantiateViewController(withIdentifier: "LoginNavigationController")
+            self.present(loginNavController, animated: true, completion: nil)
         }
         
         // Load posts
