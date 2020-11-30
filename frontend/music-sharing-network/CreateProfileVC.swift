@@ -68,11 +68,18 @@ class CreateProfileVC: UIViewController {
      - Parameter sender: object that triggered profile creation
      */
     @IBAction func createProfile(_ sender: Any) {
+        // Store credential  inputs
+        let username_input = self.usernameInput.text ?? ""
+        let password_input = self.passwordInput.text ?? ""
+        
         // Send a request to the create account API
-        BackendAPI.createAccount(username: self.usernameInput.text ?? "", password: self.passwordInput.text ?? "", fullname: self.fullNameInput.text ?? "", bio: self.bioInput.text ?? "", successCallback: { (username: String) in
+        BackendAPI.createAccount(username: username_input, password: password_input, fullname: self.fullNameInput.text ?? "", bio: self.bioInput.text ?? "", successCallback: { (username: String) in
             DispatchQueue.main.async {
                 // Update shared username variable
                 SharedData.username = username
+                // Save credentials
+                UserDefaults.standard.setValue(username_input, forKey: "username")
+                UserDefaults.standard.setValue(password_input, forKey: "password")
                 // Tell everyone else we updated it
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
             }
