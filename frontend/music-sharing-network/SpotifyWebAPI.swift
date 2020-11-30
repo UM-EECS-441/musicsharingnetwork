@@ -71,12 +71,13 @@ class SpotifyWebAPI {
                 // Save the access token and expiration date
                 self.token = token
                 self.expires = expires
-                condition.signal()
                 
                 print("SpotifyWebAPI > authenticate: Successfully set token '\(self.token!)' to expire at '\(self.expires!)'")
             } catch let error as NSError {
                 print("SpotifyWebAPI > authenticate - ERROR: \(error))")
             }
+            
+            condition.signal()
         }, errorCallback: nil)
         
         condition.wait()
