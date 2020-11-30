@@ -40,9 +40,12 @@ class ExploreVC: UITableViewController {
      */
     private func getRecommendations() {
         // Send a request to the backend API to get recommendations
-        BackendAPI.getRecommendations(successCallback: { (artistRecommendations: [String]?, genreRecommendations: [String]?, attributeRecommendations: [String]?) in
+        BackendAPI.getRecommendations(successCallback: { (popularityRecommendations: [String]?, artistRecommendations: [String]?, genreRecommendations: [String]?, attributeRecommendations: [String]?) in
             // Build the recommendation list
             var recommendations: [(category: String, songs: [String])] = [(String, [String])]()
+            if popularityRecommendations != nil && !popularityRecommendations!.isEmpty {
+                recommendations.append((category: "Popular", songs: popularityRecommendations!))
+            }
             if artistRecommendations != nil && !artistRecommendations!.isEmpty {
                 recommendations.append((category: "Artist-Based Recommendations", songs: artistRecommendations!))
             }
