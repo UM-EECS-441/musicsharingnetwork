@@ -578,7 +578,7 @@ class BackendAPI {
      - Parameter successCallback: funciton to execute if recommendation retrieval succeeds
      - Parameter errorCallback: function to execute if recommendation retrieval fails
      */
-    static func getRecommendations(successCallback: (([String]) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
+    static func getRecommendations(successCallback: (([String]?, [String]?, [String]?) -> Void)? = nil, errorCallback: (() -> Void)? = nil) {
         // Build an HTTP request
         let requestURL = self.baseURL + "/recommendations/"
         var request = URLRequest(url: URL(string: requestURL)!)
@@ -593,9 +593,12 @@ class BackendAPI {
                 let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
                 
                 // Get the list of recommended songs
-                let recommendations = json["recommendations"] as! [String]
+                // FIXME: Replace these keys
+                let artistRecommendations = json["TBD"] as? [String]
+                let genreRecommendations = json["TBD"] as? [String]
+                let attributeRecommendations = json["recommendations"] as? [String]
                 
-                successCallback?(recommendations)
+                successCallback?(artistRecommendations, genreRecommendations, attributeRecommendations)
             } catch let error as NSError {
                 print("BackendAPI > getRecommendations - ERROR: \(error)")
             }

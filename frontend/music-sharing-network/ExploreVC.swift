@@ -15,7 +15,7 @@ class ExploreVC: UITableViewController {
     // MARK: - Variables
     
     // List of song recommendations
-    private var recommendations = [String]()
+    private var recommendations: [(category: String, songs: [String])] = []
     
     // MARK: - Initialization
     
@@ -40,7 +40,19 @@ class ExploreVC: UITableViewController {
      */
     private func getRecommendations() {
         // Send a request to the backend API to get recommendations
-        BackendAPI.getRecommendations(successCallback: { (recommendations: [String]) in
+        BackendAPI.getRecommendations(successCallback: { (artistRecommendations: [String]?, genreRecommendations: [String]?, attributeRecommendations: [String]?) in
+            // Build the recommendation list
+            var recommendations: [(category: String, songs: [String])] = [(String, [String])]()
+            if artistRecommendations != nil && !artistRecommendations!.isEmpty {
+                recommendations.append((category: "Artist-Based Recommendations", songs: artistRecommendations!))
+            }
+            if genreRecommendations != nil && !genreRecommendations!.isEmpty {
+                recommendations.append((category: "Genre-Based Recommendations", songs: genreRecommendations!))
+            }
+            if attributeRecommendations != nil && !attributeRecommendations!.isEmpty {
+                recommendations.append((category: "Attribute-Based Recommendations", songs: attributeRecommendations!))
+            }
+            
             // Show the recommendations
             DispatchQueue.main.async {
                 self.recommendations = recommendations
@@ -54,12 +66,17 @@ class ExploreVC: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // how many sections are in table
-        return 1
+        return self.recommendations.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // how many rows per section
-        return self.recommendations.count
+        return self.recommendations[section].songs.count
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        // title of a section
+        return self.recommendations[section].category
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -73,7 +90,7 @@ class ExploreVC: UITableViewController {
             fatalError("No reusable cell!")
         }
         
-        cell.songView.showSong(uri: self.recommendations[indexPath.row], parentVC: self)
+        cell.songView.showSong(uri: self.recommendations[indexPath.section].songs[indexPath.row], parentVC: self)
         
         return cell
     }
