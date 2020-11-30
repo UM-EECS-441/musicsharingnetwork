@@ -20,7 +20,7 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
         
         // Dismiss the keyboard when the user taps anywhere else
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboardHelper))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
     }
@@ -30,8 +30,16 @@ class SettingsVC: UIViewController {
     /**
      Dismiss the keyboard.
      */
-    @objc func dismissKeyboard() {
+    @objc func dismissKeyboardHelper() {
         self.view.endEditing(false)
+    }
+    
+    /**
+     Dismiss the keyboard.
+     - Parameter sender: object that triggered this event
+     */
+    @IBAction func dismissKeyboard(_ sender: Any) {
+        self.dismissKeyboardHelper()
     }
     
     /**

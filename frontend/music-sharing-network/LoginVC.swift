@@ -7,15 +7,20 @@
 
 import UIKit
 
-/*
- Controls a view that prompts the user to login.
+/**
+ Display a form for the user to login.
  */
 class LoginVC: UIViewController {
+    
+    // MARK: - Variables
+    
     // Should we allow the user to continue as a guest without signing in?
     var allowGuest = true
     
     // Closure to run once the user is logged in
     var completion: ((String) -> Void)?
+    
+    // MARK: - User Interface
     
     // Username and password fields
     @IBOutlet weak var usernameInput: UITextField!
@@ -25,9 +30,12 @@ class LoginVC: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var continueAsGuestButton: UIButton!
     
+    // MARK: - Initialization
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Respond when the user logs in or out
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
         
         // Hide the continue as guest button if necessary
@@ -35,6 +43,19 @@ class LoginVC: UIViewController {
         self.isModalInPresentation = !allowGuest
     }
     
+    // MARK: - Event Handlers
+    
+    /**
+     Dismiss the keyboard.
+     - Parameter sender: object that triggered this event
+     */
+    @IBAction func dismissKeyboard(_ sender: Any) {
+        self.view.endEditing(false)
+    }
+    
+    /**
+     Dismiss the login form if the user logs in.
+     */
     @objc func loginChanged() {
         if SharedData.logged_in {
             print("LoginVC > loginChanged: User logged in")
@@ -44,8 +65,9 @@ class LoginVC: UIViewController {
         }
     }
     
-    /*
+    /**
      Sign in with the username and password supplied by the user.
+     - Parameter sender: object that triggered this event
      */
     @IBAction func login(_ sender: Any) {
         // Get the username and password from the input fields
@@ -66,6 +88,10 @@ class LoginVC: UIViewController {
         })
     }
     
+    /**
+     Cancel login by dismissing the view.
+     - Parameter sender: object that triggered this event
+     */
     @IBAction func continueAsGuest(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }

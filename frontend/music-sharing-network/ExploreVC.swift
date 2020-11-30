@@ -24,8 +24,6 @@ class ExploreVC: UITableViewController {
         
         // Respond when the user logs in or out
         NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
-        // Respond when the user follows or unfollows another user
-        NotificationCenter.default.addObserver(self, selector: #selector(self.reload), name: NSNotification.Name(rawValue: "followChanged"), object: nil) // TODO: Is this necessary?
         
         // Let the user refresh their recommendations
         self.refreshControl = UIRefreshControl()
@@ -83,7 +81,7 @@ class ExploreVC: UITableViewController {
     // MARK: - Event Handlers
     
     /**
-     Reload recommendations when the user logs in/out or follows/unfollows another user.
+     Reload recommendations when the user logs in or out.
      */
     @objc private func reload() {
         self.getRecommendations()

@@ -30,7 +30,10 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WU3-DI-zZi" userLabel="Username Input">
                                         <rect key="frame" x="0.0" y="30.5" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" textContentType="username"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="username"/>
+                                        <connections>
+                                            <action selector="dismissKeyboard:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="0zb-Lf-PIf"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AVi-e8-ELm" userLabel="Password Label">
                                         <rect key="frame" x="0.0" y="74.5" width="374" height="20.5"/>
@@ -41,7 +44,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GXY-0h-qIq" userLabel="Password Input">
                                         <rect key="frame" x="0.0" y="105" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
                                         <connections>
                                             <action selector="login:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="Ypg-ny-PGH"/>
                                         </connections>
@@ -110,7 +113,10 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your username here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wTn-0t-qSd" userLabel="Username Input">
                                         <rect key="frame" x="0.0" y="30.5" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" textContentType="username"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="username"/>
+                                        <connections>
+                                            <action selector="dismissKeyboard:" destination="F8z-Fr-tZ2" eventType="primaryActionTriggered" id="5R9-Kr-4hx"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUB-yf-zTP" userLabel="Password Label">
                                         <rect key="frame" x="0.0" y="74.5" width="374" height="20.5"/>
@@ -121,7 +127,10 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your password here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jVR-0i-qiB" userLabel="Password Input">
                                         <rect key="frame" x="0.0" y="105" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                        <connections>
+                                            <action selector="dismissKeyboard:" destination="F8z-Fr-tZ2" eventType="primaryActionTriggered" id="YzP-2k-f6R"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMx-pt-ht0" userLabel="Full Name Label">
                                         <rect key="frame" x="0.0" y="149" width="374" height="20.5"/>
@@ -132,7 +141,10 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your full name here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BaK-yG-uf2" userLabel="Full Name Input">
                                         <rect key="frame" x="0.0" y="179.5" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <action selector="dismissKeyboard:" destination="F8z-Fr-tZ2" eventType="primaryActionTriggered" id="UCY-WM-O38"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FmJ-ZQ-Y57" userLabel="Bio Label">
                                         <rect key="frame" x="0.0" y="223.5" width="374" height="20.5"/>
@@ -143,7 +155,10 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your bio here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="scH-B7-7q7" userLabel="Bio Input">
                                         <rect key="frame" x="0.0" y="254" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <action selector="dismissKeyboard:" destination="F8z-Fr-tZ2" eventType="primaryActionTriggered" id="VVb-dE-odc"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -223,7 +238,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TimelineTableCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimelineTableCell" rowHeight="268" id="Gcc-6b-Nn3" customClass="TimelineTableCell" customModule="music_sharing_network" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TimelineTableCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TimelineTableCell" rowHeight="268" id="Gcc-6b-Nn3" customClass="TimelineTableCell" customModule="music_sharing_network" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="268"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gcc-6b-Nn3" id="nU3-Ze-Xj1">
@@ -386,7 +401,7 @@
                                 <rect key="frame" x="0.0" y="130" width="414" height="678"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SongSelectionTableCell" rowHeight="133" id="Yup-4F-Obm" customClass="SongSelectionTableCell" customModule="music_sharing_network" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SongSelectionTableCell" rowHeight="133" id="Yup-4F-Obm" customClass="SongSelectionTableCell" customModule="music_sharing_network" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="133"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yup-4F-Obm" id="3Hw-3R-qLl">
@@ -529,7 +544,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExploreTableCell" rowHeight="155" id="CfI-ih-fFN" customClass="ExploreTableCell" customModule="music_sharing_network" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ExploreTableCell" rowHeight="155" id="CfI-ih-fFN" customClass="ExploreTableCell" customModule="music_sharing_network" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="155"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CfI-ih-fFN" id="5CW-Ui-c8F">
@@ -576,23 +591,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CommentTableCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentTableCell" rowHeight="150" id="nfK-gG-PRz" customClass="CommentTableCell" customModule="music_sharing_network" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CommentTableCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentTableCell" rowHeight="150" id="nfK-gG-PRz" customClass="CommentTableCell" customModule="music_sharing_network" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nfK-gG-PRz" id="uCd-il-xDo">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqA-gZ-UaA" userLabel="Username Label">
-                                            <rect key="frame" x="20" y="11" width="98" height="25"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="25" id="6ow-KZ-VYr"/>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="98" id="pSf-la-m7S"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is where a user's comment is shown." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2j-4w-SlH" userLabel="Comment Content">
                                             <rect key="frame" x="20" y="81" width="374" height="58"/>
                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
@@ -601,7 +606,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uug-67-VjM" userLabel="Timestamp Label">
-                                            <rect key="frame" x="20" y="46" width="33.5" height="25"/>
+                                            <rect key="frame" x="55" y="46" width="33.5" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="wgA-NM-iL3"/>
                                             </constraints>
@@ -609,18 +614,46 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9nJ-I2-oZx">
+                                            <rect key="frame" x="20" y="11.5" width="25" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="Mnh-R1-Dag"/>
+                                                <constraint firstAttribute="height" constant="25" id="glh-kG-M0z"/>
+                                            </constraints>
+                                        </imageView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="aac-Wt-Par">
+                                            <rect key="frame" x="20" y="47" width="25" height="22.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="IlG-eX-ANi"/>
+                                                <constraint firstAttribute="width" constant="25" id="vjB-gc-GrD"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqA-gZ-UaA" userLabel="Username Label">
+                                            <rect key="frame" x="55" y="11" width="98" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="6ow-KZ-VYr"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="98" id="pSf-la-m7S"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="cqA-gZ-UaA" firstAttribute="top" secondItem="uCd-il-xDo" secondAttribute="topMargin" id="27q-dN-3gl"/>
-                                        <constraint firstItem="Uug-67-VjM" firstAttribute="leading" secondItem="uCd-il-xDo" secondAttribute="leadingMargin" id="95n-Ib-JKD"/>
+                                        <constraint firstItem="9nJ-I2-oZx" firstAttribute="top" secondItem="uCd-il-xDo" secondAttribute="topMargin" id="7Fp-Ib-6KA"/>
+                                        <constraint firstItem="aac-Wt-Par" firstAttribute="top" secondItem="9nJ-I2-oZx" secondAttribute="bottom" constant="10" id="AyN-m5-pfY"/>
+                                        <constraint firstItem="Uug-67-VjM" firstAttribute="centerY" secondItem="aac-Wt-Par" secondAttribute="centerY" id="Bg1-m4-2z1"/>
+                                        <constraint firstItem="cqA-gZ-UaA" firstAttribute="centerY" secondItem="9nJ-I2-oZx" secondAttribute="centerY" id="FBU-uQ-90J"/>
+                                        <constraint firstItem="cqA-gZ-UaA" firstAttribute="leading" secondItem="9nJ-I2-oZx" secondAttribute="trailing" constant="10" id="H66-47-JkJ"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="cqA-gZ-UaA" secondAttribute="trailing" id="Ibf-dn-InG"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Uug-67-VjM" secondAttribute="trailing" id="K8n-K7-aka"/>
-                                        <constraint firstItem="cqA-gZ-UaA" firstAttribute="leading" secondItem="m2j-4w-SlH" secondAttribute="leading" id="PBB-ym-3jy"/>
+                                        <constraint firstItem="Uug-67-VjM" firstAttribute="leading" secondItem="aac-Wt-Par" secondAttribute="trailing" constant="10" id="PrD-XK-Xq2"/>
                                         <constraint firstItem="m2j-4w-SlH" firstAttribute="trailing" secondItem="uCd-il-xDo" secondAttribute="trailingMargin" id="QSr-6J-Inv"/>
-                                        <constraint firstItem="Uug-67-VjM" firstAttribute="top" secondItem="cqA-gZ-UaA" secondAttribute="bottom" constant="10" id="kmb-LF-aHr"/>
+                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="top" secondItem="Uug-67-VjM" secondAttribute="bottom" constant="10" id="Smf-Ge-H8y"/>
+                                        <constraint firstItem="aac-Wt-Par" firstAttribute="leading" secondItem="uCd-il-xDo" secondAttribute="leadingMargin" id="UJm-PY-KcG"/>
+                                        <constraint firstItem="9nJ-I2-oZx" firstAttribute="leading" secondItem="uCd-il-xDo" secondAttribute="leadingMargin" id="pmF-9z-yqN"/>
                                         <constraint firstItem="m2j-4w-SlH" firstAttribute="bottom" secondItem="uCd-il-xDo" secondAttribute="bottomMargin" id="qbG-K4-I6q"/>
                                         <constraint firstItem="m2j-4w-SlH" firstAttribute="leading" secondItem="uCd-il-xDo" secondAttribute="leadingMargin" id="ucd-Ty-l0i"/>
-                                        <constraint firstItem="m2j-4w-SlH" firstAttribute="top" secondItem="Uug-67-VjM" secondAttribute="bottom" constant="10" id="z9o-5U-i1O"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -672,7 +705,10 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your comment..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3bQ-5J-tyH" userLabel="Comment Input">
                                 <rect key="frame" x="20" y="117" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="addComment:" destination="Ity-FG-bmJ" eventType="primaryActionTriggered" id="QTj-jd-Ujk"/>
+                                </connections>
                             </textField>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0c-B9-GHh">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
@@ -725,7 +761,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search by username..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gts-5b-if7">
                                 <rect key="frame" x="20" y="108" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES" textContentType="username"/>
                                 <connections>
                                     <action selector="executeSearch:" destination="B8w-n8-zqy" eventType="primaryActionTriggered" id="Cw6-gn-8CU"/>
                                 </connections>
@@ -904,12 +940,18 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Old Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u5M-rq-ozM" userLabel="Old Password Input">
                                         <rect key="frame" x="0.0" y="40.5" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                        <connections>
+                                            <action selector="dismissKeyboard:" destination="BNv-2P-JtG" eventType="primaryActionTriggered" id="7Bc-ly-OWF"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4mp-s5-qBM" userLabel="New Password">
                                         <rect key="frame" x="0.0" y="94.5" width="374" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                        <connections>
+                                            <action selector="dismissKeyboard:" destination="BNv-2P-JtG" eventType="primaryActionTriggered" id="hm9-Z3-Jg6"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvX-SV-8oW" userLabel="Save Button">
                                         <rect key="frame" x="0.0" y="148.5" width="374" height="30"/>
@@ -1016,6 +1058,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="membersLabel" destination="Wb4-FY-cA4" id="Jwo-Lf-3uo"/>
+                                    <segue destination="7Bw-um-mwV" kind="show" id="6Pc-ye-qRo"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1052,10 +1095,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7lC-8j-29z">
-                                <rect key="frame" x="0.0" y="44" width="414" height="764"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="671"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageViewTableCellSong" rowHeight="156" id="N4c-eK-AdJ" customClass="MessageViewTableCellSong" customModule="music_sharing_network" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageViewTableCellSong" rowHeight="156" id="N4c-eK-AdJ" customClass="MessageViewTableCellSong" customModule="music_sharing_network" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="156"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N4c-eK-AdJ" id="Pmk-Bj-WYu" userLabel="MessageViewTableCellSong">
@@ -1091,7 +1134,7 @@
                                             <outlet property="usernameLabel" destination="ahs-qR-bw3" id="9IU-Fl-TYH"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageViewTableCellText" rowHeight="118" id="AcZ-NE-EvZ" customClass="MessageViewTableCellText" customModule="music_sharing_network" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageViewTableCellText" rowHeight="118" id="AcZ-NE-EvZ" customClass="MessageViewTableCellText" customModule="music_sharing_network" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="184" width="414" height="118"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AcZ-NE-EvZ" id="s5L-cn-ano">
@@ -1130,9 +1173,9 @@
                                 </prototypes>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send a message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SFh-d8-F6B" userLabel="Message Input">
-                                <rect key="frame" x="10" y="818" width="394" height="34"/>
+                                <rect key="frame" x="10" y="769" width="394" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
                                     <action selector="sendMessage:" destination="7Bw-um-mwV" eventType="primaryActionTriggered" id="F9C-mC-isZ"/>
                                 </connections>
@@ -1150,9 +1193,11 @@
                             <constraint firstItem="PpK-Dr-mlX" firstAttribute="trailing" secondItem="7lC-8j-29z" secondAttribute="trailing" id="ubf-QA-oER"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="username" id="Iqf-L2-kyk"/>
                     <connections>
                         <outlet property="bottomConstraint" destination="QS8-v9-TZF" id="x04-Id-WqS"/>
                         <outlet property="messageInput" destination="SFh-d8-F6B" id="QrU-eM-bHk"/>
+                        <outlet property="navBar" destination="Iqf-L2-kyk" id="dKQ-aE-ifP"/>
                         <outlet property="tableView" destination="7lC-8j-29z" id="WnX-fz-oAs"/>
                     </connections>
                 </viewController>
@@ -1194,7 +1239,10 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Recipient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7YM-t7-ZfZ" userLabel="Recipient Input">
                                 <rect key="frame" x="96.5" y="76" width="297.5" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="dismissKeyboard:" destination="tdg-YR-5Vk" eventType="primaryActionTriggered" id="WIk-JD-lW7"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ozl-Nk-Ltc">
                                 <rect key="frame" x="0.0" y="130" width="414" height="21"/>
@@ -1207,7 +1255,7 @@
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1dF-RP-Gud"/>
@@ -1273,7 +1321,10 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Recipient" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yQJ-7k-vXl">
                                 <rect key="frame" x="96.5" y="228" width="297.5" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="sendButtonHandler:" destination="otv-0N-afP" eventType="primaryActionTriggered" id="ag4-jN-1Zk"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HoQ-2k-xgv" userLabel="Song" customClass="SongView" customModule="music_sharing_network" customModuleProvider="target">
                                 <rect key="frame" x="20" y="108" width="374" height="100"/>

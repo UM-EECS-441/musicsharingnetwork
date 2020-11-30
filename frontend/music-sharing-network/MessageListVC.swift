@@ -81,13 +81,6 @@ class MessageListVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // event handler when a cell is tapped
-        let conversation = conversations[indexPath.row]
-        
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let messageViewVC = storyBoard.instantiateViewController(withIdentifier: "MessageViewVC") as! MessageViewVC
-        messageViewVC.conversation = conversation
-        self.navigationController?.show(messageViewVC, sender: nil)
-        
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
 
@@ -120,6 +113,17 @@ class MessageListVC: UITableViewController {
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         self.getConversations()
         self.refreshControl?.endRefreshing()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if let destinationVC = segue.destination as? MessageViewVC {
+            if let cell = sender as? MessageListTableCell {
+                if let index = self.tableView.indexPath(for: cell)?.row {
+                    let conversation = self.conversations[index]
+                    destinationVC.conversation = conversation
+                }
+            }
+        }
     }
     
     /**
