@@ -145,6 +145,7 @@ def add_liked_to_post(post_dict, username):
 def update_attributes(username, track_id, score):
     """ Updates user's attribute vectors based on the features of the song and sentiment score of their post."""
 
+    # get feature vector for user
     feature_dict = user_ref.document(username).get().to_dict()['feature_vector']
     # get or initialize genre vector and artist vector for user
     genre_dict = user_ref.document(username).get().to_dict().get('genre_vector', {})
@@ -161,18 +162,17 @@ def update_attributes(username, track_id, score):
         genres.update(genre_list)
     # filter genres to only contain seedable values for recommendations
     genres = genres.intersection(set(SEED_GENRES))
-    print(genres)
 
     # increments/decrements the corresponding bucket value for each attribute based on sentiment score
     for feature in FEATURES:
         index = get_index(feature, track[feature])
-        print(feature, index)
         feature_dict[feature][index] += score
 
     # updates the user's genre vector
     for genre in genres:
         genre_dict[genre] = genre_dict.get(genre, 0) + score
     
+    # updates the user's artist preference vector
     for artist_id in artist_ids:
         artist_dict[artist_id] = artist_dict.get(artist_id, 0) + score
     

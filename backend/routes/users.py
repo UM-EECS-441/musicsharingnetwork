@@ -56,7 +56,7 @@ def create_user():
         'follower': username,
         'followed': username
     }
-    follow_ref.document(username + '-' + username).set(data)
+    follow_ref.document(username + '_' + username).set(data)
     # set flask session token and return response
     flask.session['username'] = username
     return flask.jsonify(**{'url': flask.request.path}), 201

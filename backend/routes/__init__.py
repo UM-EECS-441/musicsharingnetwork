@@ -29,6 +29,7 @@ token = spotify_auth.get_access_token()
 DUMMY_ID = '1rFMYAZxBoAKSzXI54brMu'
 FEATURES = spotify_ref.audio_features(tracks=[DUMMY_ID])[0].keys()
 EXCLUDE_FEATURES = ['track_href', 'uri', 'analysis_url', 'id', 'type', 'time_signature', 'duration_ms', 'key', 'mode']
+
 FEATURES = FEATURES - EXCLUDE_FEATURES
 SEED_GENRES = spotify_ref.recommendation_genre_seeds()['genres']
 
