@@ -593,11 +593,10 @@ class BackendAPI {
                 let json = try JSONSerialization.jsonObject(with: data!) as! [String: Any]
                 
                 // Get the list of recommended songs
-                // FIXME: Replace these keys
-                let popularityRecommendations = json["TBD"] as? [String]
-                let artistRecommendations = json["TBD"] as? [String]
-                let genreRecommendations = json["TBD"] as? [String]
-                let attributeRecommendations = json["recommendations"] as? [String]
+                let popularityRecommendations = json["popular_songs"] as? [String]
+                let artistRecommendations = json["artist_recommendations"] as? [String]
+                let genreRecommendations = json["genre_recommendations"] as? [String]
+                let attributeRecommendations = json["attribute_recommendations"] as? [String]
                 
                 successCallback?(popularityRecommendations, artistRecommendations, genreRecommendations, attributeRecommendations)
             } catch let error as NSError {
