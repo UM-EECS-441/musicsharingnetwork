@@ -35,6 +35,9 @@ class UserSearchVC: UIViewController, UITableViewDataSource, UITableViewDelegate
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
+        
+        // Load a list of all users
+        self.executeSearch(self)
     }
 
     // MARK: - TableView Handlers

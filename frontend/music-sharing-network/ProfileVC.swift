@@ -55,7 +55,7 @@ class ProfileVC: UIViewController {
                 self.navBar.rightBarButtonItem?.title = nil
                 self.navBar.rightBarButtonItem?.isEnabled = false
                 
-                SharedData.promptLogin(parentVC: self, parentView: self.view)
+                SharedData.promptLogin(parentVC: self)
             }
         } else {
             self.navBar.rightBarButtonItem?.title = nil
@@ -128,7 +128,7 @@ class ProfileVC: UIViewController {
                 
                 self.navigationController?.popToRootViewController(animated: true)
                 
-                SharedData.promptLogin(parentVC: self, parentView: self.view)
+                SharedData.promptLogin(parentVC: self)
             }
         } else {
             if SharedData.logged_in {

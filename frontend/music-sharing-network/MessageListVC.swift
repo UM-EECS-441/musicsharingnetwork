@@ -11,7 +11,7 @@ import UIKit
  Display a list of all conversations the user is a member of.
  Conversations are identified by the set of members in them.
  */
-class MessageListVC: UITableViewController {
+class MessageListVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Variables
     
@@ -22,13 +22,21 @@ class MessageListVC: UITableViewController {
     
     @IBOutlet weak var composeButton: UIBarButtonItem!
     
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            self.tableView.delegate = self;
+            self.tableView.dataSource = self;
+            self.tableView.refreshControl = UIRefreshControl()
+        }
+    }
+    
     // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Let the user refresh their conversation list
-        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        self.tableView.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
         
         // Respond when the user logs in or out
         NotificationCenter.default.addObserver(self, selector: #selector(self.loginChanged), name: NSNotification.Name(rawValue: "loginChanged"), object: nil)
@@ -47,7 +55,7 @@ class MessageListVC: UITableViewController {
             self.composeButton.isEnabled = false
             
             // If they're not, prompt them to login
-            SharedData.promptLogin(parentVC: self, parentView: self.view.superview ?? self.view)
+            SharedData.promptLogin(parentVC: self)
         }
     }
     
@@ -69,22 +77,22 @@ class MessageListVC: UITableViewController {
     
     // MARK:- TableView Handlers
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // how many sections are in table
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // how many rows per section
         return conversations.count
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // event handler when a cell is tapped
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // populate a single cell
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageListTableCell", for: indexPath) as? MessageListTableCell else {
             fatalError("No reusable cell!")
@@ -112,7 +120,7 @@ class MessageListVC: UITableViewController {
      */
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         self.getConversations()
-        self.refreshControl?.endRefreshing()
+        self.tableView.refreshControl?.endRefreshing()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
@@ -149,7 +157,7 @@ class MessageListVC: UITableViewController {
             self.composeButton.isEnabled = false
             self.navigationController?.popToRootViewController(animated: true)
             
-            SharedData.promptLogin(parentVC: self, parentView: self.view.superview ?? self.view)
+            SharedData.promptLogin(parentVC: self)
         }
     }
     
